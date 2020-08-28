@@ -1,0 +1,13 @@
+{
+    "name": "mathias/blog",
+    "authors": [
+        {
+            "name": "mathias73",
+            "email": "mat.micheli99@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0",
+        "twbs/bootstrap": "^4.5"
+    }
+}
