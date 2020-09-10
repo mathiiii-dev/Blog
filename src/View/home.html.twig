@@ -1,14 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block head %}
-    <title>Accueil</title>
+
+{% block title %}
+    Accueil
 {% endblock %}
-{% block stylesheet %}
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <link href="src/Public/css/clean-blog.min.css" rel="stylesheet">
-{% endblock %}
+
 {% block content %}
     <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -61,10 +56,10 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
+
 {% block javascript %}
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="src/Public/js/clean-blog.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="src/Public/js/clean-blog.min.js"></script>
 {% endblock %}
