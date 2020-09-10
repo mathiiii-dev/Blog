@@ -9,19 +9,19 @@ class Route
     private $matches = [];
     private $params = [];
 
-    public function __construct($path, $callable)
+    public function __construct(string $path, string $callable)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
     }
 
-    public function with($param, $regex)
+    public function with( $param,  $regex) : string
     {
         $this->params[$param] = str_replace('(','(?:', $regex);
         return $this;
     }
 
-    public function match($url)
+    public function match(string $url) : bool
     {
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
@@ -35,7 +35,7 @@ class Route
         return true;
     }
 
-   private function paramMatch($match)
+   private function paramMatch(string $match) : string
    {
        if (isset($this->params[$match[1]]))
        {
@@ -59,7 +59,7 @@ class Route
         }
     }
 
-    public function getUrl($params)
+    public function getUrl(array $params) : string
     {
         $path = $this->path;
         foreach ($params as $k => $v)
