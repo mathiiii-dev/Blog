@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="src/Public/css/style.css">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+    <link href="src/Public/css/clean-blog.min.css" rel="stylesheet">
+    {% block stylesheet %}{% endblock %}
+</head>
+
+<body>
+    {% include 'navbar.html.twig' %}
+    {% block content %} {% endblock %}
+    {% block javascript %} {% endblock %}
+</body>
+
+</html>
