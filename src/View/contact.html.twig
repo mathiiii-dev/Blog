@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link href="src/Public/css/contact.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-8 col-md-10 mx-auto mt-5 mb-5">
+        <h3>Formulaire de contact</h3>
+        <form id="formContact" onsubmit="submitForm(); return false;">
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="nom">Nom & Prénom</label>
+                    <input type="text" class="form-control" id="nom" placeholder="Nom & Prénom" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" placeholder="E-mail" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="sujet">Sujet</label>
+                    <input type="text" class="form-control" id="sujet" placeholder="Sujet" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" rows="5" placeholder="Message" required></textarea>
+                </div>
+            </div>
+            <br>
+            <input type="submit" class="btn btn-primary float-right" id="submitBtn" value="Envoyer"><span id="status"></span>
+            <br>
+        </form>
+    </div>
+{% endblock %}
