@@ -6,4 +6,5 @@ require 'vendor/autoload.php';
 
 $router = new Router($_GET['url']);
 $router->get('/', 'Home#show');
+$router->post('/sendMail', 'Mail#sendMail');
 $router->run();
