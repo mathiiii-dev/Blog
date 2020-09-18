@@ -21,7 +21,7 @@ class MailController
             'cache' => false//'src/tmp',
         ]);
 
-        if(empty($nom) OR empty($email) OR empty($sujet) OR empty($message))
+        if(!isset($nom, $email, $sujet, $message))
         {
             echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
                     <strong>Erreur ! </strong> Veuillez remplir tout les champs du formulaire.
@@ -39,15 +39,16 @@ class MailController
             $headers .= "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-1\n";
             if (mail($to, $email_sujet, $email_message, $headers)){
-                echo $twig->render('home.html.twig');
+                header('Location: /Blog/#formContact');
                 echo "<div class='alert alert-succes alert-dismissible fade show' role='alert'>
                     <strong>Message envoyé !</strong> Nous reviendrons vers vous au plus vite.
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                         <span aria-hidden='true'>&times;</span>
                     </button>
                 </div>";
+                die();
             }else{
-                echo $twig->render('home.html.twig');
+                header('Location: /Blog/#formContact');
                 echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                     <strong>Erreur !</strong> Veuillez reessayer plus tard.
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
