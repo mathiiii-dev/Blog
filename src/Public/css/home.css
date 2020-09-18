@@ -1,6 +1,6 @@
 .timeline-element
 {
-    background-color: #0085a1;
+    background-color: #6879cc;
     color: white;
     padding: 20px;
     margin: 20px;
@@ -20,7 +20,7 @@
 }
 
 .active.item .line, .active.item .line > .node {
-    background: #0085a1;
+    background: #6879cc;
 }
 
 
@@ -34,7 +34,7 @@
     display: block;
     width: 10px;
     height: 150px;
-    background: #7f8c8d;
+    background: #9da9d9;
 }
 
 .node {
@@ -44,6 +44,6 @@
     display: block;
     width: 50px;
     height: 50px;
-    background: #7f8c8d;
+    background: #9da9d9;
     border-radius: 25px;
 }
