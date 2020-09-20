@@ -3,7 +3,7 @@
 {% block content %}
     <div class="col-lg-8 col-md-10 mx-auto mt-5 mb-5">
         <h3>Formulaire de contact</h3>
-        <form id="formContact" method="post" action="SendMail">
+        <form id="formContact">
             <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                     <label for="nom">Nom & Prénom</label>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <br>
-            <input type="submit" class="btn btn-primary float-right" id="js-submit-btn" value="Envoyer">
+            <input type="button" class="btn btn-primary float-right" id="js-submit-btn" value="Envoyer">
             <input type="hidden" id="token" name="token">
             <br>
         </form>

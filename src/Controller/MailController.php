@@ -46,7 +46,6 @@ class MailController
                         <span aria-hidden='true'>&times;</span>
                     </button>
                 </div>";
-                die();
             }else{
                 header('Location: /Blog/#formContact');
                 echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>

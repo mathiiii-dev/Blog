@@ -1,3 +1,4 @@
+console.log(document.getElementById('js-submit-btn'));
 document.getElementById('js-submit-btn').addEventListener('click', function (){
 
     var nom = $('#nom');
@@ -6,7 +7,7 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
     var message = $('#message');
 
     $.ajax({
-        url: 'src/Controller/MailController.php',
+        url: '/sendMail',
         method: 'POST',
         dataType: 'json',
         data: {
@@ -16,5 +17,7 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
             message: message.val()
         }
     });
+
+    console.log('test');
 
 });

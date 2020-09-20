@@ -47,6 +47,7 @@ class Router
             }
         }
         throw new RouterException('No matching routes');
+
     }
 
     public function url(string $name, array $params = []) : array
