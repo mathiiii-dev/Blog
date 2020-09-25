@@ -18,9 +18,10 @@ class SigninController
         echo $twig->render('signin.html.twig');
     }
 
-    public function signIn()
+    public function signIn() : void
     {
         $userManger = new UserManager();
         $userManger->newUser();
+        $this->show();
     }
 }

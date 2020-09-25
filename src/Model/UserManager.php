@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use mysql_xdevapi\Exception;
+use App\Controller\SigninController;
+
 class UserManager extends DbManager
 {
     public function __construct()
@@ -17,23 +20,24 @@ class UserManager extends DbManager
         $pseudo = $_POST['pseudo'];
         $password = $_POST['password'];
         $type = 'Blogger';
-        $createdAt = date('d/m/y');
+        $createdAt = date('y/m/d');
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
         if (!empty($firstname) || !empty($lastname) || !empty($email) || !empty($pseudo) || !empty($password) || !empty($passwordHash)) {
 
             if (!$this->getUserByPseudo($pseudo) == null) {
 
-                echo 'Pseudo deja pris';
+                throw new \Exception('pseudo');
 
             } elseif (!$this->getUserByEmail($email) == null) {
 
-                echo 'Mail déja pris';
+                throw new \Exception('email');
 
             } else {
                 $addUser = $this->dbConnect()->prepare("INSERT INTO user(firstname, lastname, email, pseudo, password, type, createdAt)
                 VALUE ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $pseudo . "','" . $passwordHash . "','" . $type . "','" . $createdAt . "')");
                 $addUser->execute(array($firstname, $lastname, $email, $pseudo, $passwordHash, $type, $createdAt));
+                echo "Afficher vue sign up";
             }
 
         } else {
