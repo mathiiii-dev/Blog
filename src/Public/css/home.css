@@ -1,17 +1,10 @@
-.timeline-element
-{
+.timeline-element {
     background-color: #0085a1;
     border-radius: 20px;
     color: white;
     padding: 20px;
     margin: 20px;
 }
-
-.timeline-container
-{
-
-}
-
 
 .main {
     width: 200px;
@@ -23,7 +16,6 @@
 .active.item .line, .active.item .line > .node {
     background: #0085a1;
 }
-
 
 .item {
     flex: 1;
