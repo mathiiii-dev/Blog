@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Model;
 
-class MainController
+class DbManager
 {
     public function dbConnect()
     {

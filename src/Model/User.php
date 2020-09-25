@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class User
+class User extends Model
 {
     protected int $id;
     protected string $firstname,
@@ -12,15 +12,9 @@ class User
                      $password,
                      $type;
 
-    public function __construct($id, $firstname, $lastname, $email, $pseudo, $password,$type)
+    public function __construct(array $data)
     {
-        $this->id=$id;
-        $this->firstname=$firstname;
-        $this->lastname=$lastname;
-        $this->pseudo=$pseudo;
-        $this->email=$email;
-        $this->password=$password;
-        $this->type=$type;
+        $this->hydrate($data);
     }
 
     public function getId() : int
@@ -28,9 +22,19 @@ class User
         return $this->id;
     }
 
+    public function setId($id) : int
+    {
+        $this->id = $id;
+    }
+
     public function getFirstname() : string
     {
         return $this->firstname;
+    }
+
+    public function setFirstname($firstname) : string
+    {
+        $this->firstname = $firstname;
     }
 
     public function getLastname() : string
@@ -38,9 +42,19 @@ class User
         return $this->firstname;
     }
 
+    public function setLastname($lastname) : string
+    {
+        $this->lastname = $lastname;
+    }
+
     public function getEmail() : string
     {
         return $this->email;
+    }
+
+    public function setEmail($email) : string
+    {
+        $this->email = $email;
     }
 
     public function getPseudo() : string
@@ -48,14 +62,29 @@ class User
         return $this->pseudo;
     }
 
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+    }
+
     public function getPassword() : string
     {
         return $this->password;
     }
 
+    public function setPassword($password) : string
+    {
+        $this->password = $password;
+    }
+
     public function getType() : string
     {
         return $this->type;
+    }
+
+    public function setType($type) : string
+    {
+        $this->type = $type;
     }
 
 }
