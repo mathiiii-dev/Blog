@@ -25,21 +25,27 @@ class UserManager extends DbManager
 
         if (!empty($firstname) || !empty($lastname) || !empty($email) || !empty($pseudo) || !empty($password) || !empty($passwordHash)) {
 
-            if (!$this->getUserByPseudo($pseudo) == null) {
+            if (strlen($password) < 8 ) {
+                throw new \Exception('password');
 
-                throw new \Exception('pseudo');
+            }else {
 
-            } elseif (!$this->getUserByEmail($email) == null) {
+                if (!$this->getUserByPseudo($pseudo) == null) {
 
-                throw new \Exception('email');
+                    throw new \Exception('pseudo');
+                    //echo '<script type="text/javascript" src="src/Public/js/main.js">pseudo();</script>';
 
-            } else {
-                $addUser = $this->dbConnect()->prepare("INSERT INTO user(firstname, lastname, email, pseudo, password, type, createdAt)
+                } elseif (!$this->getUserByEmail($email) == null) {
+
+                    throw new \Exception('email');
+
+                } else {
+                    $addUser = $this->dbConnect()->prepare("INSERT INTO user(firstname, lastname, email, pseudo, password, type, createdAt)
                 VALUE ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $pseudo . "','" . $passwordHash . "','" . $type . "','" . $createdAt . "')");
-                $addUser->execute(array($firstname, $lastname, $email, $pseudo, $passwordHash, $type, $createdAt));
-                echo "Afficher vue sign up";
+                    $addUser->execute(array($firstname, $lastname, $email, $pseudo, $passwordHash, $type, $createdAt));
+                    echo "Afficher vue sign up";
+                }
             }
-
         } else {
 
             echo 'remplir tout les champs';
