@@ -1,15 +1,15 @@
 document.getElementById('js-submit-btn').addEventListener('click', function (){
 
     //Get the value of the form input
-    const nom = document.getElementById('nom').value;
-    const email = document.getElementById('email').value;
-    const sujet = document.getElementById('sujet').value;
-    const message = document.getElementById('message').value;
+    let nom = document.getElementById('nom').value,
+        email = document.getElementById('email').value,
+        sujet = document.getElementById('sujet').value,
+        message = document.getElementById('message').value,
+        cssErrForm = document.getElementById('err-form').style,
+        cssSuccessForm = document.getElementById('success-form').style,
+        cssError = document.getElementById('error').style,
+        cssErrMail = document.getElementById('err-mail').style;
 
-    let cssErrForm = document.getElementById('err-form').style;
-    let cssSuccessForm = document.getElementById('success-form').style;
-    let cssError = document.getElementById('error').style;
-    let cssErrMail = document.getElementById('err-mail').style;
 
     function isNotEmpty() {
         //Display error if an input is empty
@@ -43,6 +43,7 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
 
         return true;
     }
+    
     if (isNotEmpty(true) && checkMail(true)){
 
         const formData = new FormData();
@@ -66,11 +67,10 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
                 cssError.display = "none";
                 cssErrMail.display = "none";
                 //We make the input empty if it's a success
-                nom.value = "";
-                email.value = "";
-                sujet.value = "";
-                message.value = "";
-                grecaptcha.reset();
+                document.getElementById('nom').value = "";
+                document.getElementById('email').value = "";
+                document.getElementById('sujet').value = "";
+                document.getElementById('message').value = "";
             },
             error: function() {
                 //Display an error
