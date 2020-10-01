@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -15,5 +16,12 @@ class SigninController
         ]);
 
         echo $twig->render('signin.html.twig');
+    }
+
+    public function signIn() : void
+    {
+        $userManger = new UserManager();
+        $userManger->newUser();
+        $this->show();
     }
 }
