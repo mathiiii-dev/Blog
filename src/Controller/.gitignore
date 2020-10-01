@@ -1,6 +1,0 @@
-# Composer
-composer.phar
-/vendor/
-
-# IDE / Editor
-.idea

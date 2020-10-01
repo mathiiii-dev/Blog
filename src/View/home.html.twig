@@ -4,6 +4,11 @@
     Accueil
 {% endblock %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="src/Public/css/home.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+{% endblock %}
+
 {% block content %}
     <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg')">
         <div class="overlay"></div>
@@ -11,8 +16,8 @@
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto ">
                     <div class="site-heading">
-                        <h1>Mon Blog</h1>
-                        <span class="subheading">Un blog réalisé avec PHP et Twig</span>
+                        <h1>Mathias Micheli</h1>
+                        <span class="subheading">Développeur en alternance</span>
                     </div>
                 </div>
             </div>
@@ -20,11 +25,15 @@
     </header>
     <div class="container mb-5">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-6">
                 <img src="src/Public/img/logo-home.webp" alt="Logo Home" class="home-img">
             </div>
-            <div class="col-lg-8 text-center">
-                <p>Mathias Micheli, développeur en alternance.</p>
+            <div class="col-lg-8 col-md-6 text-center">
+                <blockquote>
+                    <p>I do not fear computers. I fear the lack of them.
+                        <br><small>— Isaac Asimov.</small>
+                    </p>
+                </blockquote>
                 <a class="btn btn-primary" href="src/Public/files/CV.pdf" target="_blank">Télécharger mon CV →</a>
                 <br><br>
                 <ul class="list-inline">
@@ -52,7 +61,126 @@
                             </span>
                         </a>
                     </li>
+                    <li class="list-inline-item">
+                        <a href="https://mathias-micheli.live/" target="_blank">
+                            <span class="fa-stack fa-lg">
+                              <i class="fas fa-circle fa-stack-2x"></i>
+                              <i class="fab fa-chrome fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div data-aos="zoom-in-down">
+                    <h2 class="text-center">Mes Expériences & Mes Formations</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid timeline-container">
+        <div class="row">
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="main">
+                    <div class="item active">
+                        <div class="line">
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    <div class="item active">
+                        <div class="line">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="line">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="line">
+                            <div class="node"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="col-lg-7">
+                <div class="timeline-element">
+                    <h3>Alternance - Alliance - Réseaux</h3>
+                    <h4>2020-2022</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Alliance - Réseaux est une entreprise spécialisée dans le secteur du conseil et logiciels informatiques. Réalisation d'application web avec C# et ASP.NET. </p>
+                    </div>
+                </div>
+                <div class="timeline-element">
+                    <h3>OpenClassRooms - DA PHP/Symfony</h3>
+                    <h4>2020-2022</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Création de projets web dynamique avec PHP. Utilisation de framework (Symfony). Mise en oeuvre de test unitaires et d'intégration.</p>
+                    </div>
+                </div>
+                <div class="timeline-element">
+                    <h3>Stage de BTS - Girard & Roux</h3>
+                    <h4>Janvier 2019 - Février 2019</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Girard & Roux est une entreprise spécialisée dans le secteur d'activité du commerce de gros (commerce interentreprises) de fournitures et équipements divers pour le commerce et les services. J'ai effectuer un stage de 6 semaines au sein de cette entreprise, lors duquel j'ai pu créer un site vitrine WordPress & réaliser une page d'administration et utiliser de l'API Google Analytics.</p>
+                    </div>
+                </div>
+                <div class="timeline-element">
+                    <h3>Stage de BTS - Jean Lain Automobile</h3>
+                    <h4>Mai 2018 - Juin 2018</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Jean Lain Automobile est une entreprise spécialisée dans le secteur d'activité du commerce de voitures. J'ai effectuer un stage de 5 semaines au sein de cette entreprise lors duquel j'ai pu réaliser une application web avec Symfony permettant le tri et la validation de données clients.</p>
+                    </div>
+                </div>
+                <div class="timeline-element">
+                    <h3>BTS SIO Option SLAM</h3>
+                    <h4>2017-2019</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Réalisation de page web statiques (HTML, CSS, Javascript) et dynamiques (PHP, SQL). Développement web (CMS). Développement client lourd : C#, Unity, Android, Java</p>
+                    </div>
+                </div>
+                <div class="timeline-element">
+                    <h3>Terminal STMG option SIG</h3>
+                    <h4>2017</h4>
+                    <div data-aos="zoom-in">
+                        <p class="text-lg-justify ">Cette année de terminal STMG Option SIG m'a permis de découvrir le code et plus en particuliés PHP. Projet BAC : Création d'un site web dynamique de mise en vente de bien immobillier (HTML, CSS, PHP, SQL)</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,4 +190,6 @@
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="src/Public/js/clean-blog.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>AOS.init();</script>
 {% endblock %}
