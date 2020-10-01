@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use mysql_xdevapi\Exception;
 use App\Controller\SigninController;
 
 class UserManager extends DbManager
@@ -10,6 +9,31 @@ class UserManager extends DbManager
     public function __construct()
     {
         $this->dbConnect();
+    }
+
+    public function isNotEmpty()
+    {
+        $lastname = $_POST['nom'];
+        $firstname = $_POST['prenom'];
+        $email = $_POST['email'];
+        $pseudo = $_POST['pseudo'];
+        $password = $_POST['password'];
+
+        if (!empty($lastname) && !empty($firstname) && !empty($email) && !empty($pseudo) && !empty($password)) {
+            return true;
+        }
+        echo "<strong>Erreur !</strong> Veuillez remplir tout les champs";
+        return false;
+    }
+
+    public function checkPassword()
+    {
+        $password = $_POST['password'];
+        if (strlen($password) < 8 ) {
+            echo "<strong>Erreur !</strong> Le mot de passe est trop court";
+            return false;
+        }
+        return true;
     }
 
     public function newUser()
@@ -23,33 +47,10 @@ class UserManager extends DbManager
         $createdAt = date('y/m/d');
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        if (!empty($firstname) || !empty($lastname) || !empty($email) || !empty($pseudo) || !empty($password) || !empty($passwordHash)) {
-
-            if (strlen($password) < 8 ) {
-                throw new \Exception('password');
-
-            }else {
-
-                if (!$this->getUserByPseudo($pseudo) == null) {
-
-                    throw new \Exception('pseudo');
-                    //echo '<script type="text/javascript" src="src/Public/js/main.js">pseudo();</script>';
-
-                } elseif (!$this->getUserByEmail($email) == null) {
-
-                    throw new \Exception('email');
-
-                } else {
-                    $addUser = $this->dbConnect()->prepare("INSERT INTO user(firstname, lastname, email, pseudo, password, type, createdAt)
-                VALUE ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $pseudo . "','" . $passwordHash . "','" . $type . "','" . $createdAt . "')");
-                    $addUser->execute(array($firstname, $lastname, $email, $pseudo, $passwordHash, $type, $createdAt));
-                    echo "Afficher vue sign up";
-                }
-            }
-        } else {
-
-            echo 'remplir tout les champs';
-
+        if ($this->isNotEmpty() && $this->checkPassword() && $this->checkEmail() && $this->checkPseudo()) {
+            $addUser = $this->dbConnect()->prepare("INSERT INTO user(firstname, lastname, email, pseudo, password, type, createdAt)
+            VALUE ('" . $firstname . "','" . $lastname . "','" . $email . "','" . $pseudo . "','" . $passwordHash . "','" . $type . "','" . $createdAt . "')");
+            $addUser->execute(array($firstname, $lastname, $email, $pseudo, $passwordHash, $type, $createdAt));
         }
     }
 
@@ -62,6 +63,15 @@ class UserManager extends DbManager
         return $userPseudo->fetch();
     }
 
+    public function checkPseudo()
+    {
+        if (!$this->getUserByPseudo($_POST['pseudo']) == null) {
+            echo "<strong>Erreur !</strong> Le pseudo est déjà enregistré";
+            return false;
+        }
+        return true;
+    }
+
     public function getUserByEmail($email)
     {
         $userEmail = $this->dbConnect()->prepare("SELECT * FROM User WHERE email = :email");
@@ -69,5 +79,14 @@ class UserManager extends DbManager
         $userEmail->execute();
         $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
         return $userEmail->fetch();
+    }
+
+    public function checkEmail()
+    {
+        if (!$this->getUserByEmail($_POST['email']) == null) {
+            echo "<strong>Erreur !</strong> L'email est déjà enregistré";
+            return false;
+        }
+        return true;
     }
 }

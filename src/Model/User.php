@@ -10,7 +10,9 @@ class User extends Model
                      $email,
                      $pseudo,
                      $password,
-                     $type;
+                     $type,
+                     $createdAt;
+
 
     public function __construct(array $data)
     {
@@ -87,4 +89,13 @@ class User extends Model
         $this->type = $type;
     }
 
+    public function getCreatedAt() : string
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt) : string
+    {
+        $this->createdAt = $createdAt;
+    }
 }

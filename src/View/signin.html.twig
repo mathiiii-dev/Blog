@@ -4,10 +4,6 @@
     Inscription
 {% endblock %}
 
-{% block stylesheet %}
-    <link rel="stylesheet" href="src/Public/css/sign-in.css">
-{% endblock %}
-
 {% block content %}
     <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg'); height: 75%;!important;">
         <div class="overlay"></div>
@@ -25,18 +21,6 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
                 <p>Inscrivez-vous pour avoir accès à tous les posts du blog !</p>
-                <div class='alert alert-danger alert-dismissible fade show' id="err-mail" role='alert'>
-                    <strong>Erreur !</strong> Le mail est déjà enregistré.
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
-                <div class='alert alert-danger alert-dismissible fade show' id="err-pseudo" role='alert'>
-                    <strong>Erreur !</strong> Le pseudo est déjà enregistré.
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                    </button>
-                </div>
                 <form action="signIn" method="post">
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">

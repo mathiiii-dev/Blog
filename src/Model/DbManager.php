@@ -8,13 +8,11 @@ class DbManager
     {
         try
         {
-            $pdo = new \PDO('mysql:host=127.0.0.1;dbname=blog', 'root', '');
-            return $pdo;
+            return  new \PDO(Config::DB_HOST,Config::DB_USER, Config::DB_PASSWORD);
         }
         catch (\Exception $e)
         {
             echo $e->getMessage();
         }
-
     }
 }
