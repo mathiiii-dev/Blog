@@ -12,15 +12,27 @@ class MailController {
         $message = $_POST['message'];
 
         $to = "mat.micheli99@gmail.com";
-        $email_sujet = 'Blog : ' . $sujet;
-        $email_message = 'Nom : '. $nom . '<br>Email : ' . $email . '<br>Message : ' . $message;
+        $emailSujet = 'Blog : ' . $sujet;
+        $emailMessage = 'Nom : '. $nom . '<br>Email : ' . $email . '<br>Message : ' . $message;
         $headers = "De : " . $email;
         $headers .= "MIME-Version: 1.0\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\n";
-        if (mail($to, $email_sujet, $email_message, $headers)){
-            throw new \Exception('Success', 200);
-        }else {
-            throw new \Exception('Error', 500);
+
+        $httpCode = 200;
+        $httpMessage = "Success";
+
+        if (!mail($to, $emailSujet, $emailMessage, $headers)) {
+            $httpCode = 500;
+            $httpMessage = "Error";
         }
+
+        http_response_code($httpCode);
+        header('Content-Type: application/json');
+
+        echo json_encode(array(
+            'status' => $httpCode,
+            'message' => $httpMessage
+        ));
+
     }
 }

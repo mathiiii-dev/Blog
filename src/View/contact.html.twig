@@ -58,7 +58,6 @@
             </div>
             <br>
             <input type="button" class="btn btn-primary float-right" id="js-submit-btn" value="Envoyer">
-            <input type="hidden" id="token" name="token">
             <br>
         </form>
     </div>
@@ -66,13 +65,4 @@
 
 {% block javascript %}
     <script src="src/Public/js/SendMail.js" type="text/javascript"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lcrac0ZAAAAAAfRIDcYVke-jibAee72NKv5yble"></script>
-    <script>
-        grecaptcha.ready(function() {
-        grecaptcha.execute('6Lcrac0ZAAAAAAfRIDcYVke-jibAee72NKv5yble', {action: 'homepage'}).then(function(token) {
-            // console.log(token);
-            document.getElementById("token").value = token;
-        });
-    });
-    </script>
 {% endblock %}
