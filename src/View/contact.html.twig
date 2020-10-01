@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="src/Public/css/contact.css">
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-8 col-md-10 mx-auto mt-5 mb-5">
+        <div class='alert alert-warning alert-dismissible fade show' id="err-form" role='alert'>
+            <strong>Erreur ! </strong> Veuillez remplir tout les champs du formulaire.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <div class='alert alert-warning alert-dismissible fade show' id="err-mail" role='alert'>
+            <strong>Erreur ! </strong> Veuillez verifiez la validité de votre mail.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <div class='alert alert-success alert-dismissible fade show' id="success-form" role='alert'>
+            <strong>Message envoyé !</strong> Nous reviendrons vers vous au plus vite.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <div class='alert alert-danger alert-dismissible fade show' id="error" role='alert'>
+            <strong>Erreur !</strong> Veuillez reessayer plus tard.
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+        </div>
+        <h3>Formulaire de contact</h3>
+        <form id="js-form-contact">
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="nom">Nom & Prénom</label>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom & Prénom" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="sujet">Sujet</label>
+                    <input type="text" class="form-control" id="sujet" name="sujet" placeholder="Sujet" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="form-group floating-label-form-group controls">
+                    <label for="message">Message</label>
+                    <textarea class="form-control"  id="message" name="message" rows="5" placeholder="Message" required></textarea>
+                </div>
+            </div>
+            <br>
+            <input type="button" class="btn btn-primary float-right" id="js-submit-btn" value="Envoyer">
+            <br>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="src/Public/js/SendMail.js" type="text/javascript"></script>
+{% endblock %}

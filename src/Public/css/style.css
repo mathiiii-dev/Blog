@@ -1,19 +1,9 @@
-h1, h2, h3, h4, h5, h6
-{
-    font-family: 'Roboto', sans-serif;!important;
-}
-a, span, p
-{
-    font-family: 'Montserrat', sans-serif;
-}
+.home-img {
 
-.home-img
-{
     height: 275px;
     width: 345px;
 }
 
-.test-div
-{
+.test-div {
     border: #e83e8c 3px solid;
 }

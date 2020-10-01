@@ -1,4 +1,4 @@
 RewriteEngine on
-
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/js/$
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
