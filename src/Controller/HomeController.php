@@ -7,7 +7,7 @@ use Twig\Loader\FilesystemLoader;
 
 class HomeController
 {
-    public function show()
+    public function show() : void
     {
         $loader = new FilesystemLoader('src/View');
         $twig = new Environment($loader,[
