@@ -6,7 +6,7 @@ use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class SigninController
+class SignupController
 {
     public function show() : void
     {
@@ -15,10 +15,10 @@ class SigninController
             'cache' => false//'src/tmp',
         ]);
 
-        echo $twig->render('signin.html.twig');
+        echo $twig->render('signup.html.twig');
     }
 
-    public function signIn() : void
+    public function signUp() : void
     {
         $userManger = new UserManager();
         $userManger->newUser();

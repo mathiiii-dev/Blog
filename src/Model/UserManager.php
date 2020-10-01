@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Controller\SigninController;
+use App\Controller\SignupController;
 
 class UserManager extends DbManager
 {
