@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Connection
+{% endblock %}
+
+{% block content %}
+    <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg'); height: 75%;!important;">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto ">
+                    <div class="site-heading">
+                        <h1>Connection</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto mb-5">
+                <p>Connectez vous !</p>
+                <form action="" method="post">
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label for="pseudo">Pseudo</label>
+                            <input type="text" class="form-control" placeholder="Pseudo" id="pseudo" name="pseudo" required="">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" required="">
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary float-right">Je me connecte</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
