@@ -6,12 +6,12 @@ class User extends Model
 {
     protected int $id;
     protected string $firstname,
-                     $lastname,
-                     $email,
-                     $pseudo,
-                     $password,
-                     $type,
-                     $createdAt;
+        $lastname,
+        $email,
+        $pseudo,
+        $password,
+        $type,
+        $createdAt;
 
 
     public function __construct(array $data)
@@ -24,7 +24,7 @@ class User extends Model
         return $this->id;
     }
 
-    public function setId($id) : int
+    public function setId($id)
     {
         $this->id = $id;
     }
@@ -34,7 +34,7 @@ class User extends Model
         return $this->firstname;
     }
 
-    public function setFirstname($firstname) : string
+    public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
     }
@@ -44,7 +44,7 @@ class User extends Model
         return $this->firstname;
     }
 
-    public function setLastname($lastname) : string
+    public function setLastname($lastname)
     {
         $this->lastname = $lastname;
     }
@@ -54,7 +54,7 @@ class User extends Model
         return $this->email;
     }
 
-    public function setEmail($email) : string
+    public function setEmail($email)
     {
         $this->email = $email;
     }
@@ -74,7 +74,7 @@ class User extends Model
         return $this->password;
     }
 
-    public function setPassword($password) : string
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -84,7 +84,7 @@ class User extends Model
         return $this->type;
     }
 
-    public function setType($type) : string
+    public function setType($type)
     {
         $this->type = $type;
     }
@@ -94,7 +94,7 @@ class User extends Model
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt) : string
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
