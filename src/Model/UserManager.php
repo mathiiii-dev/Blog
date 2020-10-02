@@ -37,6 +37,7 @@ class UserManager extends DbManager
     public function addUser(User $user) : void
     {
         if ($this->isNotEmpty($user) && $this->checkPasswordLength() && $this->checkPseudo($user) && $this->checkEmail($user)) {
+
             $addUser = $this->dbConnect()->prepare(
                 'INSERT INTO User (firstname, lastname, email, pseudo, password, type, createdAt) 
             VALUES (:firstname, :lastname, :email, :pseudo, :password, :type, :createdAt)'
@@ -88,5 +89,43 @@ class UserManager extends DbManager
             return false;
         }
         return true;
+    }
+
+    public function getPasswordHash($user)
+    {
+        $userhHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");
+        $userhHash->bindValue(':pseudo', $user->getPseudo());
+        $userhHash->execute();
+        $userhHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $rslt = $userhHash->fetch();
+        var_dump($rslt[0]);
+        return $rslt[0];
+    }
+
+    public function checkPasswordHash($user)
+    {
+        $password = $user->getPassword();
+        if (password_verify($password, $this->getPasswordHash($user)))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function connectUser(User $user)
+    {
+        if ($this->checkPasswordHash($user)){
+            session_start();
+            $pseudo = $user->getPseudo();
+            $_SESSION['id'] = $this->getUserByPseudo($pseudo)[0];
+            $_SESSION['pseudo'] = $this->getUserByPseudo($pseudo)[4];
+            $_SESSION['password'] = $this->getUserByPseudo($pseudo)[5];
+            $_SESSION['type'] = $this->getUserByPseudo($pseudo)[6];
+
+            echo 'Connecté';
+        }
+        else{
+            echo 'Erreur de connection';
+        }
     }
 }

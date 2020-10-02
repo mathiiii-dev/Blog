@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\User;
+use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -15,5 +17,17 @@ class SigninController
         ]);
 
         echo $twig->render('signin.html.twig');
+    }
+
+    public function signIn() : void
+    {
+       $user = new User([
+            'pseudo' => $_POST['pseudo'],
+            'password' => $_POST['password']
+       ]);
+        $userManager = new UserManager();
+        $userManager->connectUser($user);
+        $home = new HomeController();
+        $home->show();
     }
 }
