@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class UserManager extends DbManager
 {
     public function __construct()
@@ -20,7 +23,12 @@ class UserManager extends DbManager
         if (!empty($lastname) && !empty($firstname) && !empty($email) && !empty($pseudo) && !empty($password)) {
             return true;
         }
-        echo "<strong>Erreur !</strong> Veuillez remplir tout les champs";
+        $loader = new FilesystemLoader('src/View');
+        $twig = new Environment($loader, [
+            'cache' => false//'src/tmp',
+        ]);
+
+        echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Veuillez remplir tout les champs !'));
         return false;
     }
 
@@ -28,7 +36,12 @@ class UserManager extends DbManager
     {
         $password = $_POST['password'];
         if (strlen($password) < 8) {
-            echo "<strong>Erreur !</strong> Le mot de passe est trop court";
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le mot de passe est trop court !'));
             return false;
         }
         return true;
@@ -51,6 +64,8 @@ class UserManager extends DbManager
             $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
 
             $addUser->execute();
+        }else {
+            exit();
         }
     }
 
@@ -66,7 +81,13 @@ class UserManager extends DbManager
     public function checkPseudo(User $user) : bool
     {
         if (!$this->getUserByPseudo($user->getPseudo()) == null) {
-            echo "<strong>Erreur !</strong> Le pseudo est déjà enregistré";
+
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le pseudo est déjà pris !'));
             return false;
         }
         return true;
@@ -84,7 +105,12 @@ class UserManager extends DbManager
     public function checkEmail(User $user) : bool
     {
         if (!$this->getUserByEmail($user->getEmail()) == null) {
-            echo "<strong>Erreur !</strong> L'email est déjà enregistré";
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => "Erreur : L'email est déjà pris !"));
             return false;
         }
         return true;
