@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class UserManager extends DbManager
 {
     public function __construct()
@@ -9,7 +12,7 @@ class UserManager extends DbManager
         $this->dbConnect();
     }
 
-    public function isNotEmpty(User $user) : bool
+    public function isNotEmpty(User $user): bool
     {
         $lastname = $user->getLastname();
         $firstname = $user->getFirstname();
@@ -20,7 +23,12 @@ class UserManager extends DbManager
         if (!empty($lastname) && !empty($firstname) && !empty($email) && !empty($pseudo) && !empty($password)) {
             return true;
         }
-        echo "<strong>Erreur !</strong> Veuillez remplir tout les champs";
+        $loader = new FilesystemLoader('src/View');
+        $twig = new Environment($loader, [
+            'cache' => false//'src/tmp',
+        ]);
+
+        echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Veuillez remplir tout les champs !'));
         return false;
     }
 
@@ -28,13 +36,18 @@ class UserManager extends DbManager
     {
         $password = $_POST['password'];
         if (strlen($password) < 8) {
-            echo "<strong>Erreur !</strong> Le mot de passe est trop court";
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le mot de passe est trop court !'));
             return false;
         }
         return true;
     }
 
-    public function addUser(User $user) : void
+    public function addUser(User $user): void
     {
         if ($this->isNotEmpty($user) && $this->checkPasswordLength() && $this->checkPseudo($user) && $this->checkEmail($user)) {
 
@@ -52,7 +65,10 @@ class UserManager extends DbManager
             $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
 
             $addUser->execute();
+        }else {
+            exit();
         }
+
     }
 
     public function getUserByPseudo($pseudo)
@@ -64,10 +80,16 @@ class UserManager extends DbManager
         return $userPseudo->fetch();
     }
 
-    public function checkPseudo(User $user) : bool
+    public function checkPseudo(User $user): bool
     {
         if (!$this->getUserByPseudo($user->getPseudo()) == null) {
-            echo "<strong>Erreur !</strong> Le pseudo est déjà enregistré";
+
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le pseudo est déjà pris !'));
             return false;
         }
         return true;
@@ -80,12 +102,18 @@ class UserManager extends DbManager
         $userEmail->execute();
         $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
         return $userEmail->fetch();
+
     }
 
-    public function checkEmail(User $user) : bool
+    public function checkEmail(User $user): bool
     {
         if (!$this->getUserByEmail($user->getEmail()) == null) {
-            echo "<strong>Erreur !</strong> L'email est déjà enregistré";
+            $loader = new FilesystemLoader('src/View');
+            $twig = new Environment($loader, [
+                'cache' => false//'src/tmp',
+            ]);
+
+            echo $twig->render('signup.html.twig', array('erreur' => "Erreur : L'email est déjà pris !"));
             return false;
         }
         return true;
@@ -93,28 +121,50 @@ class UserManager extends DbManager
 
     public function getPasswordHash($user)
     {
-        $userhHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");
-        $userhHash->bindValue(':pseudo', $user->getPseudo());
-        $userhHash->execute();
-        $userhHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
-        $rslt = $userhHash->fetch();
-        var_dump($rslt[0]);
-        return $rslt[0];
+        $userHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");
+        $userHash->bindValue(':pseudo', $user->getPseudo());
+        $userHash->execute();
+        $userHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $rslt = $userHash->fetch();
+        return $rslt["password"];
     }
 
     public function checkPasswordHash($user)
     {
         $password = $user->getPassword();
-        if (password_verify($password, $this->getPasswordHash($user)))
-        {
+        var_dump($this->getPasswordHash($user));
+        if (password_verify($password, $this->getPasswordHash($user))) {
             return true;
         }
-        return false;
+        $loader = new FilesystemLoader('src/View');
+        $twig = new Environment($loader, [
+            'cache' => false//'src/tmp',
+        ]);
+
+        echo $twig->render('signin.html.twig', array('erreur' => 'Erreur : Mauvais mot de passe'));
+        exit();
+    }
+
+    public function checkIfPseudoExist($user)
+    {
+        $pseudo = $user->getPseudo();
+        if ($this->getUserByPseudo($pseudo)) {
+            return true;
+        }
+        $loader = new FilesystemLoader('src/View');
+        $twig = new Environment($loader, [
+            'cache' => false//'src/tmp',
+        ]);
+
+        echo $twig->render('signin.html.twig', array('erreur' => "Erreur : Le pseudo n'existe pas"));
+        exit();
+
     }
 
     public function connectUser(User $user)
     {
-        if ($this->checkPasswordHash($user)){
+        var_dump($this->checkIfPseudoExist($user));
+        if ($this->checkPasswordHash($user) && $this->checkIfPseudoExist($user)) {
             session_start();
             $pseudo = $user->getPseudo();
             $_SESSION['id'] = $this->getUserByPseudo($pseudo)[0];
@@ -123,9 +173,8 @@ class UserManager extends DbManager
             $_SESSION['type'] = $this->getUserByPseudo($pseudo)[6];
 
             echo 'Connecté';
-        }
-        else{
-            echo 'Erreur de connection';
+        } else {
+            exit();
         }
     }
 }
