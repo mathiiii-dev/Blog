@@ -41,7 +41,7 @@ class User extends Model
 
     public function getLastname() : string
     {
-        return $this->firstname;
+        return $this->lastname;
     }
 
     public function setLastname($lastname)
