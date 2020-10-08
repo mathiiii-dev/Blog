@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Model\Twig;
 use App\Model\User;
 use App\Model\UserManager;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class SigninController extends Twig
 {
@@ -36,5 +34,12 @@ class SigninController extends Twig
             $home = new HomeController();
             $home->show();
         }
+    }
+
+    public function disconnect(){
+        $userManager = new UserManager();
+        $userManager->userDisconnect();
+        $home = new HomeController();
+        $home->show();
     }
 }

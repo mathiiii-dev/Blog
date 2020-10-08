@@ -51,6 +51,15 @@ class UserRepository extends DbManager
         return $userEmail->fetch();
     }
 
+    public function getUserById($id)
+    {
+        $userId = $this->dbConnect()->prepare("SELECT * FROM User WHERE id = :id");
+        $userId->bindValue(':id', $id);
+        $userId->execute();
+        $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        return $userId->fetch();
+    }
+
     public function getPasswordHash($user)
     {
         $userHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");

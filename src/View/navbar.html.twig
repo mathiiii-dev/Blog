@@ -18,12 +18,21 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">Contact</a>
                 </li>
+                {% if session == null %}
+                    {{ session.auth }}
                 <li class="nav-item">
                     <a class="nav-link" href="/Blog/sign-up">Inscription</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/Blog/sign-in">Connection</a>
                 </li>
+                {% endif %}
+                {% if session %}
+                    {{ session.auth }}
+                <li class="nav-item">
+                    <a class="nav-link" href="/Blog/exit">Deconnection</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </div>

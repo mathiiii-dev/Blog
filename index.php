@@ -11,4 +11,5 @@ $router->get('/sign-in', 'Signin#show');
 $router->post('/signUp', 'Signup#signUp');
 $router->post('/signIn', 'Signin#signIn');
 $router->post('/sendmail', 'Mail#sendMail');
+$router->get('/exit', 'Signin#disconnect');
 $router->run();

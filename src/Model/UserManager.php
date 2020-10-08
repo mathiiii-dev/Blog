@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Repository\UserRepository;
+use http\Cookie;
 
 class UserManager extends UserRepository
 {
@@ -66,19 +67,56 @@ class UserManager extends UserRepository
         return false;
     }
 
+    public function setRememberMe(User $user)
+    {
+        if (isset($_POST["remember"])){
+            $pseudo = $user->getPseudo();
+            $userInfo = $this->getUserByPseudo($pseudo);
+            setcookie('auth', $userInfo[0] . '-----' . sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']), time() + 3600 * 24 * 30, '/', 'localhost', false, true);
+        }
+    }
+
+    public function getRememberMe()
+    {
+        if (isset($_COOKIE['auth'])){
+            $auth = $_COOKIE['auth'];
+            $auth = explode('-----', $auth);
+            $userManager = new UserManager();
+            $userInfo = $userManager->getUserById($auth[0]);
+            $key = sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']);
+            if ($key == $auth[1]){
+                $_SESSION['Auth'] = (array)$userInfo;
+                setcookie('auth', $userInfo['id'] . '-----' . $key, time() + 3000 * 24 * 30, '/', 'localhost', false, true);
+            }else{
+                setcookie('auth', '', time() - 3600, '/', 'localhost', false, true);
+            }
+        }
+    }
+
     public function connectUser(User $user) : bool
     {
         if ($this->checkPasswordHash($user) && $this->checkIfPseudoExist($user)) {
             session_start();
             $pseudo = $user->getPseudo();
             $userInfo = $this->getUserByPseudo($pseudo);
-            $_SESSION['id'] = $userInfo[0];
-            $_SESSION['pseudo'] = $userInfo[4];
-            $_SESSION['password'] = $userInfo[5];
-            $_SESSION['type'] = $userInfo[6];
+            $_SESSION['id'] = $userInfo['id'];
+            $_SESSION['pseudo'] = $userInfo['pseudo'];
+            $_SESSION['password'] = $userInfo['password'];
+            $_SESSION['type'] = $userInfo['type'];
+            $this->setRememberMe($user);
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function userDisconnect(){
+        session_start();
+        session_unset();
+        session_destroy();
+        if (isset($_COOKIE['auth'])) {
+            unset($_COOKIE['auth']);
+            setcookie('auth', null, -1, '/');
         }
     }
 }

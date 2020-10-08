@@ -20,6 +20,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
+                {% if session %}
+                    <p>Déconnecté vous pour créer un nouveau compte</p>
+                {% endif %}
+                {% if session == null %}
                 <p>Inscrivez-vous pour avoir accès à tous les posts du blog !</p>
                 {{ erreur }}
                 <form action="signUp" method="post">
@@ -56,6 +60,7 @@
                     <br>
                     <button type="submit" class="btn btn-primary float-right">Je m'inscris</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>
