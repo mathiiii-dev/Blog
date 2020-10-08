@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Repository\UserRepository;
+use http\Cookie;
 
 class UserManager extends UserRepository
 {
@@ -72,10 +73,10 @@ class UserManager extends UserRepository
             session_start();
             $pseudo = $user->getPseudo();
             $userInfo = $this->getUserByPseudo($pseudo);
-            $_SESSION['id'] = $userInfo[0];
-            $_SESSION['pseudo'] = $userInfo[4];
-            $_SESSION['password'] = $userInfo[5];
-            $_SESSION['type'] = $userInfo[6];
+            $_SESSION['id'] = $userInfo['id'];
+            $_SESSION['pseudo'] = $userInfo['pseudo'];
+            $_SESSION['password'] = $userInfo['password'];
+            $_SESSION['type'] = $userInfo['type'];
             return true;
         } else {
             return false;
