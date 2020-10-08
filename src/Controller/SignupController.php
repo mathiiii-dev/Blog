@@ -2,21 +2,17 @@
 
 namespace App\Controller;
 
+use App\Model\Twig;
 use App\Model\User;
 use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class SignupController
+class SignupController extends Twig
 {
     public function show() : void
     {
-        $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader, [
-            'cache' => false//'src/tmp',
-        ]);
-
-        echo $twig->render('signup.html.twig');
+        $this->twig('signup.html.twig', [''=>'']);
     }
 
     public function signUp() : void
