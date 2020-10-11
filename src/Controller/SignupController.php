@@ -10,9 +10,9 @@ use Twig\Loader\FilesystemLoader;
 
 class SignupController extends Twig
 {
-    public function show() : void
+    public function show($filter = null) : void
     {
-        $this->twig('signup.html.twig', [''=>'']);
+        $this->twig('signup.html.twig', ['erreur'=>''.$filter.'']);
     }
 
     public function signUp() : void
@@ -28,7 +28,22 @@ class SignupController extends Twig
         ]);
 
         $userManager = new UserManager();
-        $userManager->addUser($user);
-        $this->show();
+        if (!$userManager->isNotEmpty($user)){
+            $this->show('Veuillez remplir tout les champs');
+        }
+        elseif (!$userManager->checkPasswordLength()){
+            $this->show('Mot de passe trop court');
+        }
+        elseif (!$userManager->checkPseudo($user)){
+            $this->show('Pseudo déjà pris');
+        }
+        elseif (!$userManager->checkEmail($user)){
+            $this->show('Email déjà pris');
+        }else{
+            $userManager->addUser($user);
+            $signin = new SigninController();
+            $signin->show();
+        }
+
     }
 }
