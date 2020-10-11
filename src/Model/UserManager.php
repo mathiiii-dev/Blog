@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Repository\UserRepository;
+use http\Cookie;
 
 class UserManager extends UserRepository
 {
