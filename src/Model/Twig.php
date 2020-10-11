@@ -14,6 +14,15 @@ class Twig
             'cache' => false//'src/tmp',
         ]);
 
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
+        $userManager = new UserManager();
+        $userManager->getRememberMe();
+
+        $twig->addGlobal('session', $_SESSION ?? $userManager);
+
         echo $twig->render($view, $filter);
     }
 }
