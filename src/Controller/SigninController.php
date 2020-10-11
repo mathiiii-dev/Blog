@@ -2,18 +2,39 @@
 
 namespace App\Controller;
 
+use App\Model\Twig;
+use App\Model\User;
+use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class SigninController
+class SigninController extends Twig
 {
-    public function show() : void
+    public function show($filter = null) : void
     {
-        $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader, [
-            'cache' => false//'src/tmp',
-        ]);
+        $this->twig('signin.html.twig',['erreur'=>''.$filter.'']);
+    }
 
-        echo $twig->render('signin.html.twig');
+    public function signIn() : void
+    {
+       $user = new User([
+            'pseudo' => $_POST['pseudo'],
+            'password' => $_POST['password']
+       ]);
+        $userManager = new UserManager();
+        if (empty($_POST["password"]) || empty($_POST["pseudo"])){
+            $this->show('Veuillez remplir tout les champs');
+        }
+        elseif (!$userManager->checkIfPseudoExist($user)){
+            $this->show('Pseudo incorrect');
+        }
+        elseif (!$userManager->checkPasswordHash($user)){
+            $this->show('Mauvais mot de passe');
+        }
+        else{
+            $userManager->connectUser($user);
+            $home = new HomeController();
+            $home->show();
+        }
     }
 }

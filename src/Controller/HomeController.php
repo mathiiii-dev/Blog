@@ -2,18 +2,12 @@
 
 namespace App\Controller;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use App\Model\Twig;
 
-class HomeController
+class HomeController extends Twig
 {
     public function show() : void
     {
-        $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader,[
-            'cache' => false//'src/tmp',
-        ]);
-
-        echo $twig->render('home.html.twig');
+        $this->twig('home.html.twig', [''=>'']);
     }
 }
