@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Model\Repository\UserRepository;
-use http\Cookie;
 
 class UserManager extends UserRepository
 {
@@ -15,10 +14,11 @@ class UserManager extends UserRepository
         $pseudo = $user->getPseudo();
         $password = $user->getPassword();
 
-        if (!empty($lastname) && !empty($firstname) && !empty($email) && !empty($pseudo) && !empty($password)) {
-            return true;
+        if (empty($lastname) && empty($firstname) && empty($email) && empty($pseudo) && empty($password)) {
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     public function checkPasswordLength() : bool
@@ -49,10 +49,10 @@ class UserManager extends UserRepository
     public function checkIfPseudoExist(User $user) : bool
     {
         $pseudo = $user->getPseudo();
-        if ($this->getUserByPseudo($pseudo)) {
-            return true;
+        if (!$this->getUserByPseudo($pseudo)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public function checkPasswordHash(User $user) : bool
@@ -95,19 +95,18 @@ class UserManager extends UserRepository
 
     public function connectUser(User $user) : bool
     {
-        if ($this->checkPasswordHash($user) && $this->checkIfPseudoExist($user)) {
-            session_start();
-            $pseudo = $user->getPseudo();
-            $userInfo = $this->getUserByPseudo($pseudo);
-            $_SESSION['id'] = $userInfo['id'];
-            $_SESSION['pseudo'] = $userInfo['pseudo'];
-            $_SESSION['password'] = $userInfo['password'];
-            $_SESSION['type'] = $userInfo['type'];
-            $this->setRememberMe($user);
-            return true;
-        } else {
+        if (!$this->checkPasswordHash($user) && !$this->checkIfPseudoExist($user)) {
             return false;
         }
+        session_start();
+        $pseudo = $user->getPseudo();
+        $userInfo = $this->getUserByPseudo($pseudo);
+        $_SESSION['id'] = $userInfo['id'];
+        $_SESSION['pseudo'] = $userInfo['pseudo'];
+        $_SESSION['password'] = $userInfo['password'];
+        $_SESSION['type'] = $userInfo['type'];
+        $this->setRememberMe($user);
+        return true;
     }
 
     public function userDisconnect(){
