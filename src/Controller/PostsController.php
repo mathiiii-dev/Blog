@@ -12,6 +12,8 @@ class PostsController extends Twig
 {
     public function show($id, string $filter = null)
     {
+        session_start();
+        $idSession = $_SESSION['id'];
         $post = new PostRepository();
         $postInfo = $post->getPostById($id);
         $userName = $post->getUserForAPost($id);
@@ -24,7 +26,10 @@ class PostsController extends Twig
                 'lead' => '' . $postInfo['lead'] . '',
                 'content' => '' . $postInfo['content'] . '',
                 'createdAt' => '' . $dateFormat . '',
-                'firstname' => ''.$userName['firstname'].''
+                'firstname' => ''.$userName['firstname'].'',
+                'idUserSession' => ''.$idSession.'',
+                'idUserPost' => ''. $postInfo['idUser'] .'',
+                'idPost' => ''.$postInfo['id'].''
             ]);
     }
 
@@ -61,6 +66,46 @@ class PostsController extends Twig
         } else {
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
+            $home = new HomeController();
+            $home->show();
+        }
+
+    }
+
+    public function showModifyPost($id)
+    {
+        $post = new PostRepository();
+        $postInfo = $post->getPostById($id);
+        $title = $postInfo['title'];
+        $lead = $postInfo['lead'];
+        $content = $postInfo['content'];
+        $this->twig('modifyPost.html.twig', ['title' => '' . $title . '', 'lead' => ''. $lead .'', 'content' => ''. $content .'', 'idPost' => ''. $id .'']);
+    }
+
+    public function modifyPost(int $id)
+    {
+        $postRepo = new PostRepository();
+        $infoPost = $postRepo->getPostById($id);
+        $post = new Post([
+            'title' => $_POST['title'],
+            'lead' => $_POST['lead'],
+            'content' => $_POST['content'],
+            'updatedAt' => date('y-m-d'),
+            'idUser' => $infoPost['idUser'],
+            'createdAt' => $infoPost['createdAt'],
+            'isValid' => 0
+        ]);
+        $postManager = new PostsManager();
+        if (!$postManager->isNotEmpty($post)) {
+            $this->showCreatePost('Veuillez remplir tout les champs');
+        }
+        if ($postManager->checkLength(50, $_POST['title'])) {
+            $this->showCreatePost('Le titre est trop long');
+        }
+        if ($postManager->checkLength(100, $_POST['lead'])) {
+            $this->showCreatePost('Le chapô est trop long');
+        } else {
+            $postRepo->modifyPost($id, $post);
             $home = new HomeController();
             $home->show();
         }

@@ -16,4 +16,6 @@ $router->get('/posts', 'Posts#showAllPosts');
 $router->get('/posts/:id', 'Posts#show');
 $router->get('/create-post', 'Posts#showCreatePost');
 $router->post('/createPost', 'Posts#createPost');
+$router->get('/modify-post/:id', 'Posts#showModifyPost');
+$router->post('/modifyPost/:id', 'Posts#modifyPost');
 $router->run();
