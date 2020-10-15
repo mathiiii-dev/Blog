@@ -12,4 +12,7 @@ $router->post('/signUp', 'Signup#signUp');
 $router->post('/signIn', 'Signin#signIn');
 $router->post('/sendmail', 'Mail#sendMail');
 $router->get('/exit', 'Signin#disconnect');
+$router->get('/posts', 'Posts#showAllPosts');
+$router->get('/posts/:id', 'Posts#show');
+$router->get('/createPost', 'Posts#showCreatePost');
 $router->run();
