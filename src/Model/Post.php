@@ -71,4 +71,14 @@ class Post extends Model
     {
         $this->content = $content;
     }
+
+    public function getCreatedAt() : string
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
 }

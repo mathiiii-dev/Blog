@@ -14,23 +14,22 @@ class UserRepository extends DbManager
 
     public function addUser(User $user): void
     {
-        if ($this->isNotEmpty($user) && $this->checkPasswordLength() && $this->checkPseudo($user) && $this->checkEmail($user)) {
 
-            $addUser = $this->dbConnect()->prepare(
-                'INSERT INTO User (firstname, lastname, email, pseudo, password, type, createdAt) 
+        $addUser = $this->dbConnect()->prepare(
+            'INSERT INTO User (firstname, lastname, email, pseudo, password, type, createdAt) 
             VALUES (:firstname, :lastname, :email, :pseudo, :password, :type, :createdAt)'
-            );
+        );
 
-            $addUser->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
-            $addUser->bindValue(':lastname', $user->getLastname(), \PDO::PARAM_STR);
-            $addUser->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
-            $addUser->bindValue(':pseudo', $user->getPseudo(), \PDO::PARAM_STR);
-            $addUser->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
-            $addUser->bindValue(':type', $user->getType(), \PDO::PARAM_STR);
-            $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
+        $addUser->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
+        $addUser->bindValue(':lastname', $user->getLastname(), \PDO::PARAM_STR);
+        $addUser->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
+        $addUser->bindValue(':pseudo', $user->getPseudo(), \PDO::PARAM_STR);
+        $addUser->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
+        $addUser->bindValue(':type', $user->getType(), \PDO::PARAM_STR);
+        $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
 
-            $addUser->execute();
-        }
+        $addUser->execute();
+
     }
 
     public function getUserByPseudo($pseudo)

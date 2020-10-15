@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\Repository\UserRepository;
 use App\Model\Twig;
 use App\Model\User;
 use App\Model\UserManager;
@@ -40,7 +41,8 @@ class SignupController extends Twig
         elseif (!$userManager->checkEmail($user)){
             $this->show('Email déjà pris');
         }else{
-            $userManager->addUser($user);
+            $userRepo = new UserRepository();
+            $userRepo->addUser($user);
             $signin = new SigninController();
             $signin->show();
         }

@@ -24,7 +24,8 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto mb-5">
-            <form method="post">
+            {{ erreur }}
+            <form method="post" action="createPost">
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label for="title">Titre</label>
@@ -38,7 +39,7 @@
                     </div>
                 </div>
                 <br>
-                <textarea id="mytextarea">Votre post . . .</textarea>
+                <textarea id="content" name="content"></textarea>
                 <br>
                 <button type="submit" class="btn btn-primary float-right">Poster</button>
             </form>
