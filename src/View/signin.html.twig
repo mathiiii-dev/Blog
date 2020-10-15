@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Connection
+{% endblock %}
+
+{% block content %}
+    <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg'); height: 75%;!important;">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto ">
+                    <div class="site-heading">
+                        <h1>Connection</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto mb-5">
+                {% if session %}
+                    <p>Vous êtes déjà connecté</p>
+                {% endif %}
+                {% if session == null %}
+                <p>Connectez vous !</p>
+                {{ erreur }}
+                <form action="signIn" method="post">
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label for="pseudo">Pseudo</label>
+                            <input type="text" class="form-control" placeholder="Pseudo" id="pseudo" name="pseudo" required="">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label for="password">Mot de passe</label>
+                            <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" required="">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="control-group">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                            <label class="form-check-label" for="remember">Rester connecté ?</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Je me connecte</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

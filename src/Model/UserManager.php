@@ -2,16 +2,11 @@
 
 namespace App\Model;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use App\Model\Repository\UserRepository;
+use http\Cookie;
 
-class UserManager extends DbManager
+class UserManager extends UserRepository
 {
-    public function __construct()
-    {
-        $this->dbConnect();
-    }
-
     public function isNotEmpty(User $user) : bool
     {
         $lastname = $user->getLastname();
@@ -20,99 +15,108 @@ class UserManager extends DbManager
         $pseudo = $user->getPseudo();
         $password = $user->getPassword();
 
-        if (!empty($lastname) && !empty($firstname) && !empty($email) && !empty($pseudo) && !empty($password)) {
-            return true;
+        if (empty($lastname) && empty($firstname) && empty($email) && empty($pseudo) && empty($password)) {
+            return false;
         }
-        $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader, [
-            'cache' => false//'src/tmp',
-        ]);
 
-        echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Veuillez remplir tout les champs !'));
-        return false;
+        return true;
     }
 
     public function checkPasswordLength() : bool
     {
         $password = $_POST['password'];
         if (strlen($password) < 8) {
-            $loader = new FilesystemLoader('src/View');
-            $twig = new Environment($loader, [
-                'cache' => false//'src/tmp',
-            ]);
-
-            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le mot de passe est trop court !'));
             return false;
         }
         return true;
-    }
-
-    public function addUser(User $user) : void
-    {
-        if ($this->isNotEmpty($user) && $this->checkPasswordLength() && $this->checkPseudo($user) && $this->checkEmail($user)) {
-            $addUser = $this->dbConnect()->prepare(
-                'INSERT INTO User (firstname, lastname, email, pseudo, password, type, createdAt) 
-            VALUES (:firstname, :lastname, :email, :pseudo, :password, :type, :createdAt)'
-            );
-
-            $addUser->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
-            $addUser->bindValue(':lastname', $user->getLastname(), \PDO::PARAM_STR);
-            $addUser->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
-            $addUser->bindValue(':pseudo', $user->getPseudo(), \PDO::PARAM_STR);
-            $addUser->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
-            $addUser->bindValue(':type', $user->getType(), \PDO::PARAM_STR);
-            $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
-
-            $addUser->execute();
-        }else {
-            exit();
-        }
-    }
-
-    public function getUserByPseudo($pseudo)
-    {
-        $userPseudo = $this->dbConnect()->prepare("SELECT * FROM User WHERE pseudo = :pseudo");
-        $userPseudo->bindValue(':pseudo', $pseudo);
-        $userPseudo->execute();
-        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
-        return $userPseudo->fetch();
     }
 
     public function checkPseudo(User $user) : bool
     {
         if (!$this->getUserByPseudo($user->getPseudo()) == null) {
-
-            $loader = new FilesystemLoader('src/View');
-            $twig = new Environment($loader, [
-                'cache' => false//'src/tmp',
-            ]);
-
-            echo $twig->render('signup.html.twig', array('erreur' => 'Erreur : Le pseudo est déjà pris !'));
             return false;
         }
         return true;
     }
 
-    public function getUserByEmail($email)
-    {
-        $userEmail = $this->dbConnect()->prepare("SELECT * FROM User WHERE email = :email");
-        $userEmail->bindValue(':email', $email);
-        $userEmail->execute();
-        $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
-        return $userEmail->fetch();
-    }
-
-    public function checkEmail(User $user) : bool
+    public function checkEmail(User $user): bool
     {
         if (!$this->getUserByEmail($user->getEmail()) == null) {
-            $loader = new FilesystemLoader('src/View');
-            $twig = new Environment($loader, [
-                'cache' => false//'src/tmp',
-            ]);
-
-            echo $twig->render('signup.html.twig', array('erreur' => "Erreur : L'email est déjà pris !"));
             return false;
         }
         return true;
+    }
+
+    public function checkIfPseudoExist(User $user) : bool
+    {
+        $pseudo = $user->getPseudo();
+        if (!$this->getUserByPseudo($pseudo)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function checkPasswordHash(User $user) : bool
+    {
+        if ($this->checkIfPseudoExist($user)){
+            $password = $user->getPassword();
+            if (password_verify($password, $this->getPasswordHash($user))) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public function setRememberMe(User $user)
+    {
+        if (isset($_POST["remember"])){
+            $pseudo = $user->getPseudo();
+            $userInfo = $this->getUserByPseudo($pseudo);
+            setcookie('auth', $userInfo[0] . '-----' . sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']), time() + 3600 * 24 * 30, '/', 'localhost', false, true);
+        }
+    }
+
+    public function getRememberMe()
+    {
+        if (isset($_COOKIE['auth'])){
+            $auth = $_COOKIE['auth'];
+            $auth = explode('-----', $auth);
+            $userManager = new UserManager();
+            $userInfo = $userManager->getUserById($auth[0]);
+            $key = sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']);
+            if ($key == $auth[1]){
+                $_SESSION['Auth'] = (array)$userInfo;
+                setcookie('auth', $userInfo['id'] . '-----' . $key, time() + 3000 * 24 * 30, '/', 'localhost', false, true);
+            }else{
+                setcookie('auth', '', time() - 3600, '/', 'localhost', false, true);
+            }
+        }
+    }
+
+    public function connectUser(User $user) : bool
+    {
+        if (!$this->checkPasswordHash($user) && !$this->checkIfPseudoExist($user)) {
+            return false;
+        }
+        session_start();
+        $pseudo = $user->getPseudo();
+        $userInfo = $this->getUserByPseudo($pseudo);
+        $_SESSION['id'] = $userInfo['id'];
+        $_SESSION['pseudo'] = $userInfo['pseudo'];
+        $_SESSION['password'] = $userInfo['password'];
+        $_SESSION['type'] = $userInfo['type'];
+        $this->setRememberMe($user);
+        return true;
+    }
+
+    public function userDisconnect(){
+        session_start();
+        session_unset();
+        session_destroy();
+        if (isset($_COOKIE['auth'])) {
+            unset($_COOKIE['auth']);
+            setcookie('auth', null, -1, '/');
+        }
     }
 }

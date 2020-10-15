@@ -2,21 +2,18 @@
 
 namespace App\Controller;
 
+use App\Model\Repository\UserRepository;
+use App\Model\Twig;
 use App\Model\User;
 use App\Model\UserManager;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class SignupController
+class SignupController extends Twig
 {
-    public function show() : void
+    public function show($filter = null) : void
     {
-        $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader, [
-            'cache' => false//'src/tmp',
-        ]);
-
-        echo $twig->render('signup.html.twig');
+        $this->twig('signup.html.twig', ['erreur'=>''.$filter.'']);
     }
 
     public function signUp() : void
@@ -32,7 +29,23 @@ class SignupController
         ]);
 
         $userManager = new UserManager();
-        $userManager->addUser($user);
-        $this->show();
+        if (!$userManager->isNotEmpty($user)){
+            $this->show('Veuillez remplir tout les champs');
+        }
+        elseif (!$userManager->checkPasswordLength()){
+            $this->show('Mot de passe trop court');
+        }
+        elseif (!$userManager->checkPseudo($user)){
+            $this->show('Pseudo déjà pris');
+        }
+        elseif (!$userManager->checkEmail($user)){
+            $this->show('Email déjà pris');
+        }else{
+            $userRepo = new UserRepository();
+            $userRepo->addUser($user);
+            $signin = new SigninController();
+            $signin->show();
+        }
+
     }
 }
