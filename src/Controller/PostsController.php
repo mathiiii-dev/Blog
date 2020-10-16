@@ -22,12 +22,13 @@ class PostsController extends Twig
             $dateFormat = date_format($date, 'd/m/Y');
             $this->twig('post.html.twig',
                 [
-                    'erreur' => '' . $filter . '',
-                    'title' => '' . $postInfo['title'] . '',
-                    'lead' => '' . $postInfo['lead'] . '',
-                    'content' => '' . $postInfo['content'] . '',
-                    'createdAt' => '' . $dateFormat . '',
-                    'firstname' => ''.$userName['firstname'].''
+                    'erreur' =>  $filter ,
+                    'title' => $postInfo['title'],
+                    'lead' => $postInfo['lead'],
+                    'content' => $postInfo['content'],
+                    'createdAt' => $dateFormat,
+                    'firstname' => $userName['firstname'],
+                    'idPost' => $id
                 ]);
         }
     }
@@ -73,7 +74,7 @@ class PostsController extends Twig
 
     }
 
-    public function showModifyPost($id)
+    public function showModifyPost(int $id)
     {
         $post = new PostRepository();
         $postInfo = $post->getPostById($id);
