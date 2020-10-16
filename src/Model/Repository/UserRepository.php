@@ -4,6 +4,7 @@ namespace App\Model\Repository;
 
 use App\Model\DbManager;
 use App\Model\User;
+use App\Model\UserManager;
 
 class UserRepository extends DbManager
 {
@@ -14,7 +15,6 @@ class UserRepository extends DbManager
 
     public function addUser(User $user): void
     {
-
         $addUser = $this->dbConnect()->prepare(
             'INSERT INTO User (firstname, lastname, email, pseudo, password, type, createdAt) 
             VALUES (:firstname, :lastname, :email, :pseudo, :password, :type, :createdAt)'
