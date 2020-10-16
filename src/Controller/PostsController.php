@@ -12,25 +12,24 @@ class PostsController extends Twig
 {
     public function show($id, string $filter = null)
     {
-        session_start();
-        $idSession = $_SESSION['id'];
         $post = new PostRepository();
         $postInfo = $post->getPostById($id);
-        $userName = $post->getUserForAPost($id);
-        $date = date_create($postInfo['createdAt']);
-        $dateFormat = date_format($date, 'd/m/Y');
-        $this->twig('post.html.twig',
-            [
-                'erreur' => '' . $filter . '',
-                'title' => '' . $postInfo['title'] . '',
-                'lead' => '' . $postInfo['lead'] . '',
-                'content' => '' . $postInfo['content'] . '',
-                'createdAt' => '' . $dateFormat . '',
-                'firstname' => ''.$userName['firstname'].'',
-                'idUserSession' => ''.$idSession.'',
-                'idUserPost' => ''. $postInfo['idUser'] .'',
-                'idPost' => ''.$postInfo['id'].''
-            ]);
+        if (!$postInfo){
+            $this->twig('post.html.twig', ['erreur' => "Le post n'éxiste plus"]);
+        }else{
+            $userName = $post->getUserForAPost($id);
+            $date = date_create($postInfo['createdAt']);
+            $dateFormat = date_format($date, 'd/m/Y');
+            $this->twig('post.html.twig',
+                [
+                    'erreur' => '' . $filter . '',
+                    'title' => '' . $postInfo['title'] . '',
+                    'lead' => '' . $postInfo['lead'] . '',
+                    'content' => '' . $postInfo['content'] . '',
+                    'createdAt' => '' . $dateFormat . '',
+                    'firstname' => ''.$userName['firstname'].''
+                ]);
+        }
     }
 
     public function showAllPosts(string $filter = null)
@@ -46,12 +45,14 @@ class PostsController extends Twig
     public function createPost()
     {
         session_start();
+        $cookie = $_COOKIE['auth'];
+        $cookie = explode('-----', $cookie);
         $post = new Post([
             'title' => $_POST['title'],
             'lead' => $_POST['lead'],
             'content' => $_POST['content'],
             'createdAt' => date('y-m-d'),
-            'idUser' => $_SESSION['id'],
+            'idUser' => $_SESSION['id'] ?? $cookie[0],
             'isValid' => 0
         ]);
         $postManager = new PostsManager();
