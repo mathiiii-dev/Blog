@@ -112,5 +112,13 @@ class PostsController extends Twig
 
     }
 
+    public function deletePost(int $id)
+    {
+        $postRepo = new PostRepository();
+        $postRepo->deletePost($id);
+        $home = new HomeController();
+        $home->show();
+    }
+
 
 }

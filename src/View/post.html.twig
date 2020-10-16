@@ -26,6 +26,9 @@
                 <form action="/Blog/modify-post/{{ idPost }}">
                     <button type="submit" class="btn btn-primary float-right">Modifier</button>
                 </form>
+                <form action="/Blog/delete-post/{{ idPost }}">
+                    <button type="submit" class="btn btn-primary float-right">Supprimer</button>
+                </form>
             {% endif %}
             {{ content|raw }}
         </div>

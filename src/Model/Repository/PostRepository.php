@@ -57,9 +57,20 @@ class PostRepository extends DbManager
         $modifyPost->bindValue(':lead', $post->getLead(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':updatedAt', $post->getUpdateAt(), \PDO::PARAM_STR);
-        $modifyPost->bindValue(':idPost', $idPost, \PDO::PARAM_STR);
+        $modifyPost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
         $modifyPost->execute();
     }
 
+    public function deletePost($idPost)
+    {
+        $deletePost = $this->dbConnect()->prepare(
+            'DELETE FROM Post WHERE id = :idPost'
+        );
+
+        $deletePost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+
+        $deletePost->execute();
+
+    }
 
 }
