@@ -2,7 +2,9 @@
 
 namespace App\Router;
 
-class Router
+use App\Model\Twig;
+
+class Router extends Twig
 {
     private $url;
     private $routes = [];
@@ -46,7 +48,8 @@ class Router
                 return $route->call();
             }
         }
-        throw new RouterException('No matching routes');
+        http_response_code(404);
+        $this->twig('404.html.twig', ['' => '']);
 
     }
 
