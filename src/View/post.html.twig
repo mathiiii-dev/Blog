@@ -21,20 +21,21 @@
 </header>
 <div class="container">
     <div class="row">
+        {% if idUserSession == idUserPost %}
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="btn-group" role="group">
+                    <form action="/Blog/modify-post/{{ idPost }}">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </form>
+                    <form action="/Blog/delete-post/{{ idPost }}">
+                        <button type="submit" class="btn btn-primary mt-6">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
         <div class="col-lg-8 col-md-10 mx-auto">
             {{ erreur }}
             {{ content|raw }}
-        </div>
-        <div class="col-lg-8 col-md-10 mx-auto">
-            {% if idUserSession == idUserPost %}
-                <form action="/Blog/modify-post/{{ idPost }}">
-                    <button type="submit" class="btn btn-primary">Modifier</button>
-                </form>
-                <form action="/Blog/delete-post/{{ idPost }}">
-                    <button type="submit" class="btn btn-primary">Supprimer</button>
-                </form>
-            {% endif %}
-
         </div>
     </div>
 </div>

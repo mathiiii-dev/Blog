@@ -82,7 +82,7 @@ class PostsController extends Twig
         } else {
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
-            header('Location: posts');
+            header('Location: /Blog/posts');
         }
 
     }
@@ -94,7 +94,7 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        if ($postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]){
+        if (empty($cookie[0]) && empty($_SESSION['id']) || $postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]){
             http_response_code(500);
             $this->twig('500.html.twig', ['' => '']);
         }else{
@@ -137,10 +137,9 @@ class PostsController extends Twig
                 $this->showCreatePost('Le chapô est trop long');
             } else {
                 $postRepo->modifyPost($id, $post);
-                header('Location: posts');
+                header('Location: /Blog/posts');
             }
         }
-
     }
 
     public function deletePost(int $id)
@@ -150,15 +149,13 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        if ($postInfo['idUser'] != $cookie[0] ?? $_SESSION['id']){
+        if (empty($cookie[0]) ?? empty($_SESSION['id']) || $postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]){
             http_response_code(500);
             $this->twig('500.html.twig', ['' => '']);
         }else {
             $postRepo = new PostRepository();
             $postRepo->deletePost($id);
-            header('Location: posts');
+            header('Location: /Blog/posts');
         }
     }
-
-
 }
