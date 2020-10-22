@@ -1,5 +1,4 @@
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/(js|css)/$
 RewriteCond %{REQUEST_FILENAME} !-f
-ErrorDocument 404 /Blog/src/View/404.html.twig
 RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
