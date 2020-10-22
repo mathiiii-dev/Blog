@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<header class="masthead" style="background-image: url('src/Public/img/post-bg.jpg')">
+<header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -22,15 +22,19 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+            {{ erreur }}
+            {{ content|raw }}
+        </div>
+        <div class="col-lg-8 col-md-10 mx-auto">
             {% if idUserSession == idUserPost %}
                 <form action="/Blog/modify-post/{{ idPost }}">
-                    <button type="submit" class="btn btn-primary float-right">Modifier</button>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
                 </form>
                 <form action="/Blog/delete-post/{{ idPost }}">
-                    <button type="submit" class="btn btn-primary float-right">Supprimer</button>
+                    <button type="submit" class="btn btn-primary">Supprimer</button>
                 </form>
             {% endif %}
-            {{ content|raw }}
+
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@ use Twig\Loader\FilesystemLoader;
 
 class Twig
 {
-    public function twig(string $view, array $filter) : void
+    public function twig(string $view, array $filter): void
     {
         $loader = new FilesystemLoader('src/View');
         $twig = new Environment($loader, [
