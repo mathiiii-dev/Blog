@@ -82,7 +82,7 @@ class PostsController extends Twig
         } else {
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
-            header('Location: posts');
+            header('Location: /Blog/posts');
         }
 
     }
