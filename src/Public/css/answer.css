@@ -1,0 +1,13 @@
+.answer {
+    background-color: #6879cc;
+    color: white;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.info {
+    font-size: smaller;
+    font-style: italic;
+}
