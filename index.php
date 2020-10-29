@@ -6,6 +6,8 @@ require 'vendor/autoload.php';
 session_start();
 define('ROOT_DIR', basename(dirname(__FILE__)));
 
+define('ROOT_DIR', basename(dirname(__FILE__)));
+
 $router = new Router($_GET['url']);
 $router->get('/', 'Home#show');
 $router->get('/sign-up', 'Signup#show');
