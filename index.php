@@ -3,8 +3,8 @@
 use App\Router\Router;
 
 require 'vendor/autoload.php';
+
 session_start();
-define('ROOT_DIR', basename(dirname(__FILE__)));
 
 define('ROOT_DIR', basename(dirname(__FILE__)));
 
