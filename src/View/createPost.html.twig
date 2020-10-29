@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Créer ton post !
+    Crée ton post !
 {% endblock %}
 
 {% block stylesheet %}
@@ -29,7 +29,7 @@
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label for="title">Titre</label>
-                        <input type="text" class="form-control" placeholder="Titre" id="title" name="title" required="">
+                        <input type="text" class="form-control" placeholder="Titre" id="title" name="title" required="" value="{{ title }}">
                     </div>
                 </div>
                 <div class="control-group">

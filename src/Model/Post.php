@@ -5,7 +5,7 @@ namespace App\Model;
 class Post extends Model
 {
     protected int $id, $idUser, $isValid;
-    protected string $title, $lead, $content, $createdAt;
+    protected string $title, $lead, $content, $createdAt, $updatedAt;
 
     public function __construct(array $data)
     {
@@ -80,5 +80,15 @@ class Post extends Model
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getUpdateAt() : string
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

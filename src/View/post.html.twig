@@ -22,6 +22,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+            {% if idUserSession == idUserPost %}
+                <form action="/Blog/modify-post/{{ idPost }}">
+                    <button type="submit" class="btn btn-primary float-right">Modifier</button>
+                </form>
+            {% endif %}
             {{ erreur }}
             {{ content|raw }}
         </div>
