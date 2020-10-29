@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-heading">
+                    <h1>{{ title }}</h1>
+                    <h2 class="subheading">{{ lead }}</h2>
+                    <span class="meta">Créer par {{ firstname }} le {{ createdAt }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        {% if idUserSession == idUserPost %}
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="btn-group" role="group">
+                    <form action="/Blog/modify-post/{{ idPost }}">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </form>
+                    <form action="/Blog/delete-post/{{ idPost }}">
+                        <button type="submit" class="btn btn-primary mt-6">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ erreur }}
+            {{ content|raw }}
+        </div>
+    </div>
+</div>
+{% endblock %}

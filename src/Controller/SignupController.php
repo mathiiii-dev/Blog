@@ -43,9 +43,7 @@ class SignupController extends Twig
         }else{
             $userRepo = new UserRepository();
             $userRepo->addUser($user);
-            $signin = new SigninController();
-            $signin->show();
+            header('Location: sign-in');
         }
-
     }
 }

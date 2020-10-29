@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    500 - Page Inaccessible
+{% endblock %}
+
+{% block content %}
+    <header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/about-bg.jpg"}}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto ">
+                    <div class="site-heading">
+                        <h1 class="display-1">500</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container text-center my-5">
+        <p class="mb-1"><strong>Page Inaccessible :(</strong></p>
+        <p class="mb-5">La page que vous recherchez est inaccessible.</p>
+        <a href="/Blog" class="btn btn-primary btn-xl">Accueil</a>
+    </div>
+{% endblock %}

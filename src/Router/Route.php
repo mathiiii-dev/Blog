@@ -35,7 +35,7 @@ class Route
         return true;
     }
 
-   private function paramMatch(string $match) : string
+   private function paramMatch($match)
    {
        if (isset($this->params[$match[1]]))
        {

@@ -31,15 +31,13 @@ class SigninController extends Twig
         }
         else{
             $userManager->connectUser($user);
-            $home = new HomeController();
-            $home->show();
+            header('Location: /Blog');
         }
     }
 
     public function disconnect(){
         $userManager = new UserManager();
         $userManager->userDisconnect();
-        $home = new HomeController();
-        $home->show();
+        header('Location: /Blog');
     }
 }
