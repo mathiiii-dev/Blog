@@ -38,9 +38,14 @@ class PostsController extends Twig
             ]);
     }
 
-    public function showAllPosts(string $filter = null)
+    public function showAllPosts()
     {
-        $this->twig('posts.html.twig', ['' => '' . $filter . '']);
+        $postRepo = new PostRepository();
+        $postInfo = $postRepo->getAllPost();
+        $this->twig('posts.html.twig',
+            [
+                'row' => $postInfo,
+            ]);
     }
 
     public function showCreatePost(string $filter = null)
