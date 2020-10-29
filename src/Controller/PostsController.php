@@ -84,7 +84,6 @@ class PostsController extends Twig
             $postRepo->addPost($post);
             header('Location: /Blog/posts');
         }
-
     }
 
     public function showModifyPost($id)
