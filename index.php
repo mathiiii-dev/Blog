@@ -3,7 +3,7 @@
 use App\Router\Router;
 
 require 'vendor/autoload.php';
-
+session_start();
 define('ROOT_DIR', basename(dirname(__FILE__)));
 
 $router = new Router($_GET['url']);

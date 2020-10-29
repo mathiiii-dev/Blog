@@ -99,7 +99,6 @@ class UserManager extends UserRepository
         if (!$this->checkPasswordHash($user) && !$this->checkIfPseudoExist($user)) {
             return false;
         }
-        session_start();
         $pseudo = $user->getPseudo();
         $userInfo = $this->getUserByPseudo($pseudo);
         $_SESSION['id'] = $userInfo['id'];
@@ -111,7 +110,6 @@ class UserManager extends UserRepository
     }
 
     public function userDisconnect(){
-        session_start();
         session_unset();
         session_destroy();
         if (isset($_COOKIE['auth'])) {

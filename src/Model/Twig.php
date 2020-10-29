@@ -14,10 +14,6 @@ class Twig
             'cache' => false//'src/tmp',
         ]);
 
-        if(!isset($_SESSION))
-        {
-            session_start();
-        }
         $userManager = new UserManager();
         $userManager->getRememberMe();
 
