@@ -24,6 +24,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
+                {{ erreur }}
                 <form method="post" action="../modifyPost/{{ idPost }}">
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
@@ -38,7 +39,7 @@
                         </div>
                     </div>
                     <br>
-                    <textarea id="content" name="content">{{ content|raw }}</textarea>
+                    <textarea id="content" name="content">{{ content }}</textarea>
                     <br>
                     <button type="submit" class="btn btn-primary float-right">Modifier</button>
                 </form>

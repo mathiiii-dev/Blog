@@ -1,8 +1,8 @@
 <?php
 
-
 namespace App\Model;
 
+use App\Controller\PostsController;
 
 class PostsManager
 {
@@ -14,18 +14,15 @@ class PostsManager
         $createdAt = $post->getCreatedAt();
         $idUser = $post->getIdUser();
         $isValid = $post->getIsValid();
-
         if (empty($title) && empty($lead) && empty($content) && empty($createdAt)) {
             return false;
         }
-
         return true;
     }
 
-    public function checkLength(int $length, string $input)
+    public function checkLength(int $length, string $input) : bool
     {
-
-        if (strlen($input) < $length){
+        if (strlen($input) > $length){
             return false;
         }
         return true;
