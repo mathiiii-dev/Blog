@@ -26,7 +26,7 @@ class PostsController extends Twig
         $date = date_create($postInfo['createdAt']);
         $dateFormat = date_format($date, 'd/m/Y');
         $answerRepo = new AnswerRepository();
-        $answer = $answerRepo->getAllAnswerFromOnePost($id);
+        $answer = $answerRepo->getAllAnswerFromOnePost();
         $this->twig('post.html.twig',
             [
                 'erreur' => $filter,

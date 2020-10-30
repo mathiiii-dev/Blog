@@ -21,3 +21,13 @@
     padding-left: 12px;
     border-radius: 3px;
 }
+
+.panel-btn {
+    float: right;
+    padding-right: 12px;
+    color: #ffffff;
+}
+
+.panel-btn:hover {
+    color: greenyellow;
+}

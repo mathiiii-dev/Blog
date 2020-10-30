@@ -6,8 +6,9 @@ namespace App\Controller;
 
 use App\Model\Answer;
 use App\Model\Repository\AnswerRepository;
+use App\Model\Twig;
 
-class AnswerController
+class AnswerController extends Twig
 {
     public function createAnswer($id)
     {
@@ -24,5 +25,33 @@ class AnswerController
         $answerRepo = new AnswerRepository();
         $answerRepo->addAnswer($answer);
         header('Location: /Blog/posts/'.$id);
+    }
+
+    public function showModifyAnswer($id)
+    {
+        $cookie = $_COOKIE['auth'] ?? null;
+        $cookie = explode('-----', $cookie);
+        $answerRepo = new AnswerRepository();
+        $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
+        if (empty($cookie[0]) && empty($_SESSION['id']) || $idUserAnswer['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+            http_response_code(500);
+            return $this->twig('500.html.twig', ['' => '']);
+        }
+        $this->twig('modifyAnswer.html.twig',
+            [
+                'answerModif' => $idUserAnswer['answer'],
+                'answerId' => $idUserAnswer['id']
+            ]);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $answer = new Answer([
+                'answer' => $_POST['answer'],
+                'updatedAt' => date('y-m-d')
+            ]);
+
+           $answerRepo->modifyAnswer($id, $answer);
+           header('Location: /Blog/posts');
+        }
     }
 }
