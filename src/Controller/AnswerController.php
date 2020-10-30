@@ -51,7 +51,7 @@ class AnswerController extends Twig
             ]);
 
            $answerRepo->modifyAnswer($id, $answer);
-           header('Location: /Blog/posts');
+           header('Location: /Blog/posts/'.$idUserAnswer['idPost']);
         }
     }
 }
