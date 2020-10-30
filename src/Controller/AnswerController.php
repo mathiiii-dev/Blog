@@ -54,4 +54,19 @@ class AnswerController extends Twig
            header('Location: /Blog/posts/'.$idUserAnswer['idPost']);
         }
     }
+
+    public function deleteAnswer(int $id)
+    {
+        $answer = new AnswerRepository();
+        $answerInfo = $answer->getAnswerById($id);
+        $cookie = $_COOKIE['auth'] ?? null;
+        $cookie = explode('-----', $cookie);
+        if (empty($cookie[0]) && empty($_SESSION['id']) || $answerInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+            http_response_code(500);
+            return $this->twig('500.html.twig', ['' => '']);
+        }
+        $answer->deleteAnswer($id);
+        header('Location: /Blog/posts/'.$answerInfo['idPost']);
+
+    }
 }

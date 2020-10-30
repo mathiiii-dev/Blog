@@ -46,7 +46,8 @@
                         {{ i.firstname }},
                         le {{ i.createdAt }}
                         {% if idUserSession == i.idUser %}
-                            <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn">Modifier</a>
+                            <a href="/Blog/delete-answer/{{ i.id }}" class="panel-btn-suppr">Supprimer</a>
+                            <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn-modif">Modifier</a>
                         {% endif %}
                     </p>
                 </div>
