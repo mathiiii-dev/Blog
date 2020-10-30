@@ -41,8 +41,10 @@
             {{ erreur }}
             {{ content|raw }}
             {% for i in answer %}
-                <div class="answer">
+                <div class="panel">
                     <p class="info">Créer par {{ i.firstname }} le {{ i.createdAt }}</p>
+                </div>
+                <div class="answer">
                     {{ i.answer|raw }}
                 </div>
             {% endfor %}
