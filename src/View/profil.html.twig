@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/profil.css' }}">
+{% endblock %}
+
+{% block title %}
+    {{ pseudo }}
+{% endblock %}
+
+{% block content %}
+    <header class="masthead"
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto ">
+                    <div class="site-heading">
+                        <h1>{{ pseudo }}</h1>
+                        <img class="profilePicture" src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}" alt="Photo de profil">
+                        {{ description | raw }}
+                        <p>{{ country }}</p>
+                        {% if idUserSession == idUserBlogger %}
+                            <form action="/Blog/modifyProfil/{{ idUserBlogger }}">
+                                <button type="submit" class="btn btn-primary">Modifier</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto ">
+                {% for post in posts %}
+                    <div class="post-preview list-post">
+                        <a href="posts/{{ post.id }}">
+                            <h2 class="post-title">
+                                {{ post.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{ post.lead }}
+                            </h3>
+                        </a>
+                        <a class="btn btn-primary float-right" href="/blog/posts/{{ post.id }}" style="color: white;">Lire</a>
+                        <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+{% endblock %}

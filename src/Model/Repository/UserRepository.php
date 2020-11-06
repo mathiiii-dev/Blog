@@ -29,7 +29,6 @@ class UserRepository extends DbManager
         $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
 
         $addUser->execute();
-
     }
 
     public function getUserByPseudo($pseudo)
@@ -67,5 +66,12 @@ class UserRepository extends DbManager
         $userHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
         $rslt = $userHash->fetch();
         return $rslt["password"] ?? null;
+    }
+
+    public function getLastUserId()
+    {
+        $id = $this->dbConnect()->prepare('SELECT MAX(id) FROM User');
+        $id->execute();
+        return $id->fetch();
     }
 }

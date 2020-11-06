@@ -1,0 +1,55 @@
+.profilePicture {
+    height: 150px;
+}
+
+.images-selector input {
+    position: absolute;
+    z-index: 10;
+}
+
+.images-selector input:checked + .img-card {
+    filter: none;
+    transform: scaleY(1);
+}
+
+.img-card {
+    width: 95px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+    filter: grayscale(1) opacity(.8);
+}
+
+.img1 {
+    background-image: url(/Blog/src/Public/img/bebop.png);
+}
+
+.img2 {
+    background-image: url(/Blog/src/Public/img/donatello.png);
+}
+
+.img3 {
+    background-image: url(/Blog/src/Public/img/foot-clan.png);
+}
+
+.img4 {
+    background-image: url(/Blog/src/Public/img/karai.png);
+}
+
+.img5 {
+    background-image: url(/Blog/src/Public/img/leonardo.png);
+}
+
+.img6 {
+    background-image: url(/Blog/src/Public/img/michaelangelo.png);
+}
+
+.img7 {
+    background-image: url(/Blog/src/Public/img/shredder.png);
+}
+
+.form-profil {
+    margin: 15px;
+}

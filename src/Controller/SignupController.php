@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Model\Blogger;
+use App\Model\Repository\BloggerRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Twig;
 use App\Model\User;
@@ -42,8 +44,13 @@ class SignupController extends Twig
             $this->show('Email déjà pris');
         }else{
             $userRepo = new UserRepository();
+            $bloggerRepo = new BloggerRepository();
             $userRepo->addUser($user);
+            $id = $userRepo->getLastUserId();
+            $bloggerRepo->createUserProfil((int)$id[0]);
             header('Location: sign-in');
         }
     }
+
+
 }

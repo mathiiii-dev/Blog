@@ -2,12 +2,13 @@
 
 namespace App\Model;
 
+use App\Model\Repository\BloggerRepository;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 class Twig
 {
-    public function twig(string $view, array $filter): void
+    public function twig(string $view, array $parameter = []): void
     {
         $loader = new FilesystemLoader('src/View');
         $twig = new Environment($loader, [
@@ -15,10 +16,13 @@ class Twig
         ]);
 
         $userManager = new UserManager();
-        $userManager->getRememberMe();
+        $rememberMe = $userManager->getRememberMe();
+        $cookie = $_COOKIE['auth'] ?? null;
+        $cookie = explode('-----', $cookie);
 
-        $twig->addGlobal('session', $_SESSION ?? $userManager);
 
-        echo $twig->render($view, $filter);
+        $twig->addGlobal('session', $_SESSION ?? $rememberMe);
+        $twig->addGlobal('idUser', $_SESSION['id'] ?? $cookie[0]);
+        echo $twig->render($view, $parameter);
     }
 }
