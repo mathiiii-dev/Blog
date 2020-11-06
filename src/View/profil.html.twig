@@ -19,7 +19,7 @@
                         <h1>{{ pseudo }}</h1>
                         <img class="profilePicture" src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}" alt="Photo de profil">
                         {{ description | raw }}
-                        <p>{{ country }}</p>
+                        <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}">
                         {% if idUserSession == idUserBlogger %}
                             <form action="/Blog/modifyProfil/{{ idUserBlogger }}">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
