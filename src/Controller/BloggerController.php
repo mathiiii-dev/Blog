@@ -262,7 +262,7 @@ class BloggerController extends Twig
             'ZM' => 'Zambia',
             'ZW' => 'Zimbabwe',
         );
-        $code = array_search($bloggerInfo["country"], $countryCode);
+        $code = array_search($bloggerInfo["country"] ?? null, $countryCode);
         if (!$bloggerInfo) {
             http_response_code(404);
             return $this->twig('404.html.twig');

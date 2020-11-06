@@ -2,6 +2,7 @@
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/profil.css' }}">
+    <link rel="icon" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}" />
 {% endblock %}
 
 {% block title %}
@@ -19,7 +20,7 @@
                         <h1>{{ pseudo }}</h1>
                         <img class="profilePicture" src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}" alt="Photo de profil">
                         {{ description | raw }}
-                        <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}">
+                        <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}" alt="Pays">
                         {% if idUserSession == idUserBlogger %}
                             <form action="/Blog/modifyProfil/{{ idUserBlogger }}">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
@@ -30,7 +31,6 @@
             </div>
         </div>
     </header>
-
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto ">
@@ -49,5 +49,6 @@
                     </div>
                 {% endfor %}
             </div>
+        </div>
     </div>
 {% endblock %}
