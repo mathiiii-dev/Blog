@@ -26,6 +26,6 @@ $router->get('/delete-post/:id', 'Posts#deletePost');
 $router->post('/createAnswer/:id', 'Answer#createAnswer');
 $router->get('/modify-answer/:id', 'Answer#showModifyAnswer');
 $router->post('/modify-answer/:id', 'Answer#showModifyAnswer');
-
+$router->get('/delete-answer/:id', 'Answer#deleteAnswer');
 
 $router->run();

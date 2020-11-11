@@ -65,4 +65,15 @@ class AnswerRepository extends DbManager
         $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
         return $answer->fetch();
     }
+
+    public function deleteAnswer($id)
+    {
+        $deletePost = $this->dbConnect()->prepare(
+            'DELETE FROM Answer WHERE id = :id'
+        );
+
+        $deletePost->bindValue(':id', $id, \PDO::PARAM_INT);
+
+        $deletePost->execute();
+    }
 }
