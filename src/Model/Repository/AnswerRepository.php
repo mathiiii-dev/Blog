@@ -27,11 +27,42 @@ class AnswerRepository extends DbManager
         $addAnswer->execute();
     }
 
-    public function getAllAnswerFromOnePost($answer)
+    public function getAllAnswerFromOnePost($id)
     {
-        $answer = $this->dbConnect()->prepare("SELECT answer.id, answer.answer, answer.createdAt, user.firstname FROM answer INNER JOIN post ON post.id = answer.idPost INNER JOIN user ON user.id = answer.idUser ");
+        $answer = $this->dbConnect()->prepare("SELECT answer.id, answer.idUser, answer.answer, answer.createdAt, user.firstname FROM answer, user, post WHERE answer.idUser = user.id AND answer.idPost = :id GROUP BY answer.id");
+        $answer->bindValue(':id', $id, \PDO::PARAM_INT);
         $answer->execute();
-        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
         return $answer->fetchAll();
+    }
+
+    public function getIdUserFromAnswer($id)
+    {
+        $idAnswer = $this->dbConnect()->prepare("SELECT id, idPost, idUser, answer from answer where id = :id");
+        $idAnswer->bindValue(':id', $id, \PDO::PARAM_INT);
+        $idAnswer->execute();
+        $idAnswer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        return $idAnswer->fetch();
+    }
+
+    public function modifyAnswer($id, Answer $answer)
+    {
+        $modifyAnswer = $this->dbConnect()->prepare(
+            'UPDATE Answer SET answer = :answer, updatedAt = :updatedAt WHERE id = :id'
+        );
+
+        $modifyAnswer->bindValue(':answer', $answer->getAnswer(), \PDO::PARAM_STR);
+        $modifyAnswer->bindValue(':updatedAt', $answer->getUpdateAt(), \PDO::PARAM_STR);
+        $modifyAnswer->bindValue(':id', $id, \PDO::PARAM_INT);
+        $modifyAnswer->execute();
+    }
+
+    public function getAnswerById($id)
+    {
+        $answer = $this->dbConnect()->prepare("SELECT * FROM Answer WHERE id = :id");
+        $answer->bindValue(':id', $id);
+        $answer->execute();
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        return $answer->fetch();
     }
 }

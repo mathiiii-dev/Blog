@@ -42,7 +42,13 @@
             {{ content|raw }}
             {% for i in answer %}
                 <div class="panel">
-                    <p class="info">Créer par {{ i.firstname }} le {{ i.createdAt }}</p>
+                    <p class="info">Créer par
+                        {{ i.firstname }},
+                        le {{ i.createdAt }}
+                        {% if idUserSession == i.idUser %}
+                            <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn">Modifier</a>
+                        {% endif %}
+                    </p>
                 </div>
                 <div class="answer">
                     {{ i.answer|raw }}
