@@ -2,6 +2,7 @@
 composer.phar
 composer.bat
 /vendor/
+/node_modules
 
 # IDE / Editor
 .idea
