@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="/Blog/src/Public/css/style.css">
-    <link href="{{'/' ~ constant('ROOT_DIR') ~ '/vendor/bootstrap/css/bootstrap.min.css'}}" rel="stylesheet">
+    <link href="{{'/' ~ constant('ROOT_DIR') ~ '/node_modules/bootstrap/dist/css/bootstrap.css'}}" rel="stylesheet">
+    <link rel="icon" href="{{'/' ~ constant('ROOT_DIR') ~ '/src/Public/img/blogging.ico'}}">
     <link href="{{'/' ~ constant('ROOT_DIR') ~ '/vendor/fontawesome-free/css/all.min.css'}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
@@ -16,9 +17,9 @@
 <body>
     {% include 'navbar.html.twig' %}
     {% block content %}{% endblock %}
-    {% block javascript %}
-        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/vendor/jquery/jquery.min.js'}}" type="javascript"></script>
-        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/vendor/bootstrap/js/bootstrap.bundle.min.js'}}" type="javascript"></script>
+    {% block javascripts %}
+        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/jquery/dist/jquery.js'}}" type="javascript"></script>
+        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/bootstrap/js/dist/index.js'}}" type="javascript"></script>
         <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/js/clean-blog.min.js'}}" type="javascript"></script>
     {% endblock %}
 </body>

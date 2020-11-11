@@ -19,7 +19,21 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="col-lg-8 col-md-10 mx-auto ">
+                {% for post in row %}
+                <div class="post-preview list-post">
+                    <a href="posts/{{ post.id }}">
+                        <h2 class="post-title">
+                            {{ post.title }}
+                        </h2>
+                        <h3 class="post-subtitle">
+                            {{ post.lead }}
+                        </h3>
+                    </a>
+                    <a class="btn btn-primary float-right" href="posts/{{ post.id }}" style="color: white;">Lire</a>
+                    <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

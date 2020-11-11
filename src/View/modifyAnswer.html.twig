@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Modifie ton post !
+    Crée ton post !
 {% endblock %}
 
 {% block stylesheet %}
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto ">
                     <div class="site-heading">
-                        <h2>Création de votre post !</h2>
+                        <h2>Modifier votre réponse !</h2>
                     </div>
                 </div>
             </div>
@@ -25,21 +25,9 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
                 {{ erreur }}
-                <form method="post" action="../modifyPost/{{ idPost }}">
-                    <div class="control-group">
-                        <div class="form-group floating-label-form-group controls">
-                            <label for="title">Titre</label>
-                            <input type="text" class="form-control" placeholder="Titre" id="title" name="title" required="" value="{{ title }}">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="form-group floating-label-form-group controls">
-                            <label for="lead">Chapô</label>
-                            <input type="text" class="form-control" placeholder="Chapô" id="lead" name="lead" required="" value="{{ lead }}">
-                        </div>
-                    </div>
+                <form method="post">
                     <br>
-                    <textarea id="content" name="content">{{ content }}</textarea>
+                    <textarea id="answer" name="answer">{{ answerModif }}</textarea>
                     <br>
                     <button type="submit" class="btn btn-primary float-right">Modifier</button>
                 </form>
