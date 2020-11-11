@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Post;
 use App\Model\PostsManager;
+use App\Model\Repository\AnswerRepository;
 use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Twig;
@@ -24,6 +25,8 @@ class PostsController extends Twig
         $userName = $post->getUserForAPost($id);
         $date = date_create($postInfo['createdAt']);
         $dateFormat = date_format($date, 'd/m/Y');
+        $answerRepo = new AnswerRepository();
+        $answer = $answerRepo->getAllAnswerFromOnePost($id);
         $this->twig('post.html.twig',
             [
                 'erreur' => $filter,
@@ -34,7 +37,8 @@ class PostsController extends Twig
                 'firstname' => $userName['firstname'],
                 'idPost' => $id,
                 'idUserSession' => $_SESSION['id'] ?? $cookie[0],
-                'idUserPost' => $postInfo['idUser']
+                'idUserPost' => $postInfo['idUser'],
+                'answer' => $answer
             ]);
     }
 
@@ -85,7 +89,6 @@ class PostsController extends Twig
             $postRepo->addPost($post);
             header('Location: /Blog/posts');
         }
-
     }
 
     public function showModifyPost($id)

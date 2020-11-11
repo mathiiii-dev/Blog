@@ -8,7 +8,7 @@ class DbManager
     {
         try
         {
-            return  new \PDO(Config::DB_HOST,Config::DB_USER, Config::DB_PASSWORD);
+            return  new \PDO(Config::DB_HOST,Config::DB_USER, Config::DB_PASSWORD, Config::DB_OPTION);
         }
         catch (\Exception $e)
         {
