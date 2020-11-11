@@ -54,7 +54,7 @@ class AnswerController extends Twig
            header('Location: /Blog/posts/'.$idUserAnswer['idPost']);
         }
     }
-
+  
     public function deleteAnswer(int $id)
     {
         $answer = new AnswerRepository();
