@@ -26,4 +26,9 @@ $router->get('/delete-post/:id', 'Posts#deletePost');
 $router->get('/profil/:id', 'Blogger#show');
 $router->get('/modifyProfil/:id', 'Blogger#modifyProfil');
 $router->post('/modifyProfil/:id', 'Blogger#modifyProfil');
+$router->post('/createAnswer/:id', 'Answer#createAnswer');
+$router->get('/modify-answer/:id', 'Answer#showModifyAnswer');
+$router->post('/modify-answer/:id', 'Answer#showModifyAnswer');
+$router->get('/delete-answer/:id', 'Answer#deleteAnswer');
+
 $router->run();

@@ -4,6 +4,10 @@
     {{ title }}
 {% endblock %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="/Blog/src/Public/css/answer.css">
+{% endblock %}
+
 {% block content %}
 <header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
     <div class="overlay"></div>
@@ -36,6 +40,25 @@
         <div class="col-lg-8 col-md-10 mx-auto">
             {{ erreur }}
             {{ content|raw }}
+            {% for i in answer %}
+                <div class="panel">
+                    <p class="info">Créer par
+                        {{ i.firstname }},
+                        le {{ i.createdAt }}
+                        {% if idUserSession == i.idUser %}
+                            <a href="/Blog/delete-answer/{{ i.id }}" class="panel-btn-suppr">Supprimer</a>
+                            <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn-modif">Modifier</a>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="answer">
+                    {{ i.answer|raw }}
+                </div>
+            {% endfor %}
+            {% if session %}
+                {{ session.auth }}
+                {% include 'createAnswer.html.twig' %}
+            {% endif %}
         </div>
     </div>
 </div>
