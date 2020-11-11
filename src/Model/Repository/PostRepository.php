@@ -4,7 +4,6 @@ namespace App\Model\Repository;
 
 use App\Model\DbManager;
 use App\Model\Post;
-use App\Model\PostsManager;
 
 class PostRepository extends DbManager
 {
@@ -70,7 +69,14 @@ class PostRepository extends DbManager
         $deletePost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
 
         $deletePost->execute();
+    }
 
+    public function getAllPost()
+    {
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post INNER JOIN user ON post.idUser = user.id ");
+        $post->execute();
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        return $post->fetchAll();
     }
 
 }
