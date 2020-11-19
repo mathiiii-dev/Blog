@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Model;
+namespace App\PHPClass;
 
 
 class Country

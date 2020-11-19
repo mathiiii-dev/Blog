@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use App\Model\Blogger;
-use App\Model\Repository\BloggerRepository;
-use App\Model\Repository\UserRepository;
-use App\Model\Twig;
+use App\Repository\BloggerRepository;
+use App\Repository\UserRepository;
+use App\PHPClass\Twig;
 use App\Model\User;
-use App\Model\UserManager;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use App\PHPClass\UserManager;
 
 class SignupController extends Twig
 {

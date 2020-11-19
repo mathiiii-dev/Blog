@@ -1,11 +1,9 @@
 <?php
 
-
-namespace App\Model\Repository;
-
+namespace App\Repository;
 
 use App\Model\Blogger;
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 
 class BloggerRepository extends DbManager
 {
@@ -21,7 +19,6 @@ class BloggerRepository extends DbManager
 
     public function createUserProfil(int $id)
     {
-        var_dump($id);
         $lastIdUser = $this->dbConnect()->prepare(
             'INSERT INTO Blogger (idUser) VALUES (:idUser)'
         );

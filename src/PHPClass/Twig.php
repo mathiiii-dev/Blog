@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Model;
+namespace App\PHPClass;
 
-use App\Model\Repository\BloggerRepository;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 

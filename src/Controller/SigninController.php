@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\Model\Twig;
+use App\PHPClass\Twig;
 use App\Model\User;
-use App\Model\UserManager;
+use App\PHPClass\UserManager;
+use App\PHPClass\MessageFlash;
 
 class SigninController extends Twig
 {
@@ -30,6 +31,8 @@ class SigninController extends Twig
             $this->show('Mauvais mot de passe');
         }
         else{
+            $session = new MessageFlash();
+            $session->setFlashMessage('Vous êtes bien connecté !', 'alert alert-success');
             $userManager->connectUser($user);
             header('Location: /Blog');
         }

@@ -3,12 +3,10 @@
 namespace App\Controller;
 
 use App\Model\Post;
-use App\Model\PostsManager;
-use App\Model\Repository\AnswerRepository;
-use App\Model\Repository\PostRepository;
-use App\Model\Repository\UserRepository;
-use App\Model\Twig;
-use Composer\Command\ValidateCommand;
+use App\PHPClass\PostsManager;
+use App\Repository\AnswerRepository;
+use App\Repository\PostRepository;
+use App\PHPClass\Twig;
 
 class PostsController extends Twig
 {
