@@ -59,7 +59,7 @@ class AnswerRepository extends DbManager
 
     public function getAnswerById($id)
     {
-        $answer = $this->dbConnect()->prepare("SELECT * FROM Answer WHERE id = :id");
+        $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id");
         $answer->bindValue(':id', $id);
         $answer->execute();
         $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');

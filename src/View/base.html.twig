@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/Blog/src/Public/css/style.css">
+    <link rel="stylesheet" href="{{'/' ~ constant('ROOT_DIR') ~ '/src/Public/css/style.css'}}">
     <link href="{{'/' ~ constant('ROOT_DIR') ~ '/node_modules/bootstrap/dist/css/bootstrap.css'}}" rel="stylesheet">
     <link rel="icon" href="{{'/' ~ constant('ROOT_DIR') ~ '/src/Public/img/blogging.ico'}}">
     <link href="{{'/' ~ constant('ROOT_DIR') ~ '/vendor/fontawesome-free/css/all.min.css'}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto:wght@100;400&display=swap" rel="stylesheet">
-    <link href="{{'/' ~ constant('ROOT_DIR') ~ '/src/Public/css/clean-blog.css'}}" rel="stylesheet">
+    <link href="{{'/' ~ constant('ROOT_DIR') ~ '/node_modules/startbootstrap-clean-blog/css/clean-blog.min.css'}}" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
     {% block stylesheet %}{% endblock %}
 </head>
 
 <body>
     {% include 'navbar.html.twig' %}
-        <div class="{{ class }} col-lg-6">
-            {{ message }}
-        </div>
     {% block content %}{% endblock %}
     {% block javascripts %}
         <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/jquery/dist/jquery.min.js'}}" type="javascript"></script>
         <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/bootstrap/dist/js/bootstrap.min.js'}}" type="javascript"></script>
-        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/js/clean-blog.min.js'}}" type="javascript"></script>
+        <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/startbootstrap-clean-blog/js/clean-blog.min.js'}}" type="javascript"></script>
     {% endblock %}
 </body>
 

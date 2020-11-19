@@ -18,11 +18,18 @@
                 <div class="col-lg-8 col-md-10 mx-auto ">
                     <div class="site-heading">
                         <h1>{{ pseudo }}</h1>
+                        {% if description == false %}
+                            <p>Modifier votre profil pour ajouter une photo, description et votre pays !</p>
+                        {% else %}
                         <img class="profilePicture" src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}" alt="Photo de profil">
                         {{ description | raw }}
                         <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}" alt="Pays">
+                        {% endif %}
+                        <div class="{{ class }}">
+                            {{ message }}
+                        </div>
                         {% if idUserSession == idUserBlogger %}
-                            <form action="/Blog/modifyProfil/{{ idUserBlogger }}">
+                            <form action="/Blog/modify-profil/{{ idUserBlogger }}">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
                             </form>
                         {% endif %}
