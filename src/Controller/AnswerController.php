@@ -27,7 +27,7 @@ class AnswerController extends Twig
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été créée !', 'alert alert-success');
         }
-        header('Location: /Blog/posts/' . $id);
+        header('Location: /Blog/post/' . $id);
     }
 
     public function modifyAnswer($id)
@@ -55,7 +55,7 @@ class AnswerController extends Twig
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été modifiée !', 'alert alert-success');
             $answerRepo->modifyAnswer($id, $answer);
-            header('Location: /Blog/posts/' . $idUserAnswer['idPost']);
+            header('Location: /Blog/post/' . $idUserAnswer['idPost']);
         }
     }
 
@@ -72,7 +72,7 @@ class AnswerController extends Twig
         $session = new MessageFlash();
         $session->setFlashMessage('Votre réponse a bien été supprimée !', 'alert alert-success');
         $answer->deleteAnswer($id);
-        header('Location: /Blog/posts/' . $answerInfo['idPost']);
+        header('Location: /Blog/post/' . $answerInfo['idPost']);
 
     }
 }

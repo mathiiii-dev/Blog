@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Model\Post;
 use App\PHPClass\FormValidator;
 use App\PHPClass\MessageFlash;
+use App\PHPClass\Pagination;
 use App\PHPClass\PostsManager;
 use App\Repository\AnswerRepository;
 use App\Repository\PostRepository;
 use App\PHPClass\Twig;
+use Composer\Repository\InstalledFilesystemRepository;
 
 class PostsController extends Twig
 {
@@ -45,19 +47,26 @@ class PostsController extends Twig
             ]);
     }
 
-    public function showAllPosts()
+    public function showAllPosts($page)
     {
         $postRepo = new PostRepository();
-        $postInfo = $postRepo->getAllPost();
-        $session = new MessageFlash();
-        $flash = $session->showFlashMessage();
+        $pagination = new Pagination();
+        $paginationConf = $pagination->getPostPagination($page);
+        if ($paginationConf){
+            $session = new MessageFlash();
+            $flash = $session->showFlashMessage();
+            $postInfo = $postRepo->getAllPost($paginationConf['perPage'], $paginationConf['offset']);
 
-        $this->twig('posts.html.twig',
-            [
-                'row' => $postInfo,
-                'message' => $flash['message'] ?? null,
-                'class' => $flash['class'] ?? null
-            ]);
+            $this->twig('posts.html.twig',
+                [
+                    'row' => $postInfo,
+                    'message' => $flash['message'],
+                    'class' => $flash['class'] ?? null,
+                    'currentPage' => $paginationConf['currentPage'],
+                    'pages' => $paginationConf['pages']
+                ]);
+        }
+
     }
 
     public function createPost()
@@ -94,7 +103,7 @@ class PostsController extends Twig
             $session->setFlashMessage('Votre post à bien été créé !', 'alert alert-success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
-            header('Location: /Blog/posts');
+            header('Location: /Blog/posts/1');
         }
     }
 
@@ -147,7 +156,7 @@ class PostsController extends Twig
             $session = new MessageFlash();
             $session->setFlashMessage('Votre post à bien été modifié !', 'alert alert-success');
             $postRepo->modifyPost($id, $post);
-            header('Location: /Blog/posts/' . $id);
+            header('Location: /Blog/post/' . $id);
         }
     }
 
@@ -165,6 +174,6 @@ class PostsController extends Twig
         $session->setFlashMessage('Votre post à bien été supprimé !', 'alert alert-success');
         $postRepo = new PostRepository();
         $postRepo->deletePost($id);
-        header('Location: /Blog/posts');
+        header('Location: /Blog/posts/1');
     }
 }
