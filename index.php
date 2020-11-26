@@ -30,5 +30,6 @@ $router->post('/createAnswer/:id', 'Answer#createAnswer');
 $router->get('/modify-answer/:id', 'Answer#modifyAnswer');
 $router->post('/modify-answer/:id', 'Answer#modifyAnswer');
 $router->get('/delete-answer/:id', 'Answer#deleteAnswer');
+$router->get('/admin', 'Admin#show');
 
 $router->run();

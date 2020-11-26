@@ -90,4 +90,19 @@ class PostRepository extends DbManager
         return $count->fetch();
     }
 
+    public function getUnvalidatedPost()
+    {
+        $post = $this->dbConnect()->prepare("SELECT user.pseudo, post.title, post.createdAt FROM post, user WHERE post.idUser = user.id AND post.isValid = 0 ORDER BY post.id LIMIT 5");
+        $post->execute();
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        return $post->fetchAll();
+    }
+    public function countUnvalidatedPost()
+    {
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post WHERE isValid = 0");
+        $count->execute();
+        $count->setFetchMode(\PDO::FETCH_NUM);
+        return $count->fetch();
+    }
+
 }
