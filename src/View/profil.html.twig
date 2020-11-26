@@ -25,8 +25,11 @@
                         {{ description | raw }}
                         <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}" alt="Pays">
                         {% endif %}
-                        <div class="{{ class }}">
+                        <div class="{{ class }}" role="alert">
                             {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         {% if idUserSession == idUserBlogger %}
                             <form action="/Blog/modify-profil/{{ idUserBlogger }}">

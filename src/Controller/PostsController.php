@@ -6,11 +6,9 @@ use App\Model\Post;
 use App\PHPClass\FormValidator;
 use App\PHPClass\MessageFlash;
 use App\PHPClass\Pagination;
-use App\PHPClass\PostsManager;
 use App\Repository\AnswerRepository;
 use App\Repository\PostRepository;
 use App\PHPClass\Twig;
-use Composer\Repository\InstalledFilesystemRepository;
 
 class PostsController extends Twig
 {
@@ -52,21 +50,29 @@ class PostsController extends Twig
         $postRepo = new PostRepository();
         $pagination = new Pagination();
         $paginationConf = $pagination->getPostPagination($page);
-        if ($paginationConf){
-            $session = new MessageFlash();
-            $flash = $session->showFlashMessage();
-            $postInfo = $postRepo->getAllPost($paginationConf['perPage'], $paginationConf['offset']);
+        $session = new MessageFlash();
+        $flash = $session->showFlashMessage();
+        $postInfo = $postRepo->getAllPost($paginationConf['perPage'] ?? null, $paginationConf['offset'] ?? null);
+        $hasPost = true;
 
-            $this->twig('posts.html.twig',
-                [
-                    'row' => $postInfo,
-                    'message' => $flash['message'],
-                    'class' => $flash['class'] ?? null,
-                    'currentPage' => $paginationConf['currentPage'],
-                    'pages' => $paginationConf['pages']
-                ]);
+        if ($paginationConf['overPage']) {
+            http_response_code(404);
+            return $this->twig('404.html.twig');
         }
 
+        if (!$postInfo) {
+            $hasPost = false;
+        }
+
+        $this->twig('posts.html.twig',
+            [
+                'row' => $postInfo,
+                'message' => $flash['message'] ?? null,
+                'class' => $flash['class'] ?? null,
+                'currentPage' => $paginationConf['currentPage'] ?? null,
+                'pages' => $paginationConf['pages'] ?? null,
+                'hasPost' => $hasPost
+            ]);
     }
 
     public function createPost()
