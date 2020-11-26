@@ -20,11 +20,15 @@ class AdminController extends Twig
         $postRepo = new PostRepository();
         $unvalidatedPost = $postRepo->getUnvalidatedPost();
         $countUnvalidatedPost = $postRepo->countUnvalidatedPost();
+        $unvalidatedAnswer = $postRepo->getUnvalidatedAnswer();
+        $countUnvalidatedAnswer = $postRepo->countUnvalidatedAnswer();
         $this->twig('admin.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null,
             'posts' => $unvalidatedPost,
-            'countUnvalidatedPost' => $countUnvalidatedPost[0]
+            'countUnvalidatedPost' => $countUnvalidatedPost[0],
+            'answers' => $unvalidatedAnswer,
+            'countUnvalidatedAnswers' => $countUnvalidatedAnswer[0]
         ]);
     }
 }
