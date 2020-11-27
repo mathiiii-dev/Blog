@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\PHPClass\DbManager;
+use App\Services\DbManager;
 
 class AdminRepository extends dbManager
 {

@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Blogger;
-use App\PHPClass\DbManager;
+use App\Services\DbManager;
 
 class BloggerRepository extends DbManager
 {

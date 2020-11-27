@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Model\Post;
-use App\PHPClass\FormValidator;
-use App\PHPClass\MessageFlash;
-use App\PHPClass\Pagination;
+use App\Services\FormValidator;
+use App\Services\MessageFlash;
+use App\Services\Pagination;
 use App\Repository\AnswerRepository;
 use App\Repository\PostRepository;
-use App\PHPClass\Twig;
+use App\Services\Twig;
 
 class PostsController extends Twig
 {

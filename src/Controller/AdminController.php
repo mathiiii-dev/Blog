@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\PHPClass\MessageFlash;
-use App\PHPClass\Twig;
+use App\Services\MessageFlash;
+use App\Services\Twig;
 use App\Repository\AdminRepository;
 use App\Repository\AnswerRepository;
 use App\Repository\PostRepository;

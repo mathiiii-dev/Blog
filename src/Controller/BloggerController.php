@@ -3,10 +3,10 @@
 namespace App\Controller;
 
 use App\Model\Blogger;
-use App\PHPClass\Country;
-use App\PHPClass\MessageFlash;
+use App\Services\Country;
+use App\Services\MessageFlash;
 use App\Repository\BloggerRepository;
-use App\PHPClass\Twig;
+use App\Services\Twig;
 
 class BloggerController extends Twig
 {

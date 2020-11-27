@@ -5,14 +5,11 @@
 
 {% block content %}
     <form method="post" action="../createAnswer/{{ idPost }}">
-        <br>
         <textarea id="answer" name="answer"></textarea>
-        <br>
-        <button type="submit" class="btn btn-primary float-right">Répondre</button>
-        <br>
+        <button type="submit" class="btn btn-primary float-right m-3">Répondre</button>
     </form>
 {% endblock %}
-{% block javascript %}
+{% block javascripts %}
 <script>
     tinymce.init({
     selector: 'textarea',

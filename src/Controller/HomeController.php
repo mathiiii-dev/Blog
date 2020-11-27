@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\PHPClass\Twig;
-use App\PHPClass\MessageFlash;
+use App\Services\Twig;
+use App\Services\MessageFlash;
 
 class HomeController extends Twig
 {

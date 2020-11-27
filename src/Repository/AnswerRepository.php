@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Answer;
-use App\PHPClass\DbManager;
+use App\Services\DbManager;
 
 class AnswerRepository extends DbManager
 {

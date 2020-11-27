@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Model\Answer;
-use App\PHPClass\MessageFlash;
+use App\Services\MessageFlash;
 use App\Repository\AnswerRepository;
-use App\PHPClass\Twig;
+use App\Services\Twig;
 
 class AnswerController extends Twig
 {
