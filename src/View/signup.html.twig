@@ -24,41 +24,46 @@
                     <p>Déconnecté vous pour créer un nouveau compte</p>
                 {% endif %}
                 {% if session == null %}
-                <p>Inscrivez-vous pour avoir accès à tous les posts du blog !</p>
-                {{ erreur }}
-                <form action="signUp" method="post">
-                    <div class="control-group">
-                        <div class="form-group floating-label-form-group controls">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom" required="">
+                    <p>Inscrivez-vous pour avoir accès à tous les posts du blog !</p>
+                    {{ erreur }}
+                    <form action="signUp" method="post">
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls">
+                                <label for="nom">Nom</label>
+                                <input type="text" class="form-control" placeholder="Nom" id="nom" name="nom"
+                                       required="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="form-group floating-label-form-group controls">
-                            <label for="prenom">Prénom</label>
-                            <input type="text" class="form-control" placeholder="Prénom" id="prenom" name="prenom" required="">
+                        <div class="control-group">
+                            <div class="form-group floating-label-form-group controls">
+                                <label for="prenom">Prénom</label>
+                                <input type="text" class="form-control" placeholder="Prénom" id="prenom" name="prenom"
+                                       required="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="pseudo">Pseudo</label>
-                            <input type="tel" class="form-control" placeholder="Pseudo" id="pseudo" name="pseudo" required="">
+                        <div class="control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="pseudo">Pseudo</label>
+                                <input type="tel" class="form-control" placeholder="Pseudo" id="pseudo" name="pseudo"
+                                       required="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" placeholder="Email" id="email" name="email" required="">
+                        <div class="control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" placeholder="Email" id="email" name="email"
+                                       required="">
+                            </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="password">Mot de passe</label>
-                            <input type="password" class="form-control" placeholder="Mot de passe" id="password" name="password" required="">
+                        <div class="control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" class="form-control" placeholder="Mot de passe" id="password"
+                                       name="password" required="">
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary float-right mt-3">Je m'inscris !</button>
-                </form>
+                        <button type="submit" class="btn btn-primary float-right mt-3">Je m'inscris !</button>
+                    </form>
                 {% endif %}
             </div>
         </div>

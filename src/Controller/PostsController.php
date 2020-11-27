@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Post;
+use App\Services\AccessValidator;
 use App\Services\FormValidator;
 use App\Services\MessageFlash;
 use App\Services\Pagination;
@@ -79,7 +80,9 @@ class PostsController extends Twig
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        if (empty($cookie[0]) && empty($_SESSION['id'])) {
+        $verifAccess = new AccessValidator();
+
+        if (!$verifAccess->validAccess($_SESSION['id'] ?? $cookie[0])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -92,6 +95,7 @@ class PostsController extends Twig
         ]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             $post = new Post([
                 'title' => $_POST['title'],
                 'lead' => $_POST['lead'],
@@ -105,8 +109,9 @@ class PostsController extends Twig
             if (!$checkPost->checkPost($post)) {
                 return header('Location: /Blog/create-post');
             }
+
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre post à bien été créé !', 'alert alert-success');
+            $session->setFlashMessage('Votre post à bien été créé !', 'success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
             header('Location: /Blog/posts/1');
@@ -116,18 +121,17 @@ class PostsController extends Twig
     public function modifyPost($id)
     {
         $post = new PostRepository();
-        $postInfo = $post->getPostById($id);
         $postRepo = new PostRepository();
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
+        $verifAccess = new AccessValidator();
+        $session = new MessageFlash();
+        $postInfo = $post->getPostById($id);
+        $flash = $session->showFlashMessage();
 
-        if (empty($cookie[0]) && empty($_SESSION['id']) || $postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+        if (!$verifAccess->validAccess($postInfo['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
 
-        $session = new MessageFlash();
-        $flash = $session->showFlashMessage();
         $this->twig('modifyPost.html.twig',
             [
                 'title' => $postInfo['title'],
@@ -139,10 +143,6 @@ class PostsController extends Twig
             ]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
-                http_response_code(500);
-                return $this->twig('500.html.twig');
-            }
 
             $post = new Post([
                 'title' => $_POST['title'],
@@ -172,9 +172,11 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        if (empty($cookie[0]) && empty($_SESSION['id']) || $postInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+        $verifAccess = new AccessValidator();
+
+        if (!$verifAccess->validAccess($postInfo['idUser'])) {
             http_response_code(500);
-            return $this->twig('500.html.twig', ['' => '']);
+            return $this->twig('500.html.twig');
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre post à bien été supprimé !', 'alert alert-success');

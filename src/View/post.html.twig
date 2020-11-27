@@ -9,65 +9,67 @@
 {% endblock %}
 
 {% block content %}
-<header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
-    <div class="overlay"></div>
+    <header class="masthead"
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg" }}')">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="post-heading">
+                        <h1>{{ title }}</h1>
+                        <h2 class="subheading">{{ lead }}</h2>
+                        <span class="meta">Créer par {{ firstname }} le {{ createdAt }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="post-heading">
-                    <h1>{{ title }}</h1>
-                    <h2 class="subheading">{{ lead }}</h2>
-                    <span class="meta">Créer par {{ firstname }} le {{ createdAt }}</span>
+            {% if idUserSession == idUserPost %}
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="btn-group float-right mb-4" role="group">
+                        <form action="/Blog/modify-post/{{ idPost }}">
+                            <button type="submit" class="btn btn-primary btn-block">Modifier <i class="fas fa-edit"></i>
+                            </button>
+                        </form>
+                        <form action="/Blog/delete-post/{{ idPost }}">
+                            <button type="submit" class="btn btn-danger ml-3">Supprimer <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</header>
-<div class="container">
-    <div class="row">
-        {% if idUserSession == idUserPost %}
+            {% endif %}
             <div class="col-lg-8 col-md-10 mx-auto">
-                <div class="btn-group float-right mb-4" role="group">
-                    <form action="/Blog/modify-post/{{ idPost }}">
-                        <button type="submit" class="btn btn-primary btn-block">Modifier <i class="fas fa-edit"></i></button>
-                    </form>
-                    <form action="/Blog/delete-post/{{ idPost }}">
-                        <button type="submit" class="btn btn-danger ml-3">Supprimer <i class="fas fa-trash"></i>
+                {% if message != null %}
+                    <div class="alert alert-{{ class }}" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </form>
-                </div>
+                    </div>
+                {% endif %}
+                {{ content|raw }}
+                {% for i in answer %}
+                    <div class="panel">
+                        <p class="info">Créer par
+                            {{ i.firstname }},
+                            le {{ i.createdAt }}
+                            {% if idUserSession == i.idUser %}
+                                <a href="/Blog/delete-answer/{{ i.id }}" class="panel-btn-suppr">Supprimer</a>
+                                <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn-modif">Modifier</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="answer">
+                        {{ i.answer|raw }}
+                    </div>
+                {% endfor %}
+                {% if session %}
+                    {{ session.auth }}
+                    {% include 'createAnswer.html.twig' %}
+                {% endif %}
             </div>
-        {% endif %}
-        <div class="col-lg-8 col-md-10 mx-auto">
-            {% if message != null %}
-            <div class="{{ class }}" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endif %}
-            {{ content|raw }}
-            {% for i in answer %}
-                <div class="panel">
-                    <p class="info">Créer par
-                        {{ i.firstname }},
-                        le {{ i.createdAt }}
-                        {% if idUserSession == i.idUser %}
-                            <a href="/Blog/delete-answer/{{ i.id }}" class="panel-btn-suppr">Supprimer</a>
-                            <a href="/Blog/modify-answer/{{ i.id }}" class="panel-btn-modif">Modifier</a>
-                        {% endif %}
-                    </p>
-                </div>
-                <div class="answer">
-                    {{ i.answer|raw }}
-                </div>
-            {% endfor %}
-            {% if session %}
-                {{ session.auth }}
-                {% include 'createAnswer.html.twig' %}
-            {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

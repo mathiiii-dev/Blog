@@ -61,20 +61,20 @@
                             <td>{{ post.createdAt }}</td>
                             <td>
                                 <a href="/Blog/post/{{ post.id }}" class="btn btn-primary btn-block">
-                                     <i class="fas fa-eye"></i>
+                                    <i class="fas fa-eye"></i>
                                 </a>
                             </td>
                             <td>
                                 <form method="post" action="./validate-post/{{ post.id }}">
                                     <button type="submit" class="btn btn-success btn-block ">
-                                         <i class="fas fa-check"></i>
+                                        <i class="fas fa-check"></i>
                                     </button>
                                 </form>
                             </td>
                             <td>
                                 <form method="post" action="./delete-post/{{ post.id }}">
                                     <button type="submit" class="btn btn-danger btn-block">
-                                         <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>

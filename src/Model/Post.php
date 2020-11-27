@@ -12,7 +12,7 @@ class Post extends Model
         $this->hydrate($data);
     }
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -22,7 +22,7 @@ class Post extends Model
         $this->id = $id;
     }
 
-    public function getIdUser() : int
+    public function getIdUser(): int
     {
         return $this->idUser;
     }
@@ -32,7 +32,7 @@ class Post extends Model
         $this->idUser = $idUser;
     }
 
-    public function getIsValid() : int
+    public function getIsValid(): int
     {
         return $this->isValid;
     }
@@ -42,7 +42,7 @@ class Post extends Model
         $this->isValid = $isValid;
     }
 
-    public function getTitle() : string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -52,7 +52,7 @@ class Post extends Model
         $this->title = $title;
     }
 
-    public function getLead() : string
+    public function getLead(): string
     {
         return $this->lead;
     }
@@ -62,7 +62,7 @@ class Post extends Model
         $this->lead = $lead;
     }
 
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -72,7 +72,7 @@ class Post extends Model
         $this->content = $content;
     }
 
-    public function getCreatedAt() : string
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -82,7 +82,7 @@ class Post extends Model
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdateAt() : string
+    public function getUpdateAt(): string
     {
         return $this->updatedAt;
     }

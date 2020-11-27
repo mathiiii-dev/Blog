@@ -8,7 +8,7 @@ use App\Services\MessageFlash;
 class HomeController extends Twig
 {
 
-    public function show() : void
+    public function show(): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
