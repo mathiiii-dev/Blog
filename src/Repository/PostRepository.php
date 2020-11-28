@@ -14,7 +14,7 @@ class PostRepository extends DbManager
 
     public function getPostById($id)
     {
-        $post = $this->dbConnect()->prepare("SELECT * FROM Post WHERE id = :id");
+        $post = $this->dbConnect()->prepare("SELECT * FROM Post WHERE id = :id AND isValid = 1");
         $post->bindValue(':id', $id);
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
@@ -74,7 +74,7 @@ class PostRepository extends DbManager
     public function getAllPost($perPage, $offset)
     {
         $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM 
-                                            post, user WHERE post.idUser = user.id ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
+                                            post, user WHERE post.idUser = user.id AND isValid = 1 ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
         $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
         $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();
@@ -84,7 +84,7 @@ class PostRepository extends DbManager
 
     public function countPosts()
     {
-        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post");
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post WHERE isValid = 1");
         $count->execute();
         $count->setFetchMode(\PDO::FETCH_NUM);
         return $count->fetch();

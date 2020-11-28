@@ -49,7 +49,7 @@ class BloggerRepository extends DbManager
 
     public function getPostsFromBlogger(int $id)
     {
-        $postBlogger = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post, user WHERE post.idUser = user.id AND user.id = :id ORDER BY id LIMIT 5");
+        $postBlogger = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post, user WHERE post.idUser = user.id AND user.id = :id AND isValid = 1 ORDER BY id LIMIT 5");
         $postBlogger->bindValue(':id', $id, \PDO::PARAM_INT);
         $postBlogger->execute();
         $postBlogger->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');

@@ -21,4 +21,13 @@ class AccessValidator extends Twig
 
         return true;
     }
+
+    public function validAdminAccess($type)
+    {
+        if ($type != "Admin") {
+            http_response_code(500);
+            return $this->twig('500.html.twig');
+        }
+        return true;
+    }
 }

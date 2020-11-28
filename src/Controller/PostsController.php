@@ -170,8 +170,6 @@ class PostsController extends Twig
     {
         $post = new PostRepository();
         $postInfo = $post->getPostById($id);
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $verifAccess = new AccessValidator();
 
         if (!$verifAccess->validAccess($postInfo['idUser'])) {
