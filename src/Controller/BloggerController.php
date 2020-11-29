@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Blogger;
+use App\Services\AccessValidator;
 use App\Services\Country;
 use App\Services\MessageFlash;
 use App\Repository\BloggerRepository;
@@ -42,11 +43,10 @@ class BloggerController extends Twig
 
     public function modifyProfil(int $id)
     {
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $bloggerRepo = new BloggerRepository();
         $bloggerInfo = $bloggerRepo->getInfoBloggerById($id);
-        if (empty($cookie[0]) && empty($_SESSION['id']) || $bloggerInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+        $verifAccess = new AccessValidator();
+        if (!$verifAccess->validAccess($bloggerInfo['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -59,7 +59,7 @@ class BloggerController extends Twig
                 'profilePicture' => $_POST['image'] ?? '',
             ]);
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre profil a bien été modifié !', 'alert alert-success');
+            $session->setFlashMessage('Votre profil a bien été modifié !', 'success');
             $bloggerRepo->modifyProfil($id, $blogger);
             header('Location: /Blog/profil/' . $id);
         }

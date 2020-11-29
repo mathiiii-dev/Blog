@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{{'/' ~ constant('ROOT_DIR') ~ '/src/Public/css/home.css'}}">
-    <link href="{{'/' ~ constant('ROOT_DIR') ~ '/node_modules/aos/dist/aos.css'}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/home.css' }}">
+    <link href="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/aos/dist/aos.css' }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -25,12 +25,12 @@
     </header>
     <div class="container mb-5">
         {% if message != null %}
-        <div class="{{ class }}" role="alert">
-            {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+            <div class="alert alert-{{ class }}" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         {% endif %}
         <div class="row">
             <div class="col-lg-4 col-md-6">
@@ -143,49 +143,62 @@
                             <div class="node"></div>
                         </div>
                     </div>
-                    </div>
                 </div>
+            </div>
             <div class="col-lg-7">
                 <div class="timeline-element">
                     <h3>Alternance - Alliance - Réseaux</h3>
                     <h4>2020-2022</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Alliance - Réseaux est une entreprise spécialisée dans le secteur du conseil et logiciels informatiques. Réalisation d'application web avec C# et ASP.NET. </p>
+                        <p class="text-lg-justify ">Alliance - Réseaux est une entreprise spécialisée dans le secteur du
+                            conseil et logiciels informatiques. Réalisation d'application web avec C# et ASP.NET. </p>
                     </div>
                 </div>
                 <div class="timeline-element">
                     <h3>OpenClassRooms - DA PHP/Symfony</h3>
                     <h4>2020-2022</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Création de projets web dynamique avec PHP. Utilisation de framework (Symfony). Mise en oeuvre de test unitaires et d'intégration.</p>
+                        <p class="text-lg-justify ">Création de projets web dynamique avec PHP. Utilisation de framework
+                            (Symfony). Mise en oeuvre de test unitaires et d'intégration.</p>
                     </div>
                 </div>
                 <div class="timeline-element">
                     <h3>Stage de BTS - Girard & Roux</h3>
                     <h4>Janvier 2019 - Février 2019</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Girard & Roux est une entreprise spécialisée dans le secteur d'activité du commerce de gros (commerce interentreprises) de fournitures et équipements divers pour le commerce et les services. J'ai effectuer un stage de 6 semaines au sein de cette entreprise, lors duquel j'ai pu créer un site vitrine WordPress & réaliser une page d'administration et utiliser de l'API Google Analytics.</p>
+                        <p class="text-lg-justify ">Girard & Roux est une entreprise spécialisée dans le secteur
+                            d'activité du commerce de gros (commerce interentreprises) de fournitures et équipements
+                            divers pour le commerce et les services. J'ai effectuer un stage de 6 semaines au sein de
+                            cette entreprise, lors duquel j'ai pu créer un site vitrine WordPress & réaliser une page
+                            d'administration et utiliser de l'API Google Analytics.</p>
                     </div>
                 </div>
                 <div class="timeline-element">
                     <h3>Stage de BTS - Jean Lain Automobile</h3>
                     <h4>Mai 2018 - Juin 2018</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Jean Lain Automobile est une entreprise spécialisée dans le secteur d'activité du commerce de voitures. J'ai effectué un stage de 5 semaines au sein de cette entreprise lors duquel j'ai pu réaliser une application web avec Symfony permettant le tri et la validation de données clients.</p>
+                        <p class="text-lg-justify ">Jean Lain Automobile est une entreprise spécialisée dans le secteur
+                            d'activité du commerce de voitures. J'ai effectué un stage de 5 semaines au sein de cette
+                            entreprise lors duquel j'ai pu réaliser une application web avec Symfony permettant le tri
+                            et la validation de données clients.</p>
                     </div>
                 </div>
                 <div class="timeline-element">
                     <h3>BTS SIO Option SLAM</h3>
                     <h4>2017-2019</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Réalisation de page web statiques (HTML, CSS, Javascript) et dynamiques (PHP, SQL). Développement web (CMS). Développement client lourd : C#, Unity, Android, Java</p>
+                        <p class="text-lg-justify ">Réalisation de page web statiques (HTML, CSS, Javascript) et
+                            dynamiques (PHP, SQL). Développement web (CMS). Développement client lourd : C#, Unity,
+                            Android, Java</p>
                     </div>
                 </div>
                 <div class="timeline-element">
                     <h3>Terminal STMG option SIG</h3>
                     <h4>2017</h4>
                     <div data-aos="zoom-in">
-                        <p class="text-lg-justify ">Cette année de terminal STMG Option SIG m'a permis de découvrir le code et plus en particulier PHP. Projet BAC : Création d'un site web dynamique de mise en vente de bien immobilier  (HTML, CSS, PHP, SQL)</p>
+                        <p class="text-lg-justify ">Cette année de terminal STMG Option SIG m'a permis de découvrir le
+                            code et plus en particulier PHP. Projet BAC : Création d'un site web dynamique de mise en
+                            vente de bien immobilier (HTML, CSS, PHP, SQL)</p>
                     </div>
                 </div>
             </div>
@@ -196,7 +209,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/aos/dist/aos.js'}}" type="javascript"></script>
+    <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/node_modules/aos/dist/aos.js' }}" type="javascript"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>AOS.init();</script>
 {% endblock %}

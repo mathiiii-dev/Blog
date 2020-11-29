@@ -11,7 +11,7 @@ use App\Model\User;
 
 class SignupController extends Twig
 {
-    public function show($filter = null) : void
+    public function show($filter = null): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
@@ -34,12 +34,11 @@ class SignupController extends Twig
         ]);
         $checkSignIn = new FormValidator();
 
-        if(!$checkSignIn->checkSignUp($user))
-        {
+        if (!$checkSignIn->checkSignUp($user)) {
             return header('Location: /Blog/sign-up');
         }
         $session = new MessageFlash();
-        $session->setFlashMessage('Votre compte à bien été crée ! Vous pouvez maintenant vous connecter', 'alert alert-success');
+        $session->setFlashMessage('Votre compte à bien été crée ! Vous pouvez maintenant vous connecter', 'success');
         $userRepo = new UserRepository();
         $bloggerRepo = new BloggerRepository();
         $userRepo->addUser($user);

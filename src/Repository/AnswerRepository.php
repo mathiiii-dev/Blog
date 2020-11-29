@@ -29,7 +29,8 @@ class AnswerRepository extends DbManager
 
     public function getAllAnswerFromOnePost($id)
     {
-        $answer = $this->dbConnect()->prepare("SELECT answer.id, answer.idUser, answer.answer, answer.createdAt, user.firstname FROM answer, user, post WHERE answer.idUser = user.id AND answer.idPost = :id GROUP BY answer.id");
+        $answer = $this->dbConnect()->prepare("SELECT answer.id, answer.idUser, answer.answer, answer.createdAt, 
+            user.firstname FROM answer, user, post WHERE answer.idUser = user.id AND answer.idPost = :id AND answer.isValid = 1 GROUP BY answer.id");
         $answer->bindValue(':id', $id, \PDO::PARAM_INT);
         $answer->execute();
         $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
@@ -59,7 +60,7 @@ class AnswerRepository extends DbManager
 
     public function getAnswerById($id)
     {
-        $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id");
+        $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id AND isValid = 1");
         $answer->bindValue(':id', $id);
         $answer->execute();
         $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');

@@ -6,8 +6,7 @@ class MessageFlash
 {
     public function __construct()
     {
-        if (session_status() === PHP_SESSION_NONE)
-        {
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
     }
@@ -22,12 +21,10 @@ class MessageFlash
 
     public function showFlashMessage()
     {
-        if (!empty($_SESSION['flash'])){
-            try{
+        if (!empty($_SESSION['flash'])) {
+            try {
                 return $_SESSION['flash'];
-            }
-            finally
-            {
+            } finally {
                 unset($_SESSION['flash']);
             }
         }

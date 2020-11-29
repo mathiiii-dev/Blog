@@ -17,8 +17,7 @@ class Pagination extends Twig
         $offset = $perPage * ($currentPage - 1);
         $overPage = false;
 
-        if($currentPage <= 0 || $currentPage > $pages || !filter_var($page, FILTER_VALIDATE_INT))
-        {
+        if ($currentPage <= 0 || $currentPage > $pages || !filter_var($page, FILTER_VALIDATE_INT)) {
             $overPage = true;
         }
 

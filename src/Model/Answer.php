@@ -12,7 +12,7 @@ class Answer extends Model
         $this->hydrate($data);
     }
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -22,7 +22,7 @@ class Answer extends Model
         $this->id = $id;
     }
 
-    public function getIdUser() : int
+    public function getIdUser(): int
     {
         return $this->idUser;
     }
@@ -32,7 +32,7 @@ class Answer extends Model
         $this->idUser = $idUser;
     }
 
-    public function getIdPost() : int
+    public function getIdPost(): int
     {
         return $this->idPost;
     }
@@ -42,7 +42,7 @@ class Answer extends Model
         $this->idPost = $idPost;
     }
 
-    public function getIsValid() : int
+    public function getIsValid(): int
     {
         return $this->isValid;
     }
@@ -52,7 +52,7 @@ class Answer extends Model
         $this->isValid = $isValid;
     }
 
-    public function getAnswer() : string
+    public function getAnswer(): string
     {
         return $this->answer;
     }
@@ -62,7 +62,7 @@ class Answer extends Model
         $this->answer = $answer;
     }
 
-    public function getCreatedAt() : string
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -72,7 +72,7 @@ class Answer extends Model
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdateAt() : string
+    public function getUpdateAt(): string
     {
         return $this->updatedAt;
     }

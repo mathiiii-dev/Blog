@@ -8,7 +8,8 @@ class AdminRepository extends dbManager
 {
     public function getUnvalidatedPost()
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.pseudo, post.title, post.createdAt FROM post, user WHERE post.idUser = user.id AND post.isValid = 0 ORDER BY post.id LIMIT 5");
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.pseudo, post.content, post.createdAt FROM post, 
+                                    user WHERE post.idUser = user.id AND post.isValid = 0 ORDER BY post.id DESC LIMIT 5");
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
         return $post->fetchAll();
@@ -34,7 +35,8 @@ class AdminRepository extends dbManager
 
     public function getUnvalidatedAnswer()
     {
-        $post = $this->dbConnect()->prepare("SELECT answer.id, user.pseudo, answer.idPost, answer.answer, answer.createdAt FROM answer, user WHERE answer.idUser = user.id AND answer.isValid = 0 ORDER BY answer.id LIMIT 5");
+        $post = $this->dbConnect()->prepare("SELECT answer.id, user.pseudo, answer.idPost, answer.answer, answer.createdAt 
+                                    FROM answer, user WHERE answer.idUser = user.id AND answer.isValid = 0 ORDER BY answer.id DESC LIMIT 5");
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
         return $post->fetchAll();

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\Answer;
+use App\Services\AccessValidator;
 use App\Services\MessageFlash;
 use App\Repository\AnswerRepository;
 use App\Services\Twig;
@@ -25,7 +26,7 @@ class AnswerController extends Twig
         $answerRepo->addAnswer($answer);
         if (http_response_code(200)) {
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre réponse a bien été créée !', 'alert alert-success');
+            $session->setFlashMessage('Votre réponse a bien été créée ! Elle sera visible lorsque la modération l\'aura validée.', 'success');
         }
         header('Location: /Blog/post/' . $id);
     }
@@ -36,7 +37,8 @@ class AnswerController extends Twig
         $cookie = explode('-----', $cookie);
         $answerRepo = new AnswerRepository();
         $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
-        if (empty($cookie[0]) && empty($_SESSION['id']) || $idUserAnswer['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+        $verifAccess = new AccessValidator();
+        if (!$verifAccess->validAccess($idUserAnswer['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -53,7 +55,7 @@ class AnswerController extends Twig
                 'updatedAt' => date('y-m-d')
             ]);
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre réponse a bien été modifiée !', 'alert alert-success');
+            $session->setFlashMessage('Votre réponse a bien été modifiée !', 'success');
             $answerRepo->modifyAnswer($id, $answer);
             header('Location: /Blog/post/' . $idUserAnswer['idPost']);
         }
@@ -65,12 +67,13 @@ class AnswerController extends Twig
         $answerInfo = $answer->getAnswerById($id);
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        if (empty($cookie[0]) && empty($_SESSION['id']) || $answerInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
+        $verifAccess = new AccessValidator();
+        if (!$verifAccess->validAccess($answerInfo['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
         $session = new MessageFlash();
-        $session->setFlashMessage('Votre réponse a bien été supprimée !', 'alert alert-success');
+        $session->setFlashMessage('Votre réponse a bien été supprimée !', 'success');
         $answer->deleteAnswer($id);
         header('Location: /Blog/post/' . $answerInfo['idPost']);
 

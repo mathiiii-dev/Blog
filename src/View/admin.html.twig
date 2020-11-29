@@ -19,7 +19,7 @@
     </header>
     <div class="container">
         <div class="row mb-5">
-            <div class="col-md-6 text-center">
+            <div class="col-md-6 text-center mt-3">
                 <div class="card">
                     <h5 class="card-header">Post restant à valider</h5>
                     <div class="card-body">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 text-center">
+            <div class="col-md-6 text-center mt-3">
                 <div class="card">
                     <h5 class="card-header">Réponse restante à valider</h5>
                     <div class="card-body">
@@ -42,13 +42,12 @@
         <div class="row mb-5">
             <h3 id="post">Post : </h3>
             <div class="table-responsive">
-                <table class="table table-bordered text-center">
+                <table class="table table-bordered text-justify text-center">
                     <thead>
                     <tr>
                         <th scope="col">Pseudo</th>
-                        <th scope="col">Titre</th>
+                        <th scope="col">Post</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Voir</th>
                         <th scope="col">Valider</th>
                         <th scope="col">Supprimer</th>
                     </tr>
@@ -57,24 +56,19 @@
                     {% for post in posts %}
                         <tr>
                             <th>{{ post.pseudo }}</th>
-                            <td>{{ post.title }}</td>
+                            <td>{{ post.content|raw }}</td>
                             <td>{{ post.createdAt }}</td>
-                            <td>
-                                <a href="/Blog/post/{{ post.id }}" class="btn btn-primary btn-block">
-                                     <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
                             <td>
                                 <form method="post" action="./validate-post/{{ post.id }}">
                                     <button type="submit" class="btn btn-success btn-block ">
-                                         <i class="fas fa-check"></i>
+                                        <i class="fas fa-check"></i>
                                     </button>
                                 </form>
                             </td>
                             <td>
-                                <form method="post" action="./delete-post/{{ post.id }}">
+                                <form method="post" action="./admin-delPost/{{ post.id }}">
                                     <button type="submit" class="btn btn-danger btn-block">
-                                         <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
                             </td>
@@ -93,7 +87,6 @@
                         <th scope="col">Pseudo</th>
                         <th scope="col">Réponse</th>
                         <th scope="col">Date</th>
-                        <th scope="col">Voir</th>
                         <th scope="col">Valider</th>
                         <th scope="col">Supprimer</th>
                     </tr>
@@ -102,13 +95,8 @@
                     {% for answer in answers %}
                         <tr>
                             <th scope="row">{{ answer.pseudo }}</th>
-                            <td>{{ answer.answer }}</td>
+                            <td>{{ answer.answer|raw }}</td>
                             <td>{{ answer.createdAt }}</td>
-                            <td>
-                                <a href="/Blog/post/{{ answer.idPost }}" class="btn btn-primary btn-block">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
                             <td>
                                 <form method="post" action="./validate-answer/{{ answer.id }}">
                                     <button type="submit" class="btn btn-success btn-block">
@@ -117,7 +105,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form method="post" action="./delete-answer/{{ answer.id }}">
+                                <form method="post" action="./admin-delAnswer/{{ answer.id }}">
                                     <button type="submit" class="btn btn-danger btn-block">
                                         <i class="fas fa-trash"></i>
                                     </button>
