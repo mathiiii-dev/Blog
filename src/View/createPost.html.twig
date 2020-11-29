@@ -50,8 +50,10 @@
 {% block javascripts %}
 <script>
     tinymce.init({
-    selector: 'textarea',
-    language: 'fr_FR'
-});
+        selector: 'textarea',
+        language: 'fr_FR',
+        entity_encoding: 'raw',
+        encoding: 'UTF-8'
+    });
 </script>
 {% endblock %}

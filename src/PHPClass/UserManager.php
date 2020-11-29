@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model;
+namespace App\PHPClass;
 
-use App\Model\Repository\UserRepository;
-use http\Cookie;
+use App\Repository\UserRepository;
+use App\Model\User;
 
 class UserManager extends UserRepository
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\Repository;
+namespace App\Repository;
 
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 use App\Model\Post;
 
 class PostRepository extends DbManager

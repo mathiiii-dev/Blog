@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Controller;
 
-
 use App\Model\Answer;
-use App\Model\Repository\AnswerRepository;
-use App\Model\Twig;
+use App\Repository\AnswerRepository;
+use App\PHPClass\Twig;
 
 class AnswerController extends Twig
 {

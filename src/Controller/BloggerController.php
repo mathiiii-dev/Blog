@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Controller;
 
-
 use App\Model\Blogger;
-use App\Model\Country;
-use App\Model\Repository\BloggerRepository;
-use App\Model\Twig;
+use App\PHPClass\Country;
+use App\Repository\BloggerRepository;
+use App\PHPClass\Twig;
 
 class BloggerController extends Twig
 {

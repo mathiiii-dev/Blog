@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace App\PHPClass;
 
-use App\Controller\PostsController;
+use App\Model\Post;
 
 class PostsManager
 {
