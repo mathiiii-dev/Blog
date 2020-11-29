@@ -38,7 +38,9 @@
             </div>
         {% endif %}
         <div class="col-lg-8 col-md-10 mx-auto">
-            {{ erreur }}
+            <div class="{{ class }}">
+                {{ message }}
+            </div>
             {{ content|raw }}
             {% for i in answer %}
                 <div class="panel">

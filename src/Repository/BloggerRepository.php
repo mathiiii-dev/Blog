@@ -10,7 +10,7 @@ class BloggerRepository extends DbManager
 
     public function getInfoBloggerById(int $id)
     {
-        $blogger = $this->dbConnect()->prepare('SELECT * FROM Blogger, User WHERE blogger.idUser = user.id AND blogger.idUser = :id');
+        $blogger = $this->dbConnect()->prepare('SELECT user.pseudo, blogger.description, blogger.country, blogger.profilePicture, blogger.idUser FROM Blogger, User WHERE blogger.idUser = user.id AND blogger.idUser = :id');
         $blogger->bindValue(':id', $id);
         $blogger->execute();
         $blogger->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');

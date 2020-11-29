@@ -73,7 +73,7 @@ class PostRepository extends DbManager
 
     public function getAllPost()
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post INNER JOIN user ON post.idUser = user.id ");
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post INNER JOIN user ON post.idUser = user.id ORDER BY post.id DESC");
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
         return $post->fetchAll();

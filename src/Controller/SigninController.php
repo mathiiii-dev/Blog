@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\PHPClass\FormValidator;
 use App\PHPClass\Twig;
 use App\Model\User;
 use App\PHPClass\UserManager;
@@ -9,33 +10,33 @@ use App\PHPClass\MessageFlash;
 
 class SigninController extends Twig
 {
-    public function show($filter = null) : void
+    public function show()
     {
-        $this->twig('signin.html.twig',['erreur'=>''.$filter.'']);
+        $session = new MessageFlash();
+        $flash = $session->showFlashMessage();
+        $this->twig('signin.html.twig', [
+            'message' => $flash['message'] ?? null,
+            'class' => $flash['class'] ?? null
+        ]);
     }
 
-    public function signIn() : void
+    public function signIn()
     {
        $user = new User([
             'pseudo' => $_POST['pseudo'],
             'password' => $_POST['password']
        ]);
+
         $userManager = new UserManager();
-        if (empty($_POST["password"]) || empty($_POST["pseudo"])){
-            $this->show('Veuillez remplir tout les champs');
+        $checkSignIn = new FormValidator();
+        if(!$checkSignIn->checkSignIn($user))
+        {
+          return header('Location: /Blog/sign-in');
         }
-        elseif (!$userManager->checkIfPseudoExist($user)){
-            $this->show('Pseudo incorrect');
-        }
-        elseif (!$userManager->checkPasswordHash($user)){
-            $this->show('Mauvais mot de passe');
-        }
-        else{
-            $session = new MessageFlash();
-            $session->setFlashMessage('Vous êtes bien connecté !', 'alert alert-success');
-            $userManager->connectUser($user);
-            header('Location: /Blog');
-        }
+        $session = new MessageFlash();
+        $session->setFlashMessage('Vous êtes bien connecté !', 'alert alert-success');
+        $userManager->connectUser($user);
+        header('Location: /Blog');
     }
 
     public function disconnect(){

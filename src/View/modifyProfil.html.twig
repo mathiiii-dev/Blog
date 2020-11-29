@@ -27,8 +27,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
-               {{ erreur }}
-
+                <div class="{{ class }}">
+                    {{ message }}
+                </div>
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-profil">
                         <label for="description">Description</label>
@@ -69,10 +70,11 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
 <script>
-    tinymce.init({
-    selector: 'textarea',
-    language: 'fr_FR'
-});
+    tinymce.init( {
+        selector: 'textarea',
+        language: 'fr_FR'
+    });
 </script>
 {% endblock %}
