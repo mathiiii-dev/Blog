@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Model\Repository;
+namespace App\Repository;
 
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 use App\Model\Post;
 
 class PostRepository extends DbManager
@@ -71,12 +71,52 @@ class PostRepository extends DbManager
         $deletePost->execute();
     }
 
-    public function getAllPost()
+    public function getAllPost($perPage, $offset)
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post INNER JOIN user ON post.idUser = user.id ");
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM 
+                                            post, user WHERE post.idUser = user.id ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
+        $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
+        $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
         return $post->fetchAll();
+    }
+
+    public function countPosts()
+    {
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post");
+        $count->execute();
+        $count->setFetchMode(\PDO::FETCH_NUM);
+        return $count->fetch();
+    }
+
+    public function getUnvalidatedPost()
+    {
+        $post = $this->dbConnect()->prepare("SELECT user.pseudo, post.title, post.createdAt FROM post, user WHERE post.idUser = user.id AND post.isValid = 0 ORDER BY post.id LIMIT 5");
+        $post->execute();
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        return $post->fetchAll();
+    }
+    public function countUnvalidatedPost()
+    {
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post WHERE isValid = 0");
+        $count->execute();
+        $count->setFetchMode(\PDO::FETCH_NUM);
+        return $count->fetch();
+    }
+    public function getUnvalidatedAnswer()
+{
+    $post = $this->dbConnect()->prepare("SELECT user.pseudo, answer.answer, answer.createdAt FROM answer, user WHERE answer.idUser = user.id AND answer.isValid = 0 ORDER BY answer.id LIMIT 5");
+    $post->execute();
+    $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+    return $post->fetchAll();
+}
+    public function countUnvalidatedAnswer()
+    {
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM answer WHERE isValid = 0");
+        $count->execute();
+        $count->setFetchMode(\PDO::FETCH_NUM);
+        return $count->fetch();
     }
 
 }

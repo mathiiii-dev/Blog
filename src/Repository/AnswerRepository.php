@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model\Repository;
+namespace App\Repository;
 
 use App\Model\Answer;
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 
 class AnswerRepository extends DbManager
 {
@@ -59,7 +59,7 @@ class AnswerRepository extends DbManager
 
     public function getAnswerById($id)
     {
-        $answer = $this->dbConnect()->prepare("SELECT * FROM Answer WHERE id = :id");
+        $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id");
         $answer->bindValue(':id', $id);
         $answer->execute();
         $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');

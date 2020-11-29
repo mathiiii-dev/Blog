@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Model\Repository;
+namespace App\Repository;
 
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 use App\Model\User;
-use App\Model\UserManager;
 
 class UserRepository extends DbManager
 {
@@ -33,7 +32,7 @@ class UserRepository extends DbManager
 
     public function getUserByPseudo($pseudo)
     {
-        $userPseudo = $this->dbConnect()->prepare("SELECT * FROM User WHERE pseudo = :pseudo");
+        $userPseudo = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE pseudo = :pseudo");
         $userPseudo->bindValue(':pseudo', $pseudo);
         $userPseudo->execute();
         $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
@@ -42,7 +41,7 @@ class UserRepository extends DbManager
 
     public function getUserByEmail($email)
     {
-        $userEmail = $this->dbConnect()->prepare("SELECT * FROM User WHERE email = :email");
+        $userEmail = $this->dbConnect()->prepare("SELECT id FROM User WHERE email = :email");
         $userEmail->bindValue(':email', $email);
         $userEmail->execute();
         $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
@@ -51,7 +50,7 @@ class UserRepository extends DbManager
 
     public function getUserById($id)
     {
-        $userId = $this->dbConnect()->prepare("SELECT * FROM User WHERE id = :id");
+        $userId = $this->dbConnect()->prepare("SELECT pseudo, password, type FROM User WHERE id = :id");
         $userId->bindValue(':id', $id);
         $userId->execute();
         $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');

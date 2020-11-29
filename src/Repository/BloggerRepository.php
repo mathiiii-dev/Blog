@@ -1,18 +1,16 @@
 <?php
 
-
-namespace App\Model\Repository;
-
+namespace App\Repository;
 
 use App\Model\Blogger;
-use App\Model\DbManager;
+use App\PHPClass\DbManager;
 
 class BloggerRepository extends DbManager
 {
 
     public function getInfoBloggerById(int $id)
     {
-        $blogger = $this->dbConnect()->prepare('SELECT * FROM Blogger, User WHERE blogger.idUser = user.id AND blogger.idUser = :id');
+        $blogger = $this->dbConnect()->prepare('SELECT user.pseudo, blogger.description, blogger.country, blogger.profilePicture, blogger.idUser FROM Blogger, User WHERE blogger.idUser = user.id AND blogger.idUser = :id');
         $blogger->bindValue(':id', $id);
         $blogger->execute();
         $blogger->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
@@ -21,7 +19,6 @@ class BloggerRepository extends DbManager
 
     public function createUserProfil(int $id)
     {
-        var_dump($id);
         $lastIdUser = $this->dbConnect()->prepare(
             'INSERT INTO Blogger (idUser) VALUES (:idUser)'
         );

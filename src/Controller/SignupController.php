@@ -2,23 +2,26 @@
 
 namespace App\Controller;
 
-use App\Model\Blogger;
-use App\Model\Repository\BloggerRepository;
-use App\Model\Repository\UserRepository;
-use App\Model\Twig;
+use App\PHPClass\FormValidator;
+use App\PHPClass\MessageFlash;
+use App\Repository\BloggerRepository;
+use App\Repository\UserRepository;
+use App\PHPClass\Twig;
 use App\Model\User;
-use App\Model\UserManager;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 
 class SignupController extends Twig
 {
     public function show($filter = null) : void
     {
-        $this->twig('signup.html.twig', ['erreur'=>''.$filter.'']);
+        $session = new MessageFlash();
+        $flash = $session->showFlashMessage();
+        $this->twig('signup.html.twig', [
+            'message' => $flash['message'] ?? null,
+            'class' => $flash['class'] ?? null
+        ]);
     }
 
-    public function signUp() : void
+    public function signUp()
     {
         $user = new User([
             'lastname' => $_POST['nom'],
@@ -29,28 +32,20 @@ class SignupController extends Twig
             'type' => 'Blogger',
             'createdAt' => date('y-m-d')
         ]);
+        $checkSignIn = new FormValidator();
 
-        $userManager = new UserManager();
-        if (!$userManager->isNotEmpty($user)){
-            $this->show('Veuillez remplir tout les champs');
+        if(!$checkSignIn->checkSignUp($user))
+        {
+            return header('Location: /Blog/sign-up');
         }
-        elseif (!$userManager->checkPasswordLength()){
-            $this->show('Mot de passe trop court');
-        }
-        elseif (!$userManager->checkPseudo($user)){
-            $this->show('Pseudo déjà pris');
-        }
-        elseif (!$userManager->checkEmail($user)){
-            $this->show('Email déjà pris');
-        }else{
-            $userRepo = new UserRepository();
-            $bloggerRepo = new BloggerRepository();
-            $userRepo->addUser($user);
-            $id = $userRepo->getLastUserId();
-            $bloggerRepo->createUserProfil((int)$id[0]);
-            header('Location: sign-in');
-        }
+        $session = new MessageFlash();
+        $session->setFlashMessage('Votre compte à bien été crée ! Vous pouvez maintenant vous connecter', 'alert alert-success');
+        $userRepo = new UserRepository();
+        $bloggerRepo = new BloggerRepository();
+        $userRepo->addUser($user);
+        $id = $userRepo->getLastUserId();
+        $bloggerRepo->createUserProfil((int)$id[0]);
+        header('Location: sign-in');
     }
-
 
 }

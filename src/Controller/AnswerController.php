@@ -1,12 +1,11 @@
 <?php
 
-
 namespace App\Controller;
 
-
 use App\Model\Answer;
-use App\Model\Repository\AnswerRepository;
-use App\Model\Twig;
+use App\PHPClass\MessageFlash;
+use App\Repository\AnswerRepository;
+use App\PHPClass\Twig;
 
 class AnswerController extends Twig
 {
@@ -24,10 +23,14 @@ class AnswerController extends Twig
 
         $answerRepo = new AnswerRepository();
         $answerRepo->addAnswer($answer);
-        header('Location: /Blog/posts/'.$id);
+        if (http_response_code(200)) {
+            $session = new MessageFlash();
+            $session->setFlashMessage('Votre réponse a bien été créée !', 'alert alert-success');
+        }
+        header('Location: /Blog/post/' . $id);
     }
 
-    public function showModifyAnswer($id)
+    public function modifyAnswer($id)
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
@@ -35,7 +38,7 @@ class AnswerController extends Twig
         $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
         if (empty($cookie[0]) && empty($_SESSION['id']) || $idUserAnswer['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
             http_response_code(500);
-            return $this->twig('500.html.twig', ['' => '']);
+            return $this->twig('500.html.twig');
         }
         $this->twig('modifyAnswer.html.twig',
             [
@@ -49,12 +52,13 @@ class AnswerController extends Twig
                 'answer' => $_POST['answer'],
                 'updatedAt' => date('y-m-d')
             ]);
-
-           $answerRepo->modifyAnswer($id, $answer);
-           header('Location: /Blog/posts/'.$idUserAnswer['idPost']);
+            $session = new MessageFlash();
+            $session->setFlashMessage('Votre réponse a bien été modifiée !', 'alert alert-success');
+            $answerRepo->modifyAnswer($id, $answer);
+            header('Location: /Blog/post/' . $idUserAnswer['idPost']);
         }
     }
-  
+
     public function deleteAnswer(int $id)
     {
         $answer = new AnswerRepository();
@@ -63,10 +67,12 @@ class AnswerController extends Twig
         $cookie = explode('-----', $cookie);
         if (empty($cookie[0]) && empty($_SESSION['id']) || $answerInfo['idUser'] != $_SESSION['id'] ?? $cookie[0]) {
             http_response_code(500);
-            return $this->twig('500.html.twig', ['' => '']);
+            return $this->twig('500.html.twig');
         }
+        $session = new MessageFlash();
+        $session->setFlashMessage('Votre réponse a bien été supprimée !', 'alert alert-success');
         $answer->deleteAnswer($id);
-        header('Location: /Blog/posts/'.$answerInfo['idPost']);
+        header('Location: /Blog/post/' . $answerInfo['idPost']);
 
     }
 }

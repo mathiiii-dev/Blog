@@ -24,8 +24,15 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto mb-5">
-            {{ erreur }}
-            <form method="post" action="createPost">
+            {% if message != null %}
+            <div class="{{ class }}" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            <form method="post" action="create-post">
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label for="title">Titre</label>
@@ -50,8 +57,10 @@
 {% block javascripts %}
 <script>
     tinymce.init({
-    selector: 'textarea',
-    language: 'fr_FR'
-});
+        selector: 'textarea',
+        language: 'fr_FR',
+        entity_encoding: 'raw',
+        encoding: 'UTF-8'
+    });
 </script>
 {% endblock %}

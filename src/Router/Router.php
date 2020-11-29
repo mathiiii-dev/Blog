@@ -2,7 +2,7 @@
 
 namespace App\Router;
 
-use App\Model\Twig;
+use App\PHPClass\Twig;
 
 class Router extends Twig
 {
