@@ -71,12 +71,23 @@ class PostRepository extends DbManager
         $deletePost->execute();
     }
 
-    public function getAllPost()
+    public function getAllPost($perPage, $offset)
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post INNER JOIN user ON post.idUser = user.id ORDER BY post.id DESC");
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM 
+                                            post, user WHERE post.idUser = user.id ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
+        $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
+        $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();
         $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
         return $post->fetchAll();
+    }
+
+    public function countPosts()
+    {
+        $count = $this->dbConnect()->prepare("SELECT COUNT(id) FROM post");
+        $count->execute();
+        $count->setFetchMode(\PDO::FETCH_NUM);
+        return $count->fetch();
     }
 
 }

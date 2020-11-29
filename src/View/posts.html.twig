@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
+    <header class="masthead"
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg" }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -20,23 +21,51 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto ">
-                <div class="{{ class }}">
-                    {{ message }}
-                </div>
+                {% if message != null %}
+                    <div class="{{ class }}" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                {% if hasPost == false %}
+                    <div class="jumbotron">
+                        <h1 class="display-4">Aucun post trouvé !</h1>
+                        <p class="lead">Aucun post n'a été crée pour l'instant.</p>
+                        <hr class="my-4">
+                        {% if session == null %}
+                            <p>Pour créer un post vous devez être inscrit et connecté !</p>
+                            <a class="btn btn-primary btn-lg" href="/Blog/sign-up" role="button">Inscription</a>
+                            <a class="btn btn-primary btn-lg" href="/Blog/sign-in" role="button">Connection</a>
+                        {% else %}
+                            <p>Cliquez sur le bouton nouveau post pour créer le premier post !</p>
+                            <a class="btn btn-primary btn-lg" href="/Blog/create-post" role="button">Nouveau Post</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 {% for post in row %}
-                <div class="post-preview list-post">
-                    <a href="posts/{{ post.id }}">
-                        <h2 class="post-title">
-                            {{ post.title }}
-                        </h2>
-                        <h3 class="post-subtitle">
-                            {{ post.lead }}
-                        </h3>
-                    </a>
-                    <a class="btn btn-primary float-right" href="posts/{{ post.id }}" style="color: white;">Lire</a>
-                    <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
-                </div>
+                    <div class="post-preview list-post">
+                        <a href="/blog/post/{{ post.id }}">
+                            <h2 class="post-title">
+                                {{ post.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{ post.lead }}
+                            </h3>
+                        </a>
+                        <a class="btn btn-primary float-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
+                        <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
+                    </div>
                 {% endfor %}
+                <div class="d-flex justify-content-between my-4">
+                    {% if currentPage > 1 %}
+                        <a class="page-link" href="/Blog/posts/{{ currentPage - 1 }}">Précedent</a>
+                    {% endif %}
+                    {% if currentPage < pages %}
+                        <a class="page-link ml-auto" href="/Blog/posts/{{ currentPage + 1 }}">Suivant</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>

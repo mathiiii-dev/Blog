@@ -25,8 +25,11 @@
                         {{ description | raw }}
                         <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png'}}" alt="Pays">
                         {% endif %}
-                        <div class="{{ class }}">
+                        <div class="{{ class }}" role="alert">
                             {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         {% if idUserSession == idUserBlogger %}
                             <form action="/Blog/modify-profil/{{ idUserBlogger }}">
@@ -43,7 +46,7 @@
             <div class="col-lg-8 col-md-10 mx-auto ">
                 {% for post in posts %}
                     <div class="post-preview list-post">
-                        <a href="posts/{{ post.id }}">
+                        <a href="post/{{ post.id }}">
                             <h2 class="post-title">
                                 {{ post.title }}
                             </h2>
@@ -51,7 +54,7 @@
                                 {{ post.lead }}
                             </h3>
                         </a>
-                        <a class="btn btn-primary float-right" href="/blog/posts/{{ post.id }}" style="color: white;">Lire</a>
+                        <a class="btn btn-primary float-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
                         <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
                     </div>
                 {% endfor %}
