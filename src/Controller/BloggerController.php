@@ -43,8 +43,6 @@ class BloggerController extends Twig
 
     public function modifyProfil(int $id)
     {
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $bloggerRepo = new BloggerRepository();
         $bloggerInfo = $bloggerRepo->getInfoBloggerById($id);
         $verifAccess = new AccessValidator();

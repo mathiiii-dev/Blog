@@ -26,7 +26,7 @@ class AnswerController extends Twig
         $answerRepo->addAnswer($answer);
         if (http_response_code(200)) {
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre réponse a bien été créée !', 'success');
+            $session->setFlashMessage('Votre réponse a bien été créée ! Elle sera visible lorsque la modération l\'aura validée.', 'success');
         }
         header('Location: /Blog/post/' . $id);
     }

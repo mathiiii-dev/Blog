@@ -111,7 +111,7 @@ class PostsController extends Twig
             }
 
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre post à bien été créé !', 'success');
+            $session->setFlashMessage('Votre post à bien été créé ! Il sera visible lorsque la modération l\'aura validée.','success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
             header('Location: /Blog/posts/1');
