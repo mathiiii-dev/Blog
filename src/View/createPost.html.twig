@@ -5,11 +5,13 @@
 {% endblock %}
 
 {% block stylesheet %}
-    <script src="https://cdn.tiny.cloud/1/ktx088jengagzyqleocjgjqmtrg2xx3z09m1lnkbe61oopta/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/ktx088jengagzyqleocjgjqmtrg2xx3z09m1lnkbe61oopta/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
 {% endblock %}
 
 {% block content %}
-    <header class="masthead" style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg"}}')">
+    <header class="masthead"
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg" }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -21,46 +23,46 @@
             </div>
         </div>
     </header>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto mb-5">
-            {% if message != null %}
-            <div class="{{ class }}" role="alert">
-                {{ message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto mb-5">
+                {% if message != null %}
+                    <div class="alert alert-{{ class }}" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+                <form method="post" action="create-post">
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label for="title">Titre</label>
+                            <input type="text" class="form-control" placeholder="Titre" id="title" name="title"
+                                   required="" value="{{ title }}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls mb-3">
+                            <label for="lead">Chapô</label>
+                            <input type="text" class="form-control" placeholder="Chapô" id="lead" name="lead"
+                                   required="">
+                        </div>
+                    </div>
+                    <textarea id="content" name="content"></textarea>
+                    <button type="submit" class="btn btn-primary float-right mt-3">Poster</button>
+                </form>
             </div>
-            {% endif %}
-            <form method="post" action="create-post">
-                <div class="control-group">
-                    <div class="form-group floating-label-form-group controls">
-                        <label for="title">Titre</label>
-                        <input type="text" class="form-control" placeholder="Titre" id="title" name="title" required="" value="{{ title }}">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="form-group floating-label-form-group controls">
-                        <label for="lead">Chapô</label>
-                        <input type="text" class="form-control" placeholder="Chapô" id="lead" name="lead" required="">
-                    </div>
-                </div>
-                <br>
-                <textarea id="content" name="content"></textarea>
-                <br>
-                <button type="submit" class="btn btn-primary float-right">Poster</button>
-            </form>
         </div>
     </div>
-</div>
 {% endblock %}
 {% block javascripts %}
-<script>
-    tinymce.init({
-        selector: 'textarea',
-        language: 'fr_FR',
-        entity_encoding: 'raw',
-        encoding: 'UTF-8'
-    });
-</script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            language: 'fr_FR',
+            entity_encoding: 'raw',
+            encoding: 'UTF-8'
+        });
+    </script>
 {% endblock %}

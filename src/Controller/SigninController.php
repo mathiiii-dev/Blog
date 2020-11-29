@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\PHPClass\FormValidator;
-use App\PHPClass\Twig;
+use App\Services\FormValidator;
+use App\Services\Twig;
 use App\Model\User;
-use App\PHPClass\UserManager;
-use App\PHPClass\MessageFlash;
+use App\Services\UserManager;
+use App\Services\MessageFlash;
 
 class SigninController extends Twig
 {
@@ -22,24 +22,24 @@ class SigninController extends Twig
 
     public function signIn()
     {
-       $user = new User([
+        $user = new User([
             'pseudo' => $_POST['pseudo'],
             'password' => $_POST['password']
-       ]);
+        ]);
 
         $userManager = new UserManager();
         $checkSignIn = new FormValidator();
-        if(!$checkSignIn->checkSignIn($user))
-        {
-          return header('Location: /Blog/sign-in');
+        if (!$checkSignIn->checkSignIn($user)) {
+            return header('Location: /Blog/sign-in');
         }
         $session = new MessageFlash();
-        $session->setFlashMessage('Vous êtes bien connecté !', 'alert alert-success');
+        $session->setFlashMessage('Vous êtes bien connecté !', 'success');
         $userManager->connectUser($user);
         header('Location: /Blog');
     }
 
-    public function disconnect(){
+    public function disconnect()
+    {
         $userManager = new UserManager();
         $userManager->userDisconnect();
         header('Location: /Blog');

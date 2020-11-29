@@ -31,5 +31,9 @@ $router->get('/modify-answer/:id', 'Answer#modifyAnswer');
 $router->post('/modify-answer/:id', 'Answer#modifyAnswer');
 $router->get('/delete-answer/:id', 'Answer#deleteAnswer');
 $router->get('/admin', 'Admin#show');
+$router->post('/validate-post/:id', 'Admin#validatePost');
+$router->post('/validate-answer/:idAnswer', 'Admin#validateAnswer');
+$router->post('/admin-delPost/:idPost', 'Admin#deletePost');
+$router->post('/admin-delAnswer/:idAnswer', 'Admin#deleteAnswer');
 
 $router->run();

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PHPClass;
+namespace App\Services;
 
 class FormValidator
 {
@@ -9,15 +9,13 @@ class FormValidator
         $userManager = new UserManager();
         $session = new MessageFlash();
 
-        if (empty($_POST["password"]) || empty($_POST["pseudo"])){
+        if (empty($_POST["password"]) || empty($_POST["pseudo"])) {
             $session->setFlashMessage('Veuillez remplir tout les champs !', 'alert alert-warning');
             return false;
-        }
-        elseif (!$userManager->checkIfPseudoExist($user)){
+        } elseif (!$userManager->checkIfPseudoExist($user)) {
             $session->setFlashMessage('Le pseudo n\'éxiste pas !', 'alert alert-danger');
             return false;
-        }
-        elseif (!$userManager->checkPasswordHash($user)){
+        } elseif (!$userManager->checkPasswordHash($user)) {
             $session->setFlashMessage('Mauvais mot de passe !', 'alert alert-danger');
             return false;
         }
@@ -28,19 +26,16 @@ class FormValidator
     {
         $session = new MessageFlash();
         $userManager = new UserManager();
-        if (!$userManager->isNotEmpty($user)){
+        if (!$userManager->isNotEmpty($user)) {
             $session->setFlashMessage('Veuillez remplir tout les champs !', 'alert alert-warning');
             return false;
-        }
-        elseif (!$userManager->checkPasswordLength()){
+        } elseif (!$userManager->checkPasswordLength()) {
             $session->setFlashMessage('Le mot de passe est trop court !', 'alert alert-danger');
             return false;
-        }
-        elseif (!$userManager->checkPseudo($user)){
+        } elseif (!$userManager->checkPseudo($user)) {
             $session->setFlashMessage('Le pseudo est déjà utilisé !', 'alert alert-danger');
             return false;
-        }
-        elseif (!$userManager->checkEmail($user)){
+        } elseif (!$userManager->checkEmail($user)) {
             $session->setFlashMessage('Le mail est déjà utilisé !', 'alert alert-danger');
             return false;
         }

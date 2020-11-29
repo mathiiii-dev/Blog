@@ -1,13 +1,13 @@
 <?php
 
-namespace App\PHPClass;
+namespace App\Services;
 
 use App\Repository\UserRepository;
 use App\Model\User;
 
 class UserManager extends UserRepository
 {
-    public function isNotEmpty(User $user) : bool
+    public function isNotEmpty(User $user): bool
     {
         $lastname = $user->getLastname();
         $firstname = $user->getFirstname();
@@ -22,7 +22,7 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function checkPasswordLength() : bool
+    public function checkPasswordLength(): bool
     {
         $password = $_POST['password'];
         if (strlen($password) < 8) {
@@ -31,7 +31,7 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function checkPseudo(User $user) : bool
+    public function checkPseudo(User $user): bool
     {
         if (!$this->getUserByPseudo($user->getPseudo()) == null) {
             return false;
@@ -47,7 +47,7 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function checkIfPseudoExist(User $user) : bool
+    public function checkIfPseudoExist(User $user): bool
     {
         $pseudo = $user->getPseudo();
         if (!$this->getUserByPseudo($pseudo)) {
@@ -56,9 +56,9 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function checkPasswordHash(User $user) : bool
+    public function checkPasswordHash(User $user): bool
     {
-        if ($this->checkIfPseudoExist($user)){
+        if ($this->checkIfPseudoExist($user)) {
             $password = $user->getPassword();
             if (password_verify($password, $this->getPasswordHash($user))) {
                 return true;
@@ -70,7 +70,7 @@ class UserManager extends UserRepository
 
     public function setRememberMe(User $user)
     {
-        if (isset($_POST["remember"])){
+        if (isset($_POST["remember"])) {
             $pseudo = $user->getPseudo();
             $userInfo = $this->getUserByPseudo($pseudo);
             setcookie('auth', $userInfo[0] . '-----' . sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']), time() + 3600 * 24 * 30, '/', 'localhost', false, true);
@@ -79,22 +79,22 @@ class UserManager extends UserRepository
 
     public function getRememberMe()
     {
-        if (isset($_COOKIE['auth'])){
+        if (isset($_COOKIE['auth'])) {
             $auth = $_COOKIE['auth'];
             $auth = explode('-----', $auth);
             $userManager = new UserManager();
             $userInfo = $userManager->getUserById($auth[0]);
             $key = sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']);
-            if ($key == $auth[1]){
+            if ($key == $auth[1]) {
                 $_SESSION['Auth'] = (array)$userInfo;
                 setcookie('auth', $userInfo['id'] . '-----' . $key, time() + 3000 * 24 * 30, '/', 'localhost', false, true);
-            }else{
+            } else {
                 setcookie('auth', '', time() - 3600, '/', 'localhost', false, true);
             }
         }
     }
 
-    public function connectUser(User $user) : bool
+    public function connectUser(User $user): bool
     {
         if (!$this->checkPasswordHash($user) && !$this->checkIfPseudoExist($user)) {
             return false;
@@ -109,7 +109,8 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function userDisconnect(){
+    public function userDisconnect()
+    {
         session_unset();
         session_destroy();
         if (isset($_COOKIE['auth'])) {

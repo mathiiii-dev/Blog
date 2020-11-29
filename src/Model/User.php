@@ -19,7 +19,7 @@ class User extends Model
         $this->hydrate($data);
     }
 
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -29,7 +29,7 @@ class User extends Model
         $this->id = $id;
     }
 
-    public function getFirstname() : string
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
@@ -39,7 +39,7 @@ class User extends Model
         $this->firstname = $firstname;
     }
 
-    public function getLastname() : string
+    public function getLastname(): string
     {
         return $this->lastname;
     }
@@ -49,7 +49,7 @@ class User extends Model
         $this->lastname = $lastname;
     }
 
-    public function getEmail() : string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -59,7 +59,7 @@ class User extends Model
         $this->email = $email;
     }
 
-    public function getPseudo() : string
+    public function getPseudo(): string
     {
         return $this->pseudo;
     }
@@ -69,7 +69,7 @@ class User extends Model
         $this->pseudo = $pseudo;
     }
 
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -79,7 +79,7 @@ class User extends Model
         $this->password = $password;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -89,7 +89,7 @@ class User extends Model
         $this->type = $type;
     }
 
-    public function getCreatedAt() : string
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }

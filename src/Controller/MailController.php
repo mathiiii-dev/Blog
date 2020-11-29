@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-class MailController {
+class MailController
+{
 
     public function sendMail()
     {
@@ -13,7 +14,7 @@ class MailController {
 
         $to = "mat.micheli99@gmail.com";
         $emailSujet = 'Blog : ' . $sujet;
-        $emailMessage = 'Nom : '. $nom . '<br>Email : ' . $email . '<br>Message : ' . $message;
+        $emailMessage = 'Nom : ' . $nom . '<br>Email : ' . $email . '<br>Message : ' . $message;
         $headers = "De : " . $email;
         $headers .= "MIME-Version: 1.0\n";
         $headers .= "Content-type: text/html; charset=iso-8859-1\n";

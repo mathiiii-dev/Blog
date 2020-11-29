@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto ">
                 {% if message != null %}
-                    <div class="{{ class }}" role="alert">
+                    <div class="alert alert-{{ class }}" role="alert">
                         {{ message }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -54,7 +54,7 @@
                                 {{ post.lead }}
                             </h3>
                         </a>
-                        <a class="btn btn-primary float-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
+                        <a class="btn btn-primary float-lg-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
                         <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
                     </div>
                 {% endfor %}

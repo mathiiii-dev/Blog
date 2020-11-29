@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\PHPClass\Twig;
-use App\PHPClass\MessageFlash;
+use App\Services\Twig;
+use App\Services\MessageFlash;
 
 class HomeController extends Twig
 {
 
-    public function show() : void
+    public function show(): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();

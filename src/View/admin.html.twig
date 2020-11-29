@@ -18,101 +18,104 @@
         </div>
     </header>
     <div class="container">
-        <div class="row">
-
-            <div class="mx-auto col-12">
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
-                                    {{ countUnvalidatedPost }} posts à valider (affichage max. 5)
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                             data-parent="#accordion">
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Pseudo</th>
-                                        <th scope="col">Titre</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for post in posts %}
-                                        <tr>
-                                            <th scope="row">{{ post.pseudo }}</th>
-                                            <td>{{ post.title }}</td>
-                                            <td>{{ post.createdAt }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary"><i
-                                                            class="fas fa-eye"></i></i>
-                                                </button>
-                                                <button type="button" class="btn btn-success"><i
-                                                            class="fas fa-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger"><i
-                                                            class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                        aria-expanded="false" aria-controls="collapseTwo">
-                                    {{ countUnvalidatedAnswers }} reponses à valider (affichage max. 5)
-                                </button>
-                            </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Pseudo</th>
-                                        <th scope="col">Réponse</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for answer in answers %}
-                                        <tr>
-                                            <th scope="row">{{ answer.pseudo }}</th>
-                                            <td>{{ answer.answer|raw }}</td>
-                                            <td>{{ answer.createdAt }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-primary"><i
-                                                            class="fas fa-eye"></i></i>
-                                                </button>
-                                                <button type="button" class="btn btn-success"><i
-                                                            class="fas fa-check"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-danger"><i
-                                                            class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <div class="row mb-5">
+            <div class="col-md-6 text-center mt-3">
+                <div class="card">
+                    <h5 class="card-header">Post restant à valider</h5>
+                    <div class="card-body">
+                        <h2 class="text-danger font-weight-bold">{{ countUnvalidatedPost }}</h2>
+                        <a href="#post" class="btn btn-primary">Voir</a>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6 text-center mt-3">
+                <div class="card">
+                    <h5 class="card-header">Réponse restante à valider</h5>
+                    <div class="card-body">
+                        <h2 class="text-danger font-weight-bold">{{ countUnvalidatedAnswer }}</h2>
+
+                        <a href="#answer" class="btn btn-primary">Voir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <h3 id="post">Post : </h3>
+            <div class="table-responsive">
+                <table class="table table-bordered text-justify text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Post</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Valider</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for post in posts %}
+                        <tr>
+                            <th>{{ post.pseudo }}</th>
+                            <td>{{ post.content|raw }}</td>
+                            <td>{{ post.createdAt }}</td>
+                            <td>
+                                <form method="post" action="./validate-post/{{ post.id }}">
+                                    <button type="submit" class="btn btn-success btn-block ">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="./admin-delPost/{{ post.id }}">
+                                    <button type="submit" class="btn btn-danger btn-block">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <h3 id="answer">Réponse : </h3>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">Réponse</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Valider</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for answer in answers %}
+                        <tr>
+                            <th scope="row">{{ answer.pseudo }}</th>
+                            <td>{{ answer.answer|raw }}</td>
+                            <td>{{ answer.createdAt }}</td>
+                            <td>
+                                <form method="post" action="./validate-answer/{{ answer.id }}">
+                                    <button type="submit" class="btn btn-success btn-block">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="./admin-delAnswer/{{ answer.id }}">
+                                    <button type="submit" class="btn btn-danger btn-block">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
