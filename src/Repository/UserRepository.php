@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\PHPClass\DbManager;
+use App\Services\DbManager;
 use App\Model\User;
 
 class UserRepository extends DbManager
@@ -50,7 +50,7 @@ class UserRepository extends DbManager
 
     public function getUserById($id)
     {
-        $userId = $this->dbConnect()->prepare("SELECT pseudo, password, type FROM User WHERE id = :id");
+        $userId = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE id = :id");
         $userId->bindValue(':id', $id);
         $userId->execute();
         $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');

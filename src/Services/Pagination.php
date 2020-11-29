@@ -1,6 +1,6 @@
 <?php
 
-namespace App\PHPClass;
+namespace App\Services;
 
 use App\Repository\PostRepository;
 
@@ -16,6 +16,7 @@ class Pagination extends Twig
         $pages = ceil((int)$count[0] / $perPage);
         $offset = $perPage * ($currentPage - 1);
         $overPage = false;
+
         if($currentPage <= 0 || $currentPage > $pages || !filter_var($page, FILTER_VALIDATE_INT))
         {
             $overPage = true;

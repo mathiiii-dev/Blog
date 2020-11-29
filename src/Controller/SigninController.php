@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use App\PHPClass\FormValidator;
-use App\PHPClass\Twig;
+use App\Services\FormValidator;
+use App\Services\Twig;
 use App\Model\User;
-use App\PHPClass\UserManager;
-use App\PHPClass\MessageFlash;
+use App\Services\UserManager;
+use App\Services\MessageFlash;
 
 class SigninController extends Twig
 {
