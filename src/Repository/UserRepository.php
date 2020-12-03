@@ -73,4 +73,13 @@ class UserRepository extends DbManager
         $id->execute();
         return $id->fetch();
     }
+
+    public function newPassword($password, $email)
+    {
+        var_dump($password, $email);
+        $newPassword = $this->dbConnect()->prepare("UPDATE User SET password = :password WHERE email = :email");
+        $newPassword->bindValue(':password', $password);
+        $newPassword->bindValue(':email', $email);
+        $newPassword->execute();
+    }
 }

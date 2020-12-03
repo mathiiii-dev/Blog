@@ -62,3 +62,7 @@ header.masthead .post-heading .meta {
     margin-bottom: 20px;
     border-bottom: #6879cc 3px solid;
 }
+
+#newForm {
+    display: none;
+}

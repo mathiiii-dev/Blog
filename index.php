@@ -35,5 +35,6 @@ $router->post('/validate-post/:id', 'Admin#validatePost');
 $router->post('/validate-answer/:idAnswer', 'Admin#validateAnswer');
 $router->post('/admin-delPost/:idPost', 'Admin#deletePost');
 $router->post('/admin-delAnswer/:idAnswer', 'Admin#deleteAnswer');
+$router->post('/sendNewPassword', 'Mail#sendNewPassword');
 
 $router->run();
