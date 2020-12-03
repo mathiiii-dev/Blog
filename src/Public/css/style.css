@@ -1,3 +1,45 @@
+body, .btn {
+    font-family: "Montserrat", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+}
+
+.floating-label-form-group input,
+.floating-label-form-group textarea{
+    font-family: "Montserrat", sans-serif;
+}
+
+#mainNav {
+    font-family: "Roboto", sans-serif;
+}
+
+.btn-primary {
+    background-color: #6879cc;
+    border-color: #6879cc;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #9da9d9;!important;
+    border-color: #9da9d9;!important;
+}
+
+a:hover, a:active, a:focus {
+    color: #9da9d9;
+}
+
+::selection {
+    color: #ffffff;
+    background: #6879cc;
+    text-shadow: none;
+}
+
+.post-preview > a > .post-title:hover, .post-preview > a > .post-title:focus, .post-preview > a > .post-subtitle:hover,
+.post-preview > a > .post-subtitle:focus {
+    color: #9da9d9;
+}
+
 .home-img {
     height: 275px;
     width: 345px;
