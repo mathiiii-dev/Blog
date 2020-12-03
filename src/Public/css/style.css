@@ -7,7 +7,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .floating-label-form-group input,
-.floating-label-form-group textarea{
+.floating-label-form-group textarea {
     font-family: "Montserrat", sans-serif;
 }
 
@@ -21,8 +21,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
-    background-color: #9da9d9;!important;
-    border-color: #9da9d9;!important;
+    background-color: #9da9d9;
+!important;
+    border-color: #9da9d9;
+!important;
 }
 
 a:hover, a:active, a:focus {
@@ -38,6 +40,10 @@ a:hover, a:active, a:focus {
 .post-preview > a > .post-title:hover, .post-preview > a > .post-title:focus, .post-preview > a > .post-subtitle:hover,
 .post-preview > a > .post-subtitle:focus {
     color: #9da9d9;
+}
+
+header.masthead .post-heading .meta {
+    font-family: "Montserrat", sans-serif;
 }
 
 .home-img {
