@@ -40,3 +40,16 @@
     border-radius: 25px;
 }
 
+.home-img {
+    height: 275px;
+    width: 345px;
+}
+
+.list-post {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: #6879cc 3px solid;
+}
+

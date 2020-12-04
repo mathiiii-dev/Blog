@@ -20,11 +20,10 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #6879cc;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
-    background-color: #9da9d9;
-!important;
-    border-color: #9da9d9;
-!important;
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    color: #fff;
+    background-color: #9da9d9 !important;
+    border-color: #9da9d9 !important;
 }
 
 a:hover, a:active, a:focus {
@@ -39,28 +38,15 @@ a:hover, a:active, a:focus {
 
 .post-preview > a > .post-title:hover, .post-preview > a > .post-title:focus, .post-preview > a > .post-subtitle:hover,
 .post-preview > a > .post-subtitle:focus {
-    color: #9da9d9;
+    color: #9da9d9;!important;
+}
+
+a:focus, a:hover {
+    color: #6879cc !important;
 }
 
 header.masthead .post-heading .meta {
     font-family: "Montserrat", sans-serif;
-}
-
-.home-img {
-    height: 275px;
-    width: 345px;
-}
-
-.test-div {
-    border: #e83e8c 3px solid;
-}
-
-.list-post {
-    padding-left: 20px;
-    padding-bottom: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-bottom: #6879cc 3px solid;
 }
 
 #newForm {
