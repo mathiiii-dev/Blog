@@ -13,7 +13,7 @@ use App\Services\Twig;
 
 class PostsController extends Twig
 {
-    public function show($id)
+    public function show(int $id)
     {
         $post = new PostRepository();
         $postInfo = $post->getPostById($id);
@@ -58,7 +58,8 @@ class PostsController extends Twig
 
         if (!$postInfo) {
             $hasPost = false;
-        } else if ($paginationConf['overPage']) {
+        }
+        else if ($paginationConf['overPage']) {
             http_response_code(404);
             return $this->twig('404.html.twig');
         }
@@ -116,7 +117,7 @@ class PostsController extends Twig
         }
     }
 
-    public function modifyPost($id)
+    public function modifyPost(int $id)
     {
         $post = new PostRepository();
         $postRepo = new PostRepository();
@@ -125,7 +126,7 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $flash = $session->showFlashMessage();
 
-        if (!$verifAccess->validAccess($postInfo['idUser'])) {
+        if (!$verifAccess->validAccess($postInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -170,7 +171,7 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $verifAccess = new AccessValidator();
 
-        if (!$verifAccess->validAccess($postInfo['idUser'])) {
+        if (!$verifAccess->validAccess($postInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }

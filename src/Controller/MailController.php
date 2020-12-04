@@ -40,7 +40,7 @@ class MailController
 
     }
 
-    function randomPassword()
+    function randomPassword(): string
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array();

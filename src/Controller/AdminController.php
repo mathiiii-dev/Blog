@@ -11,7 +11,7 @@ use App\Repository\PostRepository;
 
 class AdminController extends Twig
 {
-    public function show()
+    public function show(): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
@@ -35,7 +35,7 @@ class AdminController extends Twig
 
     }
 
-    public function validatePost($idPost)
+    public function validatePost(int $idPost): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
@@ -46,7 +46,7 @@ class AdminController extends Twig
         }
     }
 
-    public function validateAnswer($idAnswer)
+    public function validateAnswer(int $idAnswer): void
     {
         $type = $_SESSION['type'] ?? null;
 
@@ -58,7 +58,7 @@ class AdminController extends Twig
         }
     }
 
-    public function deleteAnswer($idAnswer)
+    public function deleteAnswer(int $idAnswer): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
@@ -69,7 +69,7 @@ class AdminController extends Twig
         }
     }
 
-    public function deletePost($idPost)
+    public function deletePost(int $idPost): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();

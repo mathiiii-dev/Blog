@@ -10,7 +10,7 @@ use App\Services\Twig;
 
 class AnswerController extends Twig
 {
-    public function createAnswer($id)
+    public function createAnswer(int $id)
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
@@ -31,14 +31,12 @@ class AnswerController extends Twig
         header('Location: /Blog/post/' . $id);
     }
 
-    public function modifyAnswer($id)
+    public function modifyAnswer(int $id)
     {
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $answerRepo = new AnswerRepository();
         $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($idUserAnswer['idUser'])) {
+        if (!$verifAccess->validAccess($idUserAnswer['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -65,10 +63,8 @@ class AnswerController extends Twig
     {
         $answer = new AnswerRepository();
         $answerInfo = $answer->getAnswerById($id);
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($answerInfo['idUser'])) {
+        if (!$verifAccess->validAccess($answerInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }

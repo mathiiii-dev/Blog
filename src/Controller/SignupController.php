@@ -11,7 +11,7 @@ use App\Model\User;
 
 class SignupController extends Twig
 {
-    public function show($filter = null): void
+    public function show(): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
@@ -46,5 +46,4 @@ class SignupController extends Twig
         $bloggerRepo->createUserProfil((int)$id[0]);
         header('Location: sign-in');
     }
-
 }

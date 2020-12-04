@@ -10,7 +10,7 @@ use App\Services\MessageFlash;
 
 class SigninController extends Twig
 {
-    public function show()
+    public function show(): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();

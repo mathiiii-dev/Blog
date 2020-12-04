@@ -12,7 +12,7 @@ class PostRepository extends DbManager
         $this->dbConnect();
     }
 
-    public function getPostById($id)
+    public function getPostById(int $id)
     {
         $post = $this->dbConnect()->prepare("SELECT * FROM Post WHERE id = :id AND isValid = 1");
         $post->bindValue(':id', $id);
@@ -21,7 +21,7 @@ class PostRepository extends DbManager
         return $post->fetch();
     }
 
-    public function addPost(Post $post)
+    public function addPost(Post $post): void
     {
         $addPost = $this->dbConnect()->prepare(
             'INSERT INTO Post (idUser, title, lead, content, createdAt, isValid) 
@@ -37,7 +37,7 @@ class PostRepository extends DbManager
         $addPost->execute();
     }
 
-    public function getUserForAPost($idPost)
+    public function getUserForAPost(int $idPost)
     {
         $post = $this->dbConnect()->prepare("SELECT firstname FROM User u, Post p WHERE p.idUser = u.id AND p.id = :idPost");
         $post->bindValue(':idPost', $idPost);
@@ -46,7 +46,7 @@ class PostRepository extends DbManager
         return $post->fetch();
     }
 
-    public function modifyPost($idPost, Post $post)
+    public function modifyPost(int $idPost, Post $post): void
     {
         $modifyPost = $this->dbConnect()->prepare(
             'UPDATE Post SET title = :title, lead = :lead, content = :content, updatedAt = :updatedAt WHERE id = :idPost'
@@ -60,7 +60,7 @@ class PostRepository extends DbManager
         $modifyPost->execute();
     }
 
-    public function deletePost($idPost)
+    public function deletePost(int $idPost): void
     {
         $deletePost = $this->dbConnect()->prepare(
             'DELETE FROM Post WHERE id = :idPost'

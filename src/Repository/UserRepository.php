@@ -30,7 +30,7 @@ class UserRepository extends DbManager
         $addUser->execute();
     }
 
-    public function getUserByPseudo($pseudo)
+    public function getUserByPseudo(string $pseudo)
     {
         $userPseudo = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE pseudo = :pseudo");
         $userPseudo->bindValue(':pseudo', $pseudo);
@@ -39,7 +39,7 @@ class UserRepository extends DbManager
         return $userPseudo->fetch();
     }
 
-    public function getUserByEmail($email)
+    public function getUserByEmail(string $email)
     {
         $userEmail = $this->dbConnect()->prepare("SELECT id FROM User WHERE email = :email");
         $userEmail->bindValue(':email', $email);
@@ -48,7 +48,7 @@ class UserRepository extends DbManager
         return $userEmail->fetch();
     }
 
-    public function getUserById($id)
+    public function getUserById(int $id)
     {
         $userId = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE id = :id");
         $userId->bindValue(':id', $id);
@@ -57,7 +57,7 @@ class UserRepository extends DbManager
         return $userId->fetch();
     }
 
-    public function getPasswordHash($user)
+    public function getPasswordHash(User $user)
     {
         $userHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");
         $userHash->bindValue(':pseudo', $user->getPseudo());
@@ -74,7 +74,7 @@ class UserRepository extends DbManager
         return $id->fetch();
     }
 
-    public function newPassword($password, $email)
+    public function newPassword(string $password, string $email): void
     {
         var_dump($password, $email);
         $newPassword = $this->dbConnect()->prepare("UPDATE User SET password = :password WHERE email = :email");

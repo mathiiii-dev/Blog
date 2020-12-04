@@ -4,7 +4,7 @@ namespace App\Services;
 
 class FormValidator
 {
-    public function checkSignIn($user)
+    public function checkSignIn($user): bool
     {
         $userManager = new UserManager();
         $session = new MessageFlash();
@@ -22,7 +22,7 @@ class FormValidator
         return true;
     }
 
-    public function checkSignUp($user)
+    public function checkSignUp($user): bool
     {
         $session = new MessageFlash();
         $userManager = new UserManager();
@@ -42,7 +42,7 @@ class FormValidator
         return true;
     }
 
-    public function checkPost($post)
+    public function checkPost($post): bool
     {
 
         $session = new MessageFlash();

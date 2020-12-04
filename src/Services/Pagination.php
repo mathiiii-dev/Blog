@@ -7,7 +7,7 @@ use App\Repository\PostRepository;
 class Pagination extends Twig
 {
 
-    public function getPostPagination($page)
+    public function getPostPagination($page): array
     {
         $postRepo = new PostRepository();
         $currentPage = (int)$page ?? 1;

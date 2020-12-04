@@ -48,7 +48,7 @@
             <div class="col-lg-8 col-md-10 mx-auto ">
                 {% for post in posts %}
                     <div class="post-preview list-post">
-                        <a href="post/{{ post.id }}">
+                        <a href="/blog/post/{{ post.id }}">
                             <h2 class="post-title">
                                 {{ post.title }}
                             </h2>
@@ -57,7 +57,7 @@
                             </h3>
                         </a>
                         <a class="btn btn-primary float-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
-                        <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt }}</p>
+                        <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt | date("d/m/Y") }}</p>
                     </div>
                 {% endfor %}
             </div>
