@@ -55,7 +55,11 @@
                             </h3>
                         </a>
                         <a class="btn btn-primary float-lg-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
-                        <p class="post-meta">Créer par {{ post.firstname }} le {{ post.createdAt | date("d/m/Y") }}</p>
+                        {% if post.updatedAt == null %}
+                            <p class="post-meta">Créer par {{ post.pseudo }} le {{ post.createdAt | date("d/m/Y") }}</p>
+                        {% else %}
+                            <p class="post-meta">Créer par {{ post.pseudo }} , mis à jour le {{ post.updatedAt | date("d/m/Y") }}</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
                 <div class="d-flex justify-content-between my-4">

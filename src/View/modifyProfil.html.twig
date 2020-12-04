@@ -2,8 +2,6 @@
 
 {% block stylesheet %}
     <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/profil.css' }}">
-    <script src="https://cdn.tiny.cloud/1/ktx088jengagzyqleocjgjqmtrg2xx3z09m1lnkbe61oopta/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
 {% endblock %}
 
 {% block title %}
@@ -79,7 +77,17 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            language: 'fr_FR'
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
     </script>
 {% endblock %}

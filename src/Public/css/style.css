@@ -16,18 +16,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
+    color: #fff;
     background-color: #6879cc;
     border-color: #6879cc;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    color: #fff;
-    background-color: #9da9d9 !important;
-    border-color: #9da9d9 !important;
-}
-
-a:hover, a:active, a:focus {
-    color: #9da9d9;
+    color: #79b418;
+    background-color: #edeef7 !important;
+    border-color: #edeef7 !important;
 }
 
 ::selection {
@@ -36,13 +33,8 @@ a:hover, a:active, a:focus {
     text-shadow: none;
 }
 
-.post-preview > a > .post-title:hover, .post-preview > a > .post-title:focus, .post-preview > a > .post-subtitle:hover,
-.post-preview > a > .post-subtitle:focus {
-    color: #9da9d9;!important;
-}
-
 a:focus, a:hover {
-    color: #6879cc !important;
+    color: #79b418 !important;
 }
 
 header.masthead .post-heading .meta {

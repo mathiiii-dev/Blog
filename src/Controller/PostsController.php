@@ -24,8 +24,6 @@ class PostsController extends Twig
             return $this->twig('404.html.twig');
         }
         $userName = $post->getUserForAPost($id);
-        $date = date_create($postInfo['createdAt']);
-        $dateFormat = date_format($date, 'd/m/Y');
         $answerRepo = new AnswerRepository();
         $answer = $answerRepo->getAllAnswerFromOnePost($id);
         $session = new MessageFlash();
@@ -35,8 +33,9 @@ class PostsController extends Twig
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
                 'content' => $postInfo['content'],
-                'createdAt' => $dateFormat,
-                'firstname' => $userName['firstname'],
+                'createdAt' => $postInfo['createdAt'],
+                'updatedAt' => $postInfo['updatedAt'],
+                'pseudo' => $userName,
                 'idPost' => $id,
                 'idUserSession' => $_SESSION['id'] ?? $cookie[0],
                 'idUserPost' => $postInfo['idUser'],

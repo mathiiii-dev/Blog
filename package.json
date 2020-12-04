@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mathias73/Blog#readme",
   "dependencies": {
     "aos": "^2.3.4",
-    "startbootstrap-clean-blog": "^5.0.10"
+    "startbootstrap-clean-blog": "^5.0.10",
+    "tinymce": "^5.6.1"
   }
 }

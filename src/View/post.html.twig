@@ -18,7 +18,11 @@
                     <div class="post-heading">
                         <h1>{{ title }}</h1>
                         <h2 class="subheading">{{ lead }}</h2>
-                        <span class="meta">Créer par {{ firstname }} le {{ createdAt }}</span>
+                        {% if updatedAt == null %}
+                            <span class="meta">Créer par {{ pseudo.pseudo }} le {{ createdAt | date("d/m/Y") }}</span>
+                        {% else %}
+                            <span class="meta">Créer par {{ pseudo.pseudo }} , mis à jour le {{ updatedAt | date("d/m/Y") }}</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -68,6 +72,8 @@
                 {% if session %}
                     {{ session.auth }}
                     {% include 'createAnswer.html.twig' %}
+                {% else %}
+                    <p>Vous devez être connecté(e) pour pouvoir répondre à un post !</p>
                 {% endif %}
             </div>
         </div>
