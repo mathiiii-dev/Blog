@@ -37,11 +37,11 @@
                 {% endif %}
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-profil">
-                        <label for="description">Description</label>
+                        <label for="description">Description :</label>
                         <textarea id="description" name="description">{{ description }}</textarea>
                     </div>
                     <div class="form-profil">
-                        <label for="country">Pays</label>
+                        <label for="country">Pays :</label>
                         <select id="country" name="country" class="form-control">
                             {% for countryCode, countryName in country %}
                                 <option value="{{ countryCode }}">{{ countryName }}</option>
@@ -49,7 +49,7 @@
                         </select>
                     </div>
                     <div class="form-profil">
-                        <label for="images-selector">Photo de profil</label>
+                        <label for="images-selector">Photo de profil :</label>
                         <div class="images-selector">
                             <input type="radio" id="bebop" name="image" value="bebop">
                             <label for="bebop" class="img-card img1"></label>

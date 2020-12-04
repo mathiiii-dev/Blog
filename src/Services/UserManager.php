@@ -68,7 +68,7 @@ class UserManager extends UserRepository
         return false;
     }
 
-    public function setRememberMe(User $user)
+    public function setRememberMe(User $user): void
     {
         if (isset($_POST["remember"])) {
             $pseudo = $user->getPseudo();
@@ -77,7 +77,7 @@ class UserManager extends UserRepository
         }
     }
 
-    public function getRememberMe()
+    public function getRememberMe(): void
     {
         if (isset($_COOKIE['auth'])) {
             $auth = $_COOKIE['auth'];
@@ -109,7 +109,7 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function userDisconnect()
+    public function userDisconnect(): void
     {
         session_unset();
         session_destroy();

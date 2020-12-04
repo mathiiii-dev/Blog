@@ -19,7 +19,6 @@ class Twig
         $rememberMe = $userManager->getRememberMe();
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-
         $twig->addGlobal('session', $_SESSION ?? $rememberMe);
         $twig->addGlobal('idUser', $_SESSION['id'] ?? $cookie[0]);
         echo $twig->render($view, $parameter);

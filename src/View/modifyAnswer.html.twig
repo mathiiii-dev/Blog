@@ -27,7 +27,8 @@
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto mb-5">
                 <form method="post">
-                    <textarea id="answer" name="answer">{{ answerModif }}</textarea>
+                    <label for="answer">Réponse :</label>
+                    <textarea id="answer" name="answer" required="">{{ answerModif }}</textarea>
                     <button type="submit" class="btn btn-primary float-right my-3">Modifier</button>
                 </form>
             </div>

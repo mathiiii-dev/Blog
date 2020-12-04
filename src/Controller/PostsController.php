@@ -58,8 +58,7 @@ class PostsController extends Twig
 
         if (!$postInfo) {
             $hasPost = false;
-        }
-        else if ($paginationConf['overPage']) {
+        } else if ($paginationConf['overPage']) {
             http_response_code(404);
             return $this->twig('404.html.twig');
         }
@@ -80,8 +79,7 @@ class PostsController extends Twig
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
         $verifAccess = new AccessValidator();
-
-        if (!$verifAccess->validAccess($_SESSION['id'] ?? $cookie[0])) {
+        if ($verifAccess->isValid($_SESSION['id'] ?? $cookie[0]) === false) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -126,7 +124,7 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $flash = $session->showFlashMessage();
 
-        if (!$verifAccess->validAccess($postInfo['idUser'] ?? null)) {
+        if (!$verifAccess->isValid($postInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -171,7 +169,7 @@ class PostsController extends Twig
         $postInfo = $post->getPostById($id);
         $verifAccess = new AccessValidator();
 
-        if (!$verifAccess->validAccess($postInfo['idUser'] ?? null)) {
+        if (!$verifAccess->isValid($postInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }

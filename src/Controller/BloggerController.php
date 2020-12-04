@@ -46,7 +46,7 @@ class BloggerController extends Twig
         $bloggerRepo = new BloggerRepository();
         $bloggerInfo = $bloggerRepo->getInfoBloggerById($id);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($bloggerInfo['idUser'])) {
+        if (!$verifAccess->isValid($bloggerInfo['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }

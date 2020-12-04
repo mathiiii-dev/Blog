@@ -4,7 +4,7 @@ namespace App\Services;
 
 class AccessValidator extends Twig
 {
-    public function validAccess($idUser = null)
+    public function isValid($idUser = null): bool
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
@@ -22,11 +22,12 @@ class AccessValidator extends Twig
         return true;
     }
 
-    public function validAdminAccess(string $type = null)
+    public function isValidAdmin(string $type = null): bool
     {
         if ($type != "Admin") {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->twig('500.html.twig');
+            return false;
         }
         return true;
     }

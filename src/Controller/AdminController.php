@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use App\Services\AccessValidator;
 use App\Services\MessageFlash;
 use App\Services\Twig;
@@ -13,9 +14,14 @@ class AdminController extends Twig
 {
     public function show(): void
     {
-        $type = $_SESSION['type'] ?? null;
+
+        $cookie = $_COOKIE['auth'] ?? null;
+        $cookieId = explode('-----', $cookie);
+        $userRepo = new UserRepository();
+        $userType = $userRepo->getUserById($cookieId[0]);
+        $type = $userType['type'] ?? $_SESSION['type'];
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)){
+        if($adminAccess->isValidAdmin($type)){
             $session = new MessageFlash();
             $flash = $session->showFlashMessage();
             $adminRepo = new AdminRepository();
@@ -39,7 +45,7 @@ class AdminController extends Twig
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validatePostRepo($idPost);
             header('Location: /Blog/admin');
@@ -51,7 +57,7 @@ class AdminController extends Twig
         $type = $_SESSION['type'] ?? null;
 
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validateAnswerRepo($idAnswer);
             header('Location: /Blog/admin');
@@ -62,7 +68,7 @@ class AdminController extends Twig
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $answerRepo = new AnswerRepository();
             $answerRepo->deleteAnswer($idAnswer);
             header('Location: /Blog/admin');
@@ -73,7 +79,7 @@ class AdminController extends Twig
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $postRepo = new PostRepository();
             $postRepo->deletePost($idPost);
             header('Location: /Blog/admin');

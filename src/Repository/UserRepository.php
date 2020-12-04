@@ -48,9 +48,9 @@ class UserRepository extends DbManager
         return $userEmail->fetch();
     }
 
-    public function getUserById(int $id)
+    public function getUserById($id)
     {
-        $userId = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE id = :id");
+        $userId = $this->dbConnect()->prepare("SELECT id, pseudo, password, type type FROM User WHERE id = :id");
         $userId->bindValue(':id', $id);
         $userId->execute();
         $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
@@ -76,7 +76,6 @@ class UserRepository extends DbManager
 
     public function newPassword(string $password, string $email): void
     {
-        var_dump($password, $email);
         $newPassword = $this->dbConnect()->prepare("UPDATE User SET password = :password WHERE email = :email");
         $newPassword->bindValue(':password', $password);
         $newPassword->bindValue(':email', $email);

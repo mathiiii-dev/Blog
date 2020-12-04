@@ -4,7 +4,7 @@ namespace App\Services;
 
 class DbManager
 {
-    public function dbConnect()
+    public function dbConnect(): \PDO
     {
         try {
             return new \PDO(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_OPTION);

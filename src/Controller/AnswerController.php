@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Answer;
 use App\Services\AccessValidator;
+use App\Services\FormValidator;
 use App\Services\MessageFlash;
 use App\Repository\AnswerRepository;
 use App\Services\Twig;
@@ -23,11 +24,13 @@ class AnswerController extends Twig
         ]);
 
         $answerRepo = new AnswerRepository();
-        $answerRepo->addAnswer($answer);
-        if (http_response_code(200)) {
+        $formValidator = new FormValidator();
+        if ($formValidator->checkAnswer($_POST['answer'])) {
+            $answerRepo->addAnswer($answer);
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été créée ! Elle sera visible lorsque la modération l\'aura validée.', 'success');
         }
+
         header('Location: /Blog/post/' . $id);
     }
 
@@ -36,7 +39,7 @@ class AnswerController extends Twig
         $answerRepo = new AnswerRepository();
         $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($idUserAnswer['idUser'] ?? null)) {
+        if (!$verifAccess->isValid($idUserAnswer['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
@@ -64,7 +67,7 @@ class AnswerController extends Twig
         $answer = new AnswerRepository();
         $answerInfo = $answer->getAnswerById($id);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($answerInfo['idUser'] ?? null)) {
+        if (!$verifAccess->isValid($answerInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
