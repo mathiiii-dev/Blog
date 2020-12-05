@@ -62,11 +62,21 @@ class FormValidator
         return true;
     }
 
-    public function checkAnswer($answer)
+    public function checkAnswer($answer): bool
     {
 
         $session = new MessageFlash();
         if (empty($answer)) {
+            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            return false;
+        }
+        return true;
+    }
+
+    public function checkModifProfile($blogger): bool
+    {
+        $session = new MessageFlash();
+        if (empty($blogger["description"]) || empty($blogger["country"]) || empty($blogger["image"])) {
             $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
             return false;
         }

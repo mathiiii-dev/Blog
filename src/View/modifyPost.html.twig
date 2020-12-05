@@ -46,6 +46,16 @@
                     </div>
                     <div class="control-group">
                         <div class="form-group controls mb-3">
+                            <label for="author">Auteur :</label>
+                            <select id="author" name="author" class="form-control" required>
+                                {% for author in authors %}
+                                    <option value="{{ author.id }}">{{ author.pseudo }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group controls mb-3">
                             <label for="content">Post :</label>
                             <textarea id="content" name="content">{{ content }}</textarea>
                         </div>

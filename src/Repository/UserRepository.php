@@ -81,4 +81,12 @@ class UserRepository extends DbManager
         $newPassword->bindValue(':email', $email);
         $newPassword->execute();
     }
+
+    public function getAllUserPseudo(): array
+    {
+        $userPseudo = $this->dbConnect()->prepare("SELECT id, pseudo FROM User");
+        $userPseudo->execute();
+        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        return $userPseudo->fetchAll();
+    }
 }

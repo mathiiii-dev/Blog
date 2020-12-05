@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Post;
+use App\Model\User;
+use App\Repository\UserRepository;
 use App\Services\AccessValidator;
 use App\Services\FormValidator;
 use App\Services\MessageFlash;
@@ -118,34 +120,35 @@ class PostsController extends Twig
     {
         $post = new PostRepository();
         $postRepo = new PostRepository();
+        $userRepo = new UserRepository();
         $verifAccess = new AccessValidator();
         $session = new MessageFlash();
         $postInfo = $post->getPostById($id);
         $flash = $session->showFlashMessage();
+        $usersPseudo = $userRepo->getAllUserPseudo();
 
         if (!$verifAccess->isValid($postInfo['idUser'] ?? null)) {
             http_response_code(500);
             return $this->twig('500.html.twig');
         }
-
         $this->twig('modifyPost.html.twig',
             [
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
                 'content' => $postInfo['content'],
                 'idPost' => $id,
+                'authors' => $usersPseudo,
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null
             ]);
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             $post = new Post([
                 'title' => $_POST['title'],
                 'lead' => $_POST['lead'],
                 'content' => $_POST['content'],
                 'updatedAt' => date('y-m-d'),
-                'idUser' => $postInfo['idUser'],
+                'idUser' => $_POST['author'],
                 'createdAt' => $postInfo['createdAt'],
                 'isValid' => 0
             ]);

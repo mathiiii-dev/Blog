@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Model\Blogger;
 use App\Services\AccessValidator;
 use App\Services\Country;
+use App\Services\FormValidator;
 use App\Services\MessageFlash;
 use App\Repository\BloggerRepository;
 use App\Services\Twig;
@@ -46,6 +47,8 @@ class BloggerController extends Twig
         $bloggerRepo = new BloggerRepository();
         $bloggerInfo = $bloggerRepo->getInfoBloggerById($id);
         $verifAccess = new AccessValidator();
+        $session = new MessageFlash();
+
         if (!$verifAccess->isValid($bloggerInfo['idUser'])) {
             http_response_code(500);
             return $this->twig('500.html.twig');
@@ -58,18 +61,25 @@ class BloggerController extends Twig
                 'country' => $_POST['country'] ?? '',
                 'profilePicture' => $_POST['image'] ?? '',
             ]);
-            $session = new MessageFlash();
+            $checkForm = new FormValidator();
+
+            if (!$checkForm->checkModifProfile($_POST)) {
+                return header('Location: /Blog/modify-profil/' . $id);
+            }
             $session->setFlashMessage('Votre profil a bien été modifié !', 'success');
             $bloggerRepo->modifyProfil($id, $blogger);
             header('Location: /Blog/profil/' . $id);
         }
         $country = new Country();
         $code = $country->getCountryCode();
+        $flash = $session->showFlashMessage();
         $this->twig('modifyProfil.html.twig',
             [
                 'description' => $bloggerInfo['description'],
                 'profilePicture' => $bloggerInfo['profilePicture'],
                 'country' => $code,
+                'message' => $flash['message'] ?? null,
+                'class' => $flash['class'] ?? null
             ]);
     }
 

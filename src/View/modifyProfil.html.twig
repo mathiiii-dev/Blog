@@ -40,16 +40,16 @@
                     </div>
                     <div class="form-profil">
                         <label for="country">Pays :</label>
-                        <select id="country" name="country" class="form-control">
+                        <select id="country" name="country" class="form-control" required>
                             {% for countryCode, countryName in country %}
-                                <option value="{{ countryCode }}">{{ countryName }}</option>
+                                <option value="{{ countryCode }}">{{ countryName }} </option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-profil">
                         <label for="images-selector">Photo de profil :</label>
                         <div class="images-selector">
-                            <input type="radio" id="bebop" name="image" value="bebop">
+                            <input type="radio" id="bebop" name="image" value="bebop" required>
                             <label for="bebop" class="img-card img1"></label>
                             <input type="radio" id="donattello" name="image" value="donattello">
                             <label for="donattello" class="img-card img2"></label>

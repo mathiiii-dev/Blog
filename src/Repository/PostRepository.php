@@ -49,7 +49,7 @@ class PostRepository extends DbManager
     public function modifyPost(int $idPost, Post $post): void
     {
         $modifyPost = $this->dbConnect()->prepare(
-            'UPDATE Post SET title = :title, lead = :lead, content = :content, updatedAt = :updatedAt WHERE id = :idPost'
+            'UPDATE Post SET idUser = :idUser, title = :title, lead = :lead, content = :content, updatedAt = :updatedAt WHERE id = :idPost'
         );
 
         $modifyPost->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
@@ -57,6 +57,7 @@ class PostRepository extends DbManager
         $modifyPost->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':updatedAt', $post->getUpdateAt(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+        $modifyPost->bindValue(':idUser', $post->getIdUser(), \PDO::PARAM_INT);
         $modifyPost->execute();
     }
 

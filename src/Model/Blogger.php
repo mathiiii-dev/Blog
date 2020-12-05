@@ -7,7 +7,7 @@ namespace App\Model;
 class Blogger extends Model
 {
     protected int $idUser;
-    protected string $description, $country, $numTel, $profilePicture;
+    protected string $description, $country, $profilePicture;
 
     public function __construct(array $data)
     {
@@ -32,16 +32,6 @@ class Blogger extends Model
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function setNumTel(string $numTel): void
-    {
-        $this->numTel = $numTel;
-    }
-
-    public function getNumTel(): string
-    {
-        return $this->numTel;
     }
 
     public function setProfilePicture(string $profilePicture): void
