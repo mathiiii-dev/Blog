@@ -58,6 +58,7 @@ class Config
 ## Mail
 
 You can configure Laragon to test the contact form (it send a mail).
+
 ![email](https://image.noelshack.com/fichiers/2020/49/6/1607181565-email.png)
 
 ## Built With
