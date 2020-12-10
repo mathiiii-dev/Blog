@@ -59,7 +59,7 @@ class Config
 
 You can configure Laragon to test the contact form (it send a mail).
 
-Foolow the instructions here : https://laragon.org/docs/mail-sender.html
+Follow the instructions here : https://laragon.org/docs/mail-sender.html
 
 ![email](https://image.noelshack.com/fichiers/2020/49/6/1607181565-email.png)
 
