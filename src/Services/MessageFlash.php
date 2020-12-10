@@ -11,7 +11,7 @@ class MessageFlash
         }
     }
 
-    public function setFlashMessage(string $message, string $class)
+    public function setFlashMessage(string $message, string $class): void
     {
         $_SESSION['flash'] = [
             'message' => $message,

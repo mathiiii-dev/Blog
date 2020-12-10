@@ -4,14 +4,9 @@
     Modifie ton post !
 {% endblock %}
 
-{% block stylesheet %}
-    <script src="https://cdn.tiny.cloud/1/ktx088jengagzyqleocjgjqmtrg2xx3z09m1lnkbe61oopta/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
-{% endblock %}
-
 {% block content %}
     <header class="masthead"
-            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg" }}')">
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/Public/img/post-bg.jpg" }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -36,20 +31,35 @@
                 {% endif %}
                 <form method="post" action="../modify-post/{{ idPost }}">
                     <div class="control-group">
-                        <div class="form-group floating-label-form-group controls">
-                            <label for="title">Titre</label>
-                            <input type="text" class="form-control" placeholder="Titre" id="title" name="title"
+                        <div class="form-group controls">
+                            <label for="title">Titre :</label>
+                            <input type="text" class="form-control" id="title" name="title"
                                    required="" value="{{ title }}">
                         </div>
                     </div>
                     <div class="control-group">
-                        <div class="form-group floating-label-form-group controls mb-3">
-                            <label for="lead">Chapô</label>
-                            <input type="text" class="form-control" placeholder="Chapô" id="lead" name="lead"
+                        <div class="form-group controls mb-3">
+                            <label for="lead">Chapô :</label>
+                            <input type="text" class="form-control" id="lead" name="lead"
                                    required="" value="{{ lead }}">
                         </div>
                     </div>
-                    <textarea id="content" name="content">{{ content }}</textarea>
+                    <div class="control-group">
+                        <div class="form-group controls mb-3">
+                            <label for="author">Auteur :</label>
+                            <select id="author" name="author" class="form-control" required>
+                                {% for author in authors %}
+                                    <option value="{{ author.id }}">{{ author.pseudo }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group controls mb-3">
+                            <label for="content">Post :</label>
+                            <textarea id="content" name="content">{{ content }}</textarea>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary float-right mt-3">Modifier</button>
                 </form>
             </div>
@@ -60,7 +70,17 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            language: 'fr_FR'
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
     </script>
 {% endblock %}

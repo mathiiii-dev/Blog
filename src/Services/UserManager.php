@@ -68,26 +68,26 @@ class UserManager extends UserRepository
         return false;
     }
 
-    public function setRememberMe(User $user)
+    public function setRememberMe(User $user): void
     {
         if (isset($_POST["remember"])) {
             $pseudo = $user->getPseudo();
             $userInfo = $this->getUserByPseudo($pseudo);
-            setcookie('auth', $userInfo[0] . '-----' . sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']), time() + 3600 * 24 * 30, '/', 'localhost', false, true);
+            setcookie('auth', $userInfo[0] . COOKIE_SEPARATOR . sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']), time() + 3600 * 24 * 30, '/', 'localhost', false, true);
         }
     }
 
-    public function getRememberMe()
+    public function getRememberMe(): void
     {
         if (isset($_COOKIE['auth'])) {
             $auth = $_COOKIE['auth'];
-            $auth = explode('-----', $auth);
+            $auth = explode(COOKIE_SEPARATOR, $auth);
             $userManager = new UserManager();
             $userInfo = $userManager->getUserById($auth[0]);
             $key = sha1($userInfo['pseudo'] . $userInfo['password'] . $userInfo['type'] . $_SERVER['REMOTE_ADDR']);
             if ($key == $auth[1]) {
                 $_SESSION['Auth'] = (array)$userInfo;
-                setcookie('auth', $userInfo['id'] . '-----' . $key, time() + 3000 * 24 * 30, '/', 'localhost', false, true);
+                setcookie('auth', $userInfo['id'] . COOKIE_SEPARATOR . $key, time() + 3000 * 24 * 30, '/', 'localhost', false, true);
             } else {
                 setcookie('auth', '', time() - 3600, '/', 'localhost', false, true);
             }
@@ -109,13 +109,13 @@ class UserManager extends UserRepository
         return true;
     }
 
-    public function userDisconnect()
+    public function userDisconnect(): void
     {
         session_unset();
         session_destroy();
         if (isset($_COOKIE['auth'])) {
             unset($_COOKIE['auth']);
-            setcookie('auth', null, -1, '/');
+            setcookie('auth', null, -1, '/', 'localhost', false, true);
         }
     }
 }

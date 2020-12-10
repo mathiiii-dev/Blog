@@ -6,7 +6,7 @@ use App\Services\DbManager;
 
 class AdminRepository extends dbManager
 {
-    public function getUnvalidatedPost()
+    public function getUnvalidatedPost(): array
     {
         $post = $this->dbConnect()->prepare("SELECT post.id, user.pseudo, post.content, post.createdAt FROM post, 
                                     user WHERE post.idUser = user.id AND post.isValid = 0 ORDER BY post.id DESC LIMIT 5");
@@ -23,7 +23,7 @@ class AdminRepository extends dbManager
         return $count->fetch();
     }
 
-    public function validatePostRepo($idPost)
+    public function validatePostRepo(int $idPost): void
     {
         $modifyPost = $this->dbConnect()->prepare(
             'UPDATE Post SET isValid = 1 WHERE id = :idPost'
@@ -33,7 +33,7 @@ class AdminRepository extends dbManager
         $modifyPost->execute();
     }
 
-    public function getUnvalidatedAnswer()
+    public function getUnvalidatedAnswer(): array
     {
         $post = $this->dbConnect()->prepare("SELECT answer.id, user.pseudo, answer.idPost, answer.answer, answer.createdAt 
                                     FROM answer, user WHERE answer.idUser = user.id AND answer.isValid = 0 ORDER BY answer.id DESC LIMIT 5");
@@ -50,7 +50,7 @@ class AdminRepository extends dbManager
         return $count->fetch();
     }
 
-    public function validateAnswerRepo($idAnswer)
+    public function validateAnswerRepo(int $idAnswer): void
     {
         $modifyPost = $this->dbConnect()->prepare(
             'UPDATE Answer SET isValid = 1 WHERE id = :idAnswer'

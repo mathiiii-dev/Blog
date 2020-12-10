@@ -1,5 +1,5 @@
 {% block stylesheet %}
-    <link rel="stylesheet" href="src/Public/css/contact.css">
+    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/css/contact.css'}}">
 {% endblock %}
 
 {% block content %}
@@ -60,5 +60,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="src/Public/js/SendMail.js" type="text/javascript"></script>
+    <script src="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/js/SendMail.js'}}" type="text/javascript"></script>
 {% endblock %}

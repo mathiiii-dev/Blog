@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <header class="masthead" style="background-image: url('src/Public/img/home-bg.jpg'); height: 75%;!important;">
+    <header class="masthead" style='background-image: url("{{ '/' ~ constant('ROOT_DIR') ~ '/Public/img/home-bg.jpg'}}"); height: 75%;!important;'>>
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -25,7 +25,6 @@
                 {% endif %}
                 {% if session == null %}
                     <p>Inscrivez-vous pour avoir accès à tous les posts du blog !</p>
-                    {{ erreur }}
                     <form action="signUp" method="post">
                         <div class="control-group">
                             <div class="form-group controls">
