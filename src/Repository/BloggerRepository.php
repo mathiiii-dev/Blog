@@ -17,7 +17,7 @@ class BloggerRepository extends DbManager
         return $blogger->fetch();
     }
 
-    public function createUserProfil(int $id)
+    public function createUserProfil(int $id): void
     {
         $lastIdUser = $this->dbConnect()->prepare(
             'INSERT INTO Blogger (idUser) VALUES (:idUser)'
@@ -27,14 +27,14 @@ class BloggerRepository extends DbManager
         $lastIdUser->execute();
     }
 
-    public function getIdBlogger()
+    public function getIdBlogger(): array
     {
         $id = $this->dbConnect()->prepare('SELECT idUser FROM Blogger');
         $id->execute();
         return $id->fetchAll();
     }
 
-    public function modifyProfil(int $id, Blogger $blogger)
+    public function modifyProfil(int $id, Blogger $blogger): void
     {
         $modifyProfil = $this->dbConnect()->prepare(
             'UPDATE Blogger SET description = :description, country = :country, profilePicture = :profilPicture WHERE idUser = :id'
@@ -47,7 +47,7 @@ class BloggerRepository extends DbManager
         $modifyProfil->execute();
     }
 
-    public function getPostsFromBlogger(int $id)
+    public function getPostsFromBlogger(int $id): array
     {
         $postBlogger = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM post, user WHERE post.idUser = user.id AND user.id = :id AND isValid = 1 ORDER BY id LIMIT 5");
         $postBlogger->bindValue(':id', $id, \PDO::PARAM_INT);

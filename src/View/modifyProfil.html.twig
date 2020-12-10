@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/profil.css' }}">
-    <script src="https://cdn.tiny.cloud/1/ktx088jengagzyqleocjgjqmtrg2xx3z09m1lnkbe61oopta/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
+    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/css/profil.css' }}">
 {% endblock %}
 
 {% block title %}
@@ -12,7 +10,7 @@
 
 {% block content %}
     <header class="masthead"
-            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/about-bg.jpg" }}')">
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/Public/img/about-bg.jpg" }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -37,21 +35,21 @@
                 {% endif %}
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-profil">
-                        <label for="description">Description</label>
+                        <label for="description">Description :</label>
                         <textarea id="description" name="description">{{ description }}</textarea>
                     </div>
                     <div class="form-profil">
-                        <label for="country">Pays</label>
-                        <select id="country" name="country" class="form-control">
+                        <label for="country">Pays :</label>
+                        <select id="country" name="country" class="form-control" required>
                             {% for countryCode, countryName in country %}
-                                <option value="{{ countryCode }}">{{ countryName }}</option>
+                                <option value="{{ countryCode }}">{{ countryName }} </option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-profil">
-                        <label for="images-selector">Photo de profil</label>
+                        <label for="images-selector">Photo de profil :</label>
                         <div class="images-selector">
-                            <input type="radio" id="bebop" name="image" value="bebop">
+                            <input type="radio" id="bebop" name="image" value="bebop" required>
                             <label for="bebop" class="img-card img1"></label>
                             <input type="radio" id="donattello" name="image" value="donattello">
                             <label for="donattello" class="img-card img2"></label>
@@ -79,7 +77,17 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            language: 'fr_FR'
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
     </script>
 {% endblock %}

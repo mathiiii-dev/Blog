@@ -1,0 +1,54 @@
+body, .btn {
+    font-family: "Montserrat", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto", sans-serif;
+}
+
+.floating-label-form-group input,
+.floating-label-form-group textarea {
+    font-family: "Montserrat", sans-serif;
+}
+
+#mainNav {
+    font-family: "Roboto", sans-serif;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #6879cc;
+    border-color: #6879cc;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    color: #9ebcda;
+    background-color: #e0ecf4 !important;
+    border-color: #e0ecf4 !important;
+}
+
+::selection {
+    color: #ffffff;
+    background: #6879cc;
+    text-shadow: none;
+}
+
+a:focus, a:hover {
+    color: #9ebcda !important;
+}
+
+header.masthead .post-heading .meta {
+    font-family: "Montserrat", sans-serif;
+}
+
+.list-post {
+    padding-left: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: #6879cc 3px solid;
+}
+
+#newForm {
+    display: none;
+}

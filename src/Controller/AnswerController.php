@@ -3,14 +3,13 @@
 namespace App\Controller;
 
 use App\Model\Answer;
-use App\Services\AccessValidator;
-use App\Services\MessageFlash;
+use App\Services\{AccessValidator, FormValidator, MessageFlash, Twig};
 use App\Repository\AnswerRepository;
-use App\Services\Twig;
+
 
 class AnswerController extends Twig
 {
-    public function createAnswer($id)
+    public function createAnswer(int $id)
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
@@ -23,26 +22,27 @@ class AnswerController extends Twig
         ]);
 
         $answerRepo = new AnswerRepository();
-        $answerRepo->addAnswer($answer);
-        if (http_response_code(200)) {
+        $formValidator = new FormValidator();
+        if ($formValidator->checkAnswer($_POST['answer'])) {
+            $answerRepo->addAnswer($answer);
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été créée ! Elle sera visible lorsque la modération l\'aura validée.', 'success');
         }
-        header('Location: /Blog/post/' . $id);
+
+        header(POST . '/' . $id);
     }
 
-    public function modifyAnswer($id)
+    public function modifyAnswer(int $id)
     {
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $answerRepo = new AnswerRepository();
         $idUserAnswer = $answerRepo->getIdUserFromAnswer($id);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($idUserAnswer['idUser'])) {
+        if (!$verifAccess->isValid($idUserAnswer['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView('500.html.twig');
+            exit();
         }
-        $this->twig('modifyAnswer.html.twig',
+        $this->renderView('modifyAnswer.html.twig',
             [
                 'answerModif' => $idUserAnswer['answer'],
                 'answerId' => $idUserAnswer['id']
@@ -57,7 +57,7 @@ class AnswerController extends Twig
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été modifiée !', 'success');
             $answerRepo->modifyAnswer($id, $answer);
-            header('Location: /Blog/post/' . $idUserAnswer['idPost']);
+            header(POST .'/'. $idUserAnswer['idPost']);
         }
     }
 
@@ -65,17 +65,16 @@ class AnswerController extends Twig
     {
         $answer = new AnswerRepository();
         $answerInfo = $answer->getAnswerById($id);
-        $cookie = $_COOKIE['auth'] ?? null;
-        $cookie = explode('-----', $cookie);
         $verifAccess = new AccessValidator();
-        if (!$verifAccess->validAccess($answerInfo['idUser'])) {
+        if (!$verifAccess->isValid($answerInfo['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView('500.html.twig');
+            exit();
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre réponse a bien été supprimée !', 'success');
         $answer->deleteAnswer($id);
-        header('Location: /Blog/post/' . $answerInfo['idPost']);
+        header(POST . '/' .$answerInfo['idPost']);
 
     }
 }

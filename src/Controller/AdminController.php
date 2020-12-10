@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use App\Services\AccessValidator;
-use App\Services\MessageFlash;
-use App\Services\Twig;
-use App\Repository\AdminRepository;
-use App\Repository\AnswerRepository;
-use App\Repository\PostRepository;
+use App\Services\{AccessValidator, MessageFlash, Twig};
+use App\Repository\{UserRepository, AdminRepository, AnswerRepository, PostRepository};
 
 class AdminController extends Twig
 {
-    public function show()
+    public function show(): void
     {
-        $type = $_SESSION['type'] ?? null;
+        $cookie = $_COOKIE['auth'] ?? null;
+        $cookieId = explode('-----', $cookie);
+        $userRepo = new UserRepository();
+        $userType = $userRepo->getUserById($cookieId[0]);
+        $type = $userType['type'] ?? $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)){
+        if($adminAccess->isValidAdmin($type)){
             $session = new MessageFlash();
             $flash = $session->showFlashMessage();
             $adminRepo = new AdminRepository();
@@ -23,7 +23,7 @@ class AdminController extends Twig
             $countUnvalidatedPost = $adminRepo->countUnvalidatedPost();
             $unvalidatedAnswer = $adminRepo->getUnvalidatedAnswer();
             $countUnvalidatedAnswer = $adminRepo->countUnvalidatedAnswer();
-            $this->twig('admin.html.twig', [
+            $this->renderView('admin.html.twig', [
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null,
                 'posts' => $unvalidatedPost,
@@ -35,48 +35,48 @@ class AdminController extends Twig
 
     }
 
-    public function validatePost($idPost)
+    public function validatePost(int $idPost): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validatePostRepo($idPost);
-            header('Location: /Blog/admin');
+            header(ADMIN);
         }
     }
 
-    public function validateAnswer($idAnswer)
+    public function validateAnswer(int $idAnswer): void
     {
         $type = $_SESSION['type'] ?? null;
 
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validateAnswerRepo($idAnswer);
-            header('Location: /Blog/admin');
+            header(ADMIN);
         }
     }
 
-    public function deleteAnswer($idAnswer)
+    public function deleteAnswer(int $idAnswer): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $answerRepo = new AnswerRepository();
             $answerRepo->deleteAnswer($idAnswer);
-            header('Location: /Blog/admin');
+            header(ADMIN);
         }
     }
 
-    public function deletePost($idPost)
+    public function deletePost(int $idPost): void
     {
         $type = $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->validAdminAccess($type)) {
+        if($adminAccess->isValidAdmin($type)) {
             $postRepo = new PostRepository();
             $postRepo->deletePost($idPost);
-            header('Location: /Blog/admin');
+            header(ADMIN);
         }
     }
 }

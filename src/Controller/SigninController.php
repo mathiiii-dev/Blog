@@ -2,19 +2,16 @@
 
 namespace App\Controller;
 
-use App\Services\FormValidator;
-use App\Services\Twig;
 use App\Model\User;
-use App\Services\UserManager;
-use App\Services\MessageFlash;
+use App\Services\{FormValidator, Twig, UserManager, MessageFlash};
 
 class SigninController extends Twig
 {
-    public function show()
+    public function show(): void
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->twig('signin.html.twig', [
+        $this->renderView('signin.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null
         ]);
@@ -30,7 +27,8 @@ class SigninController extends Twig
         $userManager = new UserManager();
         $checkSignIn = new FormValidator();
         if (!$checkSignIn->checkSignIn($user)) {
-            return header('Location: /Blog/sign-in');
+            header('Location: /Blog/sign-in');
+            exit();
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Vous êtes bien connecté !', 'success');

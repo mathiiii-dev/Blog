@@ -7,6 +7,18 @@ require 'vendor/autoload.php';
 session_start();
 
 define('ROOT_DIR', basename(dirname(__FILE__)));
+define("ADMIN",'Location: /Blog/admin');
+define("POST",'Location: /Blog/post');
+define("POSTS",'Location: /Blog/posts');
+define("ERR_500",'500.html.twig');
+define("MODEL_ANSWER",'\Model\Answer');
+define("MODEL_USER",'\Model\User');
+define("MODEL_POST",'\Model\Post');
+define("ID_POST",':idPost');
+define("EMAIL",':email');
+define("PSEUDO",':pseudo');
+define("FORM_FIELDS",'Veuillez remplir tout les champs !');
+define("COOKIE_SEPARATOR",'-----');
 
 $router = new Router($_GET['url']);
 $router->get('/', 'Home#show');
@@ -35,5 +47,6 @@ $router->post('/validate-post/:id', 'Admin#validatePost');
 $router->post('/validate-answer/:idAnswer', 'Admin#validateAnswer');
 $router->post('/admin-delPost/:idPost', 'Admin#deletePost');
 $router->post('/admin-delAnswer/:idAnswer', 'Admin#deleteAnswer');
+$router->post('/sendNewPassword', 'Mail#sendNewPassword');
 
 $router->run();

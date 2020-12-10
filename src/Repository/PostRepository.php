@@ -12,16 +12,16 @@ class PostRepository extends DbManager
         $this->dbConnect();
     }
 
-    public function getPostById($id)
+    public function getPostById(int $id)
     {
         $post = $this->dbConnect()->prepare("SELECT * FROM Post WHERE id = :id AND isValid = 1");
         $post->bindValue(':id', $id);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetch();
     }
 
-    public function addPost(Post $post)
+    public function addPost(Post $post): void
     {
         $addPost = $this->dbConnect()->prepare(
             'INSERT INTO Post (idUser, title, lead, content, createdAt, isValid) 
@@ -37,48 +37,49 @@ class PostRepository extends DbManager
         $addPost->execute();
     }
 
-    public function getUserForAPost($idPost)
+    public function getUserForAPost(int $idPost)
     {
-        $post = $this->dbConnect()->prepare("SELECT firstname FROM User u, Post p WHERE p.idUser = u.id AND p.id = :idPost");
-        $post->bindValue(':idPost', $idPost);
+        $post = $this->dbConnect()->prepare("SELECT pseudo FROM User u, Post p WHERE p.idUser = u.id AND p.id = :idPost");
+        $post->bindValue(ID_POST, $idPost);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetch();
     }
 
-    public function modifyPost($idPost, Post $post)
+    public function modifyPost(int $idPost, Post $post): void
     {
         $modifyPost = $this->dbConnect()->prepare(
-            'UPDATE Post SET title = :title, lead = :lead, content = :content, updatedAt = :updatedAt WHERE id = :idPost'
+            'UPDATE Post SET idUser = :idUser, title = :title, lead = :lead, content = :content, updatedAt = :updatedAt WHERE id = :idPost'
         );
 
         $modifyPost->bindValue(':title', $post->getTitle(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':lead', $post->getLead(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':updatedAt', $post->getUpdateAt(), \PDO::PARAM_STR);
-        $modifyPost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+        $modifyPost->bindValue(ID_POST, $idPost, \PDO::PARAM_INT);
+        $modifyPost->bindValue(':idUser', $post->getIdUser(), \PDO::PARAM_INT);
         $modifyPost->execute();
     }
 
-    public function deletePost($idPost)
+    public function deletePost(int $idPost): void
     {
         $deletePost = $this->dbConnect()->prepare(
             'DELETE FROM Post WHERE id = :idPost'
         );
 
-        $deletePost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+        $deletePost->bindValue(ID_POST, $idPost, \PDO::PARAM_INT);
 
         $deletePost->execute();
     }
 
     public function getAllPost($perPage, $offset)
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.firstname, post.title, post.lead, post.createdAt FROM 
+        $post = $this->dbConnect()->prepare("SELECT post.id, user.pseudo, post.title, post.lead, post.createdAt, post.updatedAt FROM 
                                             post, user WHERE post.idUser = user.id AND isValid = 1 ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
         $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
         $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetchAll();
     }
 

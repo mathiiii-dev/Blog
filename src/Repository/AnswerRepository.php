@@ -12,7 +12,7 @@ class AnswerRepository extends DbManager
         $this->dbConnect();
     }
 
-    public function addAnswer(Answer $answer)
+    public function addAnswer(Answer $answer): void
     {
         $addAnswer = $this->dbConnect()->prepare(
             'INSERT INTO Answer (idPost, idUser, answer, createdAt, isValid) 
@@ -27,26 +27,26 @@ class AnswerRepository extends DbManager
         $addAnswer->execute();
     }
 
-    public function getAllAnswerFromOnePost($id)
+    public function getAllAnswerFromOnePost(int $id): array
     {
         $answer = $this->dbConnect()->prepare("SELECT answer.id, answer.idUser, answer.answer, answer.createdAt, 
             user.firstname FROM answer, user, post WHERE answer.idUser = user.id AND answer.idPost = :id AND answer.isValid = 1 GROUP BY answer.id");
         $answer->bindValue(':id', $id, \PDO::PARAM_INT);
         $answer->execute();
-        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $answer->fetchAll();
     }
 
-    public function getIdUserFromAnswer($id)
+    public function getIdUserFromAnswer(int $id)
     {
         $idAnswer = $this->dbConnect()->prepare("SELECT id, idPost, idUser, answer from answer where id = :id");
         $idAnswer->bindValue(':id', $id, \PDO::PARAM_INT);
         $idAnswer->execute();
-        $idAnswer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $idAnswer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $idAnswer->fetch();
     }
 
-    public function modifyAnswer($id, Answer $answer)
+    public function modifyAnswer(int $id, Answer $answer): void
     {
         $modifyAnswer = $this->dbConnect()->prepare(
             'UPDATE Answer SET answer = :answer, updatedAt = :updatedAt WHERE id = :id'
@@ -58,12 +58,12 @@ class AnswerRepository extends DbManager
         $modifyAnswer->execute();
     }
 
-    public function getAnswerById($id)
+    public function getAnswerById(int $id)
     {
         $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id AND isValid = 1");
         $answer->bindValue(':id', $id);
         $answer->execute();
-        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $answer->fetch();
     }
 

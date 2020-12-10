@@ -29,10 +29,10 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
     function checkMail() {
         //Regex to check if a mail is valid
         var regexMail = /^((\w[^\W]+)[\.\-]?){1,}\@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        var checkMail = regexMail.test(email);
+        var rgxMail = regexMail.test(email);
 
         //If the mail is not valid we display an error
-        if (checkMail === false) {
+        if (rgxMail === false) {
             cssErrForm.display = "none";
             cssSuccessForm.display = "none";
             cssError.display = "none";
@@ -44,7 +44,7 @@ document.getElementById('js-submit-btn').addEventListener('click', function (){
         return true;
     }
     
-    if (isNotEmpty(true) && checkMail(true)){
+    if (isNotEmpty() && checkMail()){
 
         const formData = new FormData();
 
