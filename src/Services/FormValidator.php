@@ -10,7 +10,7 @@ class FormValidator
         $session = new MessageFlash();
 
         if (empty($_POST["password"]) || empty($_POST["pseudo"])) {
-            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            $session->setFlashMessage(FORM_FIELDS, 'warning');
             return false;
         } elseif (!$userManager->checkIfPseudoExist($user)) {
             $session->setFlashMessage('Le pseudo n\'éxiste pas !', 'danger');
@@ -27,7 +27,7 @@ class FormValidator
         $session = new MessageFlash();
         $userManager = new UserManager();
         if (!$userManager->isNotEmpty($user)) {
-            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            $session->setFlashMessage(FORM_FIELDS, 'warning');
             return false;
         } elseif (!$userManager->checkPasswordLength()) {
             $session->setFlashMessage('Le mot de passe est trop court !', 'danger');
@@ -48,7 +48,7 @@ class FormValidator
         $session = new MessageFlash();
         $postManager = new PostsManager();
         if (!$postManager->isNotEmpty($post)) {
-            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            $session->setFlashMessage(FORM_FIELDS, 'warning');
             return false;
         }
         if (!$postManager->checkLength(50, $_POST['title'])) {
@@ -67,7 +67,7 @@ class FormValidator
 
         $session = new MessageFlash();
         if (empty($answer)) {
-            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            $session->setFlashMessage(FORM_FIELDS, 'warning');
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ class FormValidator
     {
         $session = new MessageFlash();
         if (empty($blogger["description"]) || empty($blogger["country"]) || empty($blogger["image"])) {
-            $session->setFlashMessage('Veuillez remplir tout les champs !', 'warning');
+            $session->setFlashMessage(FORM_FIELDS, 'warning');
             return false;
         }
         return true;

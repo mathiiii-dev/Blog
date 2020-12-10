@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Services\FormValidator;
-use App\Services\MessageFlash;
-use App\Repository\BloggerRepository;
-use App\Repository\UserRepository;
-use App\Services\Twig;
+use App\Services\{FormValidator, MessageFlash, Twig};
+use App\Repository\{BloggerRepository, UserRepository};
 use App\Model\User;
 
 class SignupController extends Twig
@@ -15,7 +12,7 @@ class SignupController extends Twig
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->twig('signup.html.twig', [
+        $this->renderView('signup.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null
         ]);
@@ -35,7 +32,8 @@ class SignupController extends Twig
         $checkSignIn = new FormValidator();
 
         if (!$checkSignIn->checkSignUp($user)) {
-            return header('Location: /Blog/sign-up');
+            header('Location: /Blog/sign-up');
+            exit();
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre compte à bien été crée ! Vous pouvez maintenant vous connecter', 'success');

@@ -33,7 +33,7 @@ class AnswerRepository extends DbManager
             user.firstname FROM answer, user, post WHERE answer.idUser = user.id AND answer.idPost = :id AND answer.isValid = 1 GROUP BY answer.id");
         $answer->bindValue(':id', $id, \PDO::PARAM_INT);
         $answer->execute();
-        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $answer->fetchAll();
     }
 
@@ -42,7 +42,7 @@ class AnswerRepository extends DbManager
         $idAnswer = $this->dbConnect()->prepare("SELECT id, idPost, idUser, answer from answer where id = :id");
         $idAnswer->bindValue(':id', $id, \PDO::PARAM_INT);
         $idAnswer->execute();
-        $idAnswer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $idAnswer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $idAnswer->fetch();
     }
 
@@ -63,7 +63,7 @@ class AnswerRepository extends DbManager
         $answer = $this->dbConnect()->prepare("SELECT idUser, idPost FROM Answer WHERE id = :id AND isValid = 1");
         $answer->bindValue(':id', $id);
         $answer->execute();
-        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Answer');
+        $answer->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_ANSWER);
         return $answer->fetch();
     }
 

@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 use App\Model\Answer;
-use App\Services\AccessValidator;
-use App\Services\FormValidator;
-use App\Services\MessageFlash;
+use App\Services\{AccessValidator, FormValidator, MessageFlash, Twig};
 use App\Repository\AnswerRepository;
-use App\Services\Twig;
+
 
 class AnswerController extends Twig
 {
@@ -31,7 +29,7 @@ class AnswerController extends Twig
             $session->setFlashMessage('Votre réponse a bien été créée ! Elle sera visible lorsque la modération l\'aura validée.', 'success');
         }
 
-        header('Location: /Blog/post/' . $id);
+        header(POST . '/' . $id);
     }
 
     public function modifyAnswer(int $id)
@@ -41,9 +39,10 @@ class AnswerController extends Twig
         $verifAccess = new AccessValidator();
         if (!$verifAccess->isValid($idUserAnswer['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView('500.html.twig');
+            exit();
         }
-        $this->twig('modifyAnswer.html.twig',
+        $this->renderView('modifyAnswer.html.twig',
             [
                 'answerModif' => $idUserAnswer['answer'],
                 'answerId' => $idUserAnswer['id']
@@ -58,7 +57,7 @@ class AnswerController extends Twig
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été modifiée !', 'success');
             $answerRepo->modifyAnswer($id, $answer);
-            header('Location: /Blog/post/' . $idUserAnswer['idPost']);
+            header(POST .'/'. $idUserAnswer['idPost']);
         }
     }
 
@@ -69,12 +68,13 @@ class AnswerController extends Twig
         $verifAccess = new AccessValidator();
         if (!$verifAccess->isValid($answerInfo['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView('500.html.twig');
+            exit();
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre réponse a bien été supprimée !', 'success');
         $answer->deleteAnswer($id);
-        header('Location: /Blog/post/' . $answerInfo['idPost']);
+        header(POST . '/' .$answerInfo['idPost']);
 
     }
 }

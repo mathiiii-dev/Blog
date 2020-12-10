@@ -26,8 +26,8 @@ class AccessValidator extends Twig
     {
         if ($type != "Admin") {
             http_response_code(500);
-            $this->twig('500.html.twig');
-            return false;
+            $this->renderView('500.html.twig');
+            exit();
         }
         return true;
     }

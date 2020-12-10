@@ -3,12 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Blogger;
-use App\Services\AccessValidator;
-use App\Services\Country;
-use App\Services\FormValidator;
-use App\Services\MessageFlash;
+use App\Services\{AccessValidator, Country, FormValidator, MessageFlash, Twig};
 use App\Repository\BloggerRepository;
-use App\Services\Twig;
 
 class BloggerController extends Twig
 {
@@ -20,7 +16,8 @@ class BloggerController extends Twig
 
         if (!$bloggerInfo) {
             http_response_code(404);
-            return $this->twig('404.html.twig');
+            $this->renderView('404.html.twig');
+            exit();
         }
 
         $cookie = $_COOKIE['auth'] ?? null;
@@ -28,7 +25,7 @@ class BloggerController extends Twig
         $bloggerPost = $bloggerRepo->getPostsFromBlogger($id);
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->twig('profil.html.twig',
+        $this->renderView('profil.html.twig',
             [
                 'idUserBlogger' => $id,
                 'idUserSession' => $_SESSION['id'] ?? $cookie[0],
@@ -51,7 +48,8 @@ class BloggerController extends Twig
 
         if (!$verifAccess->isValid($bloggerInfo['idUser'])) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView('500.html.twig');
+            exit();
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -64,7 +62,8 @@ class BloggerController extends Twig
             $checkForm = new FormValidator();
 
             if (!$checkForm->checkModifProfile($_POST)) {
-                return header('Location: /Blog/modify-profil/' . $id);
+                header('Location: /Blog/modify-profil/' . $id);
+                exit();
             }
             $session->setFlashMessage('Votre profil a bien été modifié !', 'success');
             $bloggerRepo->modifyProfil($id, $blogger);
@@ -73,7 +72,7 @@ class BloggerController extends Twig
         $country = new Country();
         $code = $country->getCountryCode();
         $flash = $session->showFlashMessage();
-        $this->twig('modifyProfil.html.twig',
+        $this->renderView('modifyProfil.html.twig',
             [
                 'description' => $bloggerInfo['description'],
                 'profilePicture' => $bloggerInfo['profilePicture'],

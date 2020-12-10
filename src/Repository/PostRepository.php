@@ -17,7 +17,7 @@ class PostRepository extends DbManager
         $post = $this->dbConnect()->prepare("SELECT * FROM Post WHERE id = :id AND isValid = 1");
         $post->bindValue(':id', $id);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetch();
     }
 
@@ -40,9 +40,9 @@ class PostRepository extends DbManager
     public function getUserForAPost(int $idPost)
     {
         $post = $this->dbConnect()->prepare("SELECT pseudo FROM User u, Post p WHERE p.idUser = u.id AND p.id = :idPost");
-        $post->bindValue(':idPost', $idPost);
+        $post->bindValue(ID_POST, $idPost);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetch();
     }
 
@@ -56,7 +56,7 @@ class PostRepository extends DbManager
         $modifyPost->bindValue(':lead', $post->getLead(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':content', $post->getContent(), \PDO::PARAM_STR);
         $modifyPost->bindValue(':updatedAt', $post->getUpdateAt(), \PDO::PARAM_STR);
-        $modifyPost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+        $modifyPost->bindValue(ID_POST, $idPost, \PDO::PARAM_INT);
         $modifyPost->bindValue(':idUser', $post->getIdUser(), \PDO::PARAM_INT);
         $modifyPost->execute();
     }
@@ -67,7 +67,7 @@ class PostRepository extends DbManager
             'DELETE FROM Post WHERE id = :idPost'
         );
 
-        $deletePost->bindValue(':idPost', $idPost, \PDO::PARAM_INT);
+        $deletePost->bindValue(ID_POST, $idPost, \PDO::PARAM_INT);
 
         $deletePost->execute();
     }
@@ -79,7 +79,7 @@ class PostRepository extends DbManager
         $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
         $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();
-        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\Post');
+        $post->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_POST);
         return $post->fetchAll();
     }
 

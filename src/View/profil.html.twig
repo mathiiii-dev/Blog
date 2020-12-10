@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/css/profil.css' }}">
-    <link rel="icon" href="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}"/>
+    <link rel="stylesheet" href="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/css/profil.css' }}">
+    <link rel="icon" href="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/img/' ~ profilePicture }}"/>
 {% endblock %}
 
 {% block title %}
@@ -11,7 +11,7 @@
 
 {% block content %}
     <header class="masthead"
-            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/src/Public/img/post-bg.jpg" }}')">
+            style="background-image: url('{{ "/" ~ constant("ROOT_DIR") ~ "/Public/img/post-bg.jpg" }}')">
         <div class="overlay"></div>
         <div class="container">
             <div class="row">
@@ -22,10 +22,10 @@
                             <p>Modifier votre profil pour ajouter une photo, description et votre pays !</p>
                         {% else %}
                             <img class="profilePicture"
-                                 src="{{ '/' ~ constant('ROOT_DIR') ~ '/src/Public/img/' ~ profilePicture }}"
+                                 src="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/img/' ~ profilePicture }}"
                                  alt="Photo de profil">
                             {{ description | raw }}
-                            <img src="{{ 'https://www.countryflags.io/'~ country ~'/flat/64.png' }}" alt="Pays">
+                            <img src="{{ 'https://img.geonames.org/flags/x/'~ country|lower ~'.gif' }}" width="60px" height="40px" alt="Pays">
                         {% endif %}
                         <div class="alert alert-{{ class }}" role="alert">
                             {{ message }}

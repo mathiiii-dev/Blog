@@ -6,3 +6,6 @@ composer.bat
 
 # IDE / Editor
 .idea
+
+# SonarQube
+.scannerwork

@@ -21,8 +21,8 @@ class UserRepository extends DbManager
 
         $addUser->bindValue(':firstname', $user->getFirstname(), \PDO::PARAM_STR);
         $addUser->bindValue(':lastname', $user->getLastname(), \PDO::PARAM_STR);
-        $addUser->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
-        $addUser->bindValue(':pseudo', $user->getPseudo(), \PDO::PARAM_STR);
+        $addUser->bindValue(EMAIL, $user->getEmail(), \PDO::PARAM_STR);
+        $addUser->bindValue(PSEUDO, $user->getPseudo(), \PDO::PARAM_STR);
         $addUser->bindValue(':password', $user->getPassword(), \PDO::PARAM_STR);
         $addUser->bindValue(':type', $user->getType(), \PDO::PARAM_STR);
         $addUser->bindValue(':createdAt', $user->getCreatedAt(), \PDO::PARAM_STR);
@@ -33,18 +33,18 @@ class UserRepository extends DbManager
     public function getUserByPseudo(string $pseudo)
     {
         $userPseudo = $this->dbConnect()->prepare("SELECT id, pseudo, password, type FROM User WHERE pseudo = :pseudo");
-        $userPseudo->bindValue(':pseudo', $pseudo);
+        $userPseudo->bindValue(PSEUDO, $pseudo);
         $userPseudo->execute();
-        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_USER);
         return $userPseudo->fetch();
     }
 
     public function getUserByEmail(string $email)
     {
         $userEmail = $this->dbConnect()->prepare("SELECT id FROM User WHERE email = :email");
-        $userEmail->bindValue(':email', $email);
+        $userEmail->bindValue(EMAIL, $email);
         $userEmail->execute();
-        $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $userEmail->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_USER);
         return $userEmail->fetch();
     }
 
@@ -53,16 +53,16 @@ class UserRepository extends DbManager
         $userId = $this->dbConnect()->prepare("SELECT id, pseudo, password, type type FROM User WHERE id = :id");
         $userId->bindValue(':id', $id);
         $userId->execute();
-        $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $userId->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_USER);
         return $userId->fetch();
     }
 
     public function getPasswordHash(User $user)
     {
         $userHash = $this->dbConnect()->prepare("SELECT password FROM User WHERE pseudo = :pseudo");
-        $userHash->bindValue(':pseudo', $user->getPseudo());
+        $userHash->bindValue(PSEUDO, $user->getPseudo());
         $userHash->execute();
-        $userHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $userHash->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_USER);
         $rslt = $userHash->fetch();
         return $rslt["password"] ?? null;
     }
@@ -78,7 +78,7 @@ class UserRepository extends DbManager
     {
         $newPassword = $this->dbConnect()->prepare("UPDATE User SET password = :password WHERE email = :email");
         $newPassword->bindValue(':password', $password);
-        $newPassword->bindValue(':email', $email);
+        $newPassword->bindValue(EMAIL, $email);
         $newPassword->execute();
     }
 
@@ -86,7 +86,7 @@ class UserRepository extends DbManager
     {
         $userPseudo = $this->dbConnect()->prepare("SELECT id, pseudo FROM User");
         $userPseudo->execute();
-        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, '\Model\User');
+        $userPseudo->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, MODEL_USER);
         return $userPseudo->fetchAll();
     }
 }

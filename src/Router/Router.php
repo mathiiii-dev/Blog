@@ -49,7 +49,7 @@ class Router extends Twig
             }
         }
         http_response_code(404);
-        $this->twig('404.html.twig', ['' => '']);
+        $this->renderView('404.html.twig');
 
     }
 

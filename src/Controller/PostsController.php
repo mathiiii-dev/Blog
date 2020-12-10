@@ -3,15 +3,8 @@
 namespace App\Controller;
 
 use App\Model\Post;
-use App\Model\User;
-use App\Repository\UserRepository;
-use App\Services\AccessValidator;
-use App\Services\FormValidator;
-use App\Services\MessageFlash;
-use App\Services\Pagination;
-use App\Repository\AnswerRepository;
-use App\Repository\PostRepository;
-use App\Services\Twig;
+use App\Repository\{UserRepository, AnswerRepository, PostRepository};
+use App\Services\{AccessValidator, FormValidator, MessageFlash, Pagination, Twig};
 
 class PostsController extends Twig
 {
@@ -23,14 +16,15 @@ class PostsController extends Twig
         $cookie = explode('-----', $cookie);
         if (!$postInfo) {
             http_response_code(404);
-            return $this->twig('404.html.twig');
+            $this->renderView('404.html.twig');
+            exit();
         }
         $userName = $post->getUserForAPost($id);
         $answerRepo = new AnswerRepository();
         $answer = $answerRepo->getAllAnswerFromOnePost($id);
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->twig('post.html.twig',
+        $this->renderView('post.html.twig',
             [
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
@@ -61,10 +55,11 @@ class PostsController extends Twig
             $hasPost = false;
         } else if ($paginationConf['overPage']) {
             http_response_code(404);
-            return $this->twig('404.html.twig');
+            $this->renderView('404.html.twig');
+            exit();
         }
 
-        $this->twig('posts.html.twig',
+        $this->renderView('posts.html.twig',
             [
                 'row' => $postInfo,
                 'message' => $flash['message'] ?? null,
@@ -82,12 +77,13 @@ class PostsController extends Twig
         $verifAccess = new AccessValidator();
         if ($verifAccess->isValid($_SESSION['id'] ?? $cookie[0]) === false) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView(ERR_500);
+            exit();
         }
 
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->twig('createPost.html.twig', [
+        $this->renderView('createPost.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null
         ]);
@@ -105,14 +101,15 @@ class PostsController extends Twig
             $checkPost = new FormValidator();
 
             if (!$checkPost->checkPost($post)) {
-                return header('Location: /Blog/create-post');
+                header('Location: /Blog/create-post');
+                exit();
             }
 
             $session = new MessageFlash();
             $session->setFlashMessage('Votre post à bien été créé ! Il sera visible lorsque la modération l\'aura validée.', 'success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
-            header('Location: /Blog/posts/1');
+            header(POSTS.'/1');
         }
     }
 
@@ -129,9 +126,10 @@ class PostsController extends Twig
 
         if (!$verifAccess->isValid($postInfo['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView(ERR_500);
+            exit();
         }
-        $this->twig('modifyPost.html.twig',
+        $this->renderView('modifyPost.html.twig',
             [
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
@@ -156,12 +154,13 @@ class PostsController extends Twig
             $checkPost = new FormValidator();
 
             if (!$checkPost->checkPost($post)) {
-                return header('Location: /Blog/modify-post/' . $id);
+                header('Location: /Blog/modify-post/' . $id);
+                exit();
             }
             $session = new MessageFlash();
             $session->setFlashMessage('Votre post à bien été modifié !', 'alert alert-success');
             $postRepo->modifyPost($id, $post);
-            header('Location: /Blog/post/' . $id);
+            header(POST . '/' .$id);
         }
     }
 
@@ -173,12 +172,13 @@ class PostsController extends Twig
 
         if (!$verifAccess->isValid($postInfo['idUser'] ?? null)) {
             http_response_code(500);
-            return $this->twig('500.html.twig');
+            $this->renderView(ERR_500);
+            exit();
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre post à bien été supprimé !', 'alert alert-success');
         $postRepo = new PostRepository();
         $postRepo->deletePost($id);
-        header('Location: /Blog/posts/1');
+        header(POST.'/1');
     }
 }
