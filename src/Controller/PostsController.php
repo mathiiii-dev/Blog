@@ -179,6 +179,6 @@ class PostsController extends Twig
         $session->setFlashMessage('Votre post à bien été supprimé !', 'alert alert-success');
         $postRepo = new PostRepository();
         $postRepo->deletePost($id);
-        header(POST.'/1');
+        header(POSTS.'/1');
     }
 }

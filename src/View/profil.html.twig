@@ -25,14 +25,16 @@
                                  src="{{ '/' ~ constant('ROOT_DIR') ~ '/Public/img/' ~ profilePicture }}"
                                  alt="Photo de profil">
                             {{ description | raw }}
-                            <img src="{{ 'https://img.geonames.org/flags/x/'~ country|lower ~'.gif' }}" width="60px" height="40px" alt="Pays">
+                            <img src="{{ 'https://www.countryflags.io/'~ country|lower ~'/flat/64.png' }}" alt="Pays">
                         {% endif %}
+                        {% if message != null %}
                         <div class="alert alert-{{ class }}" role="alert">
                             {{ message }}
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        {% endif %}
                         {% if idUserSession == idUserBlogger %}
                             <form action="/Blog/modify-profil/{{ idUserBlogger }}">
                                 <button type="submit" class="btn btn-primary">Modifier</button>
