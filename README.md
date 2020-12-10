@@ -1,4 +1,4 @@
-# P5 OC DA/PHP - Smfony
+# P5 OC DA/PHP - Symfony
 
 Create your first blog with PHP
 
