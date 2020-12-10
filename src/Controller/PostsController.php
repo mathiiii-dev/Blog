@@ -56,13 +56,11 @@ class PostsController extends Twig
         $postInfo = $postRepo->getAllPost($paginationConf['perPage'] ?? null, $paginationConf['offset'] ?? null);
         $hasPost = true;
 
-        if ($paginationConf['overPage']) {
-            http_response_code(404);
-            return $this->twig('404.html.twig');
-        }
-
         if (!$postInfo) {
             $hasPost = false;
+        } else if ($paginationConf['overPage']) {
+            http_response_code(404);
+            return $this->twig('404.html.twig');
         }
 
         $this->twig('posts.html.twig',
@@ -111,7 +109,7 @@ class PostsController extends Twig
             }
 
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre post à bien été créé ! Il sera visible lorsque la modération l\'aura validée.','success');
+            $session->setFlashMessage('Votre post à bien été créé ! Il sera visible lorsque la modération l\'aura validée.', 'success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
             header('Location: /Blog/posts/1');
