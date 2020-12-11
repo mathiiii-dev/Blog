@@ -67,7 +67,7 @@ Follow the instructions here : https://laragon.org/docs/mail-sender.html
 
 * [PHP](https://www.php.net/manual/fr/intro-whatis.php) - Programming language
 * [Twig](https://twig.symfony.com/) - Template engine
-* [Bootstrap](https://getbootstrap.com/) - CSS Framework
+* [Clean blog](https://github.com/startbootstrap/startbootstrap-clean-blog) - Template bootstrap
 * [aos](https://michalsnik.github.io/aos/) - Animation JS library
 * [TinyMCE](https://www.tiny.cloud/) - Text editor
 * [Fontawesome](https://fontawesome.com/) - Icon library
