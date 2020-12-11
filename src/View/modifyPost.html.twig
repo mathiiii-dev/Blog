@@ -70,7 +70,8 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            menubar: false,
+            menubar: true,
+            language: 'FR-fr',
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
@@ -80,7 +81,9 @@
                 'bold italic backcolor | alignleft aligncenter ' +
                 'alignright alignjustify | bullist numlist outdent indent | ' +
                 'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+            image_caption: true,
+            images_file_types: 'jpg,svg,webp,png'
         });
     </script>
 {% endblock %}

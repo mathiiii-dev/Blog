@@ -8,14 +8,14 @@ class AccessValidator extends Twig
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        $cookieId = $cookie[0] ?? null;
-        $sessionId = $_SESSION['id'] ?? null;
+        $sessionId = $_SESSION['id'] ?? $cookie[0]?? null;
 
-        if (!$cookieId && !$sessionId) {
+        if (!$sessionId) {
             return false;
         }
 
-        if ($idUser != $sessionId ? NULL : $cookieId) {
+
+        if ($idUser != $sessionId) {
             return false;
         }
 
