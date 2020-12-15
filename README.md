@@ -2,6 +2,8 @@
 
 Create your first blog with PHP
 
+[![CodeFactor](https://www.codefactor.io/repository/github/mathias73/blog/badge)](https://www.codefactor.io/repository/github/mathias73/blog)
+
 
 ## Getting Started
 
