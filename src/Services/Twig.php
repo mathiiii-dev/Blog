@@ -25,6 +25,6 @@ class Twig
         $twig->addGlobal('session', $_SESSION ?? $rememberMe);
         $twig->addGlobal('idUser', $_SESSION['id'] ?? $cookie[0]);
 
-        echo $twig->render($view, $parameter);
+        print_r($twig->render($view, $parameter));
     }
 }
