@@ -115,7 +115,7 @@ class UserManager extends UserRepository
         session_destroy();
         if (isset($_COOKIE['auth'])) {
             unset($_COOKIE['auth']);
-            setcookie('auth', null, -1, '/', 'localhost');
+            setcookie('auth', null, -1, '/', 'localhost', false, true);
         }
     }
 }
