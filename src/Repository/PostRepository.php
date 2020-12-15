@@ -74,8 +74,10 @@ class PostRepository extends DbManager
 
     public function getAllPost($perPage, $offset)
     {
-        $post = $this->dbConnect()->prepare("SELECT post.id, user.pseudo, post.title, post.lead, post.createdAt, post.updatedAt FROM 
-                                            post, user WHERE post.idUser = user.id AND isValid = 1 ORDER BY post.id DESC LIMIT :perPage OFFSET :offset ");
+        $post = $this->dbConnect()->prepare(
+            "SELECT post.id, user.pseudo, post.title, post.lead, post.createdAt, post.updatedAt FROM 
+                                            post, user WHERE post.idUser = user.id AND isValid = 1 ORDER BY post.id DESC LIMIT :perPage OFFSET :offset "
+        );
         $post->bindValue(':perPage', $perPage, \PDO::PARAM_INT);
         $post->bindValue(':offset', $offset, \PDO::PARAM_INT);
         $post->execute();

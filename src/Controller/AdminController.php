@@ -15,7 +15,7 @@ class AdminController extends Twig
         $userType = $userRepo->getUserById($cookieId[0]);
         $type = $userType['type'] ?? $_SESSION['type'] ?? null;
         $adminAccess = new AccessValidator();
-        if($adminAccess->isValidAdmin($type)){
+        if($adminAccess->isValidAdmin($type)) {
             $session = new MessageFlash();
             $flash = $session->showFlashMessage();
             $adminRepo = new AdminRepository();
@@ -23,14 +23,16 @@ class AdminController extends Twig
             $countUnvalidatedPost = $adminRepo->countUnvalidatedPost();
             $unvalidatedAnswer = $adminRepo->getUnvalidatedAnswer();
             $countUnvalidatedAnswer = $adminRepo->countUnvalidatedAnswer();
-            $this->renderView('admin.html.twig', [
+            $this->renderView(
+                'admin.html.twig', [
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null,
                 'posts' => $unvalidatedPost,
                 'countUnvalidatedPost' => $countUnvalidatedPost[0],
                 'answers' => $unvalidatedAnswer,
                 'countUnvalidatedAnswer' => $countUnvalidatedAnswer[0]
-            ]);
+                ]
+            );
         }
 
     }
@@ -42,6 +44,8 @@ class AdminController extends Twig
         if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validatePostRepo($idPost);
+            $session = new MessageFlash();
+            $session->setFlashMessage('Le post a bien été supprimée ! ', 'success');
             header(ADMIN);
         }
     }
@@ -54,6 +58,8 @@ class AdminController extends Twig
         if($adminAccess->isValidAdmin($type)) {
             $adminRepo = new AdminRepository();
             $adminRepo->validateAnswerRepo($idAnswer);
+            $session = new MessageFlash();
+            $session->setFlashMessage('La réponse a bien été validée ! ', 'success');
             header(ADMIN);
         }
     }
@@ -65,6 +71,8 @@ class AdminController extends Twig
         if($adminAccess->isValidAdmin($type)) {
             $answerRepo = new AnswerRepository();
             $answerRepo->deleteAnswer($idAnswer);
+            $session = new MessageFlash();
+            $session->setFlashMessage('La réponse a bien été supprimée ! ', 'success');
             header(ADMIN);
         }
     }
@@ -76,6 +84,8 @@ class AdminController extends Twig
         if($adminAccess->isValidAdmin($type)) {
             $postRepo = new PostRepository();
             $postRepo->deletePost($idPost);
+            $session = new MessageFlash();
+            $session->setFlashMessage('Le post a bien été supprimé ! ', 'success');
             header(ADMIN);
         }
     }

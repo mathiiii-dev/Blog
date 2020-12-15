@@ -13,13 +13,15 @@ class AnswerController extends Twig
     {
         $cookie = $_COOKIE['auth'] ?? null;
         $cookie = explode('-----', $cookie);
-        $answer = new Answer([
+        $answer = new Answer(
+            [
             'answer' => $_POST['answer'],
             'createdAt' => date('y-m-d'),
             'idUser' => $_SESSION['id'] ?? $cookie[0],
             'idPost' => $id,
             'isValid' => 0
-        ]);
+            ]
+        );
 
         $answerRepo = new AnswerRepository();
         $formValidator = new FormValidator();
@@ -42,18 +44,22 @@ class AnswerController extends Twig
             $this->renderView('500.html.twig');
             exit();
         }
-        $this->renderView('modifyAnswer.html.twig',
+        $this->renderView(
+            'modifyAnswer.html.twig',
             [
                 'answerModif' => $idUserAnswer['answer'],
                 'answerId' => $idUserAnswer['id']
-            ]);
+            ]
+        );
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $answer = new Answer([
+            $answer = new Answer(
+                [
                 'answer' => $_POST['answer'],
                 'updatedAt' => date('y-m-d')
-            ]);
+                ]
+            );
             $session = new MessageFlash();
             $session->setFlashMessage('Votre réponse a bien été modifiée !', 'success');
             $answerRepo->modifyAnswer($id, $answer);

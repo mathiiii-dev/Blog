@@ -30,7 +30,7 @@ class MailController
 
         if (!$userRepo->getUserByEmail($email)) {
             $session = new MessageFlash();
-            $session->setFlashMessage('Le mail saisie n\'existe pas ! ', 'danger');
+            $session->setFlashMessage('Le mail saisi n\'existe pas ! ', 'danger');
             header("Location: /Blog/sign-in");
             exit();
         }
@@ -45,7 +45,7 @@ class MailController
         $sendMail->sendMail($emailSujet, $emailMessage, $email);
 
         $session = new MessageFlash();
-        $session->setFlashMessage('Votre mot de passe à bien été modifié ! Il vous a été envoyé par mail', 'success');
+        $session->setFlashMessage('Votre mot de passe a bien été modifié ! Il vous a été envoyé par mail', 'success');
         header("Location: /Blog/sign-in");
     }
 

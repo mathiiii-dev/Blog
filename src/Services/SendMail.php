@@ -24,9 +24,11 @@ class SendMail
         http_response_code($httpCode);
         header('Content-Type: application/json');
 
-        echo json_encode(array(
+        echo json_encode(
+            array(
             'status' => $httpCode,
             'message' => $httpMessage
-        ));
+            )
+        );
     }
 }

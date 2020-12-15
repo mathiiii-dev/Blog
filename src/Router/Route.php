@@ -17,7 +17,7 @@ class Route
 
     public function with( $param,  $regex) : string
     {
-        $this->params[$param] = str_replace('(','(?:', $regex);
+        $this->params[$param] = str_replace('(', '(?:', $regex);
         return $this;
     }
 
@@ -26,8 +26,7 @@ class Route
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
         $regex = "#^$path$#i";
-        if (!preg_match($regex, $url, $matches))
-        {
+        if (!preg_match($regex, $url, $matches)) {
             return false;
         }
         array_shift($matches);
@@ -35,19 +34,17 @@ class Route
         return true;
     }
 
-   private function paramMatch($match)
-   {
-       if (isset($this->params[$match[1]]))
-       {
-           return '('.$this->params[$match[1]].')';
-       }
-       return '([^/]+)';
-   }
+    private function paramMatch($match)
+    {
+        if (isset($this->params[$match[1]])) {
+            return '('.$this->params[$match[1]].')';
+        }
+        return '([^/]+)';
+    }
 
     public function call()
     {
-        if (is_string($this->callable))
-        {
+        if (is_string($this->callable)) {
             $params = explode('#', $this->callable);
             $controller = "App\\Controller\\" . $params[0] . "Controller";
             $controller = new $controller();

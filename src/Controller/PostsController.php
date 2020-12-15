@@ -24,7 +24,8 @@ class PostsController extends Twig
         $answer = $answerRepo->getAllAnswerFromOnePost($id);
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->renderView('post.html.twig',
+        $this->renderView(
+            'post.html.twig',
             [
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
@@ -38,7 +39,8 @@ class PostsController extends Twig
                 'answer' => $answer,
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null
-            ]);
+            ]
+        );
     }
 
     public function showAllPosts($page)
@@ -59,7 +61,8 @@ class PostsController extends Twig
             exit();
         }
 
-        $this->renderView('posts.html.twig',
+        $this->renderView(
+            'posts.html.twig',
             [
                 'row' => $postInfo,
                 'message' => $flash['message'] ?? null,
@@ -67,7 +70,8 @@ class PostsController extends Twig
                 'currentPage' => $paginationConf['currentPage'] ?? null,
                 'pages' => $paginationConf['pages'] ?? null,
                 'hasPost' => $hasPost
-            ]);
+            ]
+        );
     }
 
     public function createPost()
@@ -83,21 +87,25 @@ class PostsController extends Twig
 
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->renderView('createPost.html.twig', [
+        $this->renderView(
+            'createPost.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null
-        ]);
+            ]
+        );
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $post = new Post([
+            $post = new Post(
+                [
                 'title' => $_POST['title'],
                 'lead' => $_POST['lead'],
                 'content' => $_POST['content'],
                 'createdAt' => date('y-m-d'),
                 'idUser' => $_SESSION['id'] ?? $cookie[0],
                 'isValid' => 0
-            ]);
+                ]
+            );
             $checkPost = new FormValidator();
 
             if (!$checkPost->checkPost($post)) {
@@ -106,7 +114,7 @@ class PostsController extends Twig
             }
 
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre post à bien été créé ! Il sera visible lorsque la modération l\'aura validée.', 'success');
+            $session->setFlashMessage('Votre post a bien été créé ! Il sera visible lorsque la modération l\'aura validée.', 'success');
             $postRepo = new PostRepository();
             $postRepo->addPost($post);
             header(POSTS.'/1');
@@ -129,7 +137,8 @@ class PostsController extends Twig
             $this->renderView(ERR_500);
             exit();
         }
-        $this->renderView('modifyPost.html.twig',
+        $this->renderView(
+            'modifyPost.html.twig',
             [
                 'title' => $postInfo['title'],
                 'lead' => $postInfo['lead'],
@@ -138,10 +147,12 @@ class PostsController extends Twig
                 'authors' => $usersPseudo,
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null
-            ]);
+            ]
+        );
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $post = new Post([
+            $post = new Post(
+                [
                 'title' => $_POST['title'],
                 'lead' => $_POST['lead'],
                 'content' => $_POST['content'],
@@ -149,7 +160,8 @@ class PostsController extends Twig
                 'idUser' => $_POST['author'],
                 'createdAt' => $postInfo['createdAt'],
                 'isValid' => 0
-            ]);
+                ]
+            );
 
             $checkPost = new FormValidator();
 
@@ -158,7 +170,7 @@ class PostsController extends Twig
                 exit();
             }
             $session = new MessageFlash();
-            $session->setFlashMessage('Votre post à bien été modifié !', 'alert alert-success');
+            $session->setFlashMessage('Votre post a bien été modifié !', 'alert alert-success');
             $postRepo->modifyPost($id, $post);
             header(POST . '/' .$id);
         }
@@ -176,7 +188,7 @@ class PostsController extends Twig
             exit();
         }
         $session = new MessageFlash();
-        $session->setFlashMessage('Votre post à bien été supprimé !', 'alert alert-success');
+        $session->setFlashMessage('Votre post a bien été supprimé !', 'alert alert-success');
         $postRepo = new PostRepository();
         $postRepo->deletePost($id);
         header(POSTS.'/1');

@@ -56,9 +56,9 @@
                         </a>
                         <a class="btn btn-primary float-lg-right" href="/blog/post/{{ post.id }}" style="color: white;">Lire</a>
                         {% if post.updatedAt == null %}
-                            <p class="post-meta">Créer par {{ post.pseudo }} le {{ post.createdAt | date("d/m/Y") }}</p>
+                            <p class="post-meta">Créé par {{ post.pseudo }} le {{ post.createdAt | date("d/m/Y") }}</p>
                         {% else %}
-                            <p class="post-meta">Créer par {{ post.pseudo }} , mis à jour le {{ post.updatedAt | date("d/m/Y") }}</p>
+                            <p class="post-meta">Créé par {{ post.pseudo }} , mis à jour le {{ post.updatedAt | date("d/m/Y") }}</p>
                         {% endif %}
                     </div>
                 {% endfor %}

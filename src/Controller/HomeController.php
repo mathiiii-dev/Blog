@@ -12,9 +12,11 @@ class HomeController extends Twig
     {
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->renderView('home.html.twig', [
+        $this->renderView(
+            'home.html.twig', [
             'message' => $flash['message'] ?? null,
             'class' => $flash['class'] ?? null
-        ]);
+            ]
+        );
     }
 }

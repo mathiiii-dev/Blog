@@ -25,7 +25,8 @@ class BloggerController extends Twig
         $bloggerPost = $bloggerRepo->getPostsFromBlogger($id);
         $session = new MessageFlash();
         $flash = $session->showFlashMessage();
-        $this->renderView('profil.html.twig',
+        $this->renderView(
+            'profil.html.twig',
             [
                 'idUserBlogger' => $id,
                 'idUserSession' => $_SESSION['id'] ?? $cookie[0],
@@ -36,7 +37,8 @@ class BloggerController extends Twig
                 'posts' => $bloggerPost,
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null
-            ]);
+            ]
+        );
     }
 
     public function modifyProfil(int $id)
@@ -54,11 +56,13 @@ class BloggerController extends Twig
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $blogger = new Blogger([
+            $blogger = new Blogger(
+                [
                 'description' => $_POST['description'] ?? '',
                 'country' => $_POST['country'] ?? '',
                 'profilePicture' => $_POST['image'] ?? '',
-            ]);
+                ]
+            );
             $checkForm = new FormValidator();
 
             if (!$checkForm->checkModifProfile($_POST)) {
@@ -72,14 +76,16 @@ class BloggerController extends Twig
         $country = new Country();
         $code = $country->getCountryCode();
         $flash = $session->showFlashMessage();
-        $this->renderView('modifyProfil.html.twig',
+        $this->renderView(
+            'modifyProfil.html.twig',
             [
                 'description' => $bloggerInfo['description'],
                 'profilePicture' => $bloggerInfo['profilePicture'],
                 'country' => $code,
                 'message' => $flash['message'] ?? null,
                 'class' => $flash['class'] ?? null
-            ]);
+            ]
+        );
     }
 
 }

@@ -11,9 +11,11 @@ class Twig
     {
         ob_start();
         $loader = new FilesystemLoader('src/View');
-        $twig = new Environment($loader, [
+        $twig = new Environment(
+            $loader, [
             'cache' => false//'src/tmp',
-        ]);
+            ]
+        );
 
         $userManager = new UserManager();
         $rememberMe = $userManager->getRememberMe();
