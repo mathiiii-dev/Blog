@@ -31,8 +31,7 @@ class SigninController extends Twig
         $userManager = new UserManager();
         $checkSignIn = new FormValidator();
         if (!$checkSignIn->checkSignIn($user)) {
-            header('Location: /Blog/sign-in');
-            exit();
+            return header('Location: /Blog/sign-in');
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Vous êtes bien connecté !', 'success');

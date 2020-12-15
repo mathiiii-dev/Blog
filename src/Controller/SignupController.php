@@ -36,8 +36,7 @@ class SignupController extends Twig
         $checkSignIn = new FormValidator();
 
         if (!$checkSignIn->checkSignUp($user)) {
-            header('Location: /Blog/sign-up');
-            exit();
+            return header('Location: /Blog/sign-up');
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre compte a bien été créé ! Vous pouvez maintenant vous connecter', 'success');

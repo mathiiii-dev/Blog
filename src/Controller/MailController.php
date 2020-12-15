@@ -31,8 +31,7 @@ class MailController
         if (!$userRepo->getUserByEmail($email)) {
             $session = new MessageFlash();
             $session->setFlashMessage('Le mail saisi n\'existe pas ! ', 'danger');
-            header("Location: /Blog/sign-in");
-            exit();
+            return header("Location: /Blog/sign-in");
         }
 
         $randomPassword = new RandomPassword();

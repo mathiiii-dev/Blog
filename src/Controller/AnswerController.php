@@ -41,8 +41,7 @@ class AnswerController extends Twig
         $verifAccess = new AccessValidator();
         if (!$verifAccess->isValid($idUserAnswer['idUser'] ?? null)) {
             http_response_code(500);
-            $this->renderView('500.html.twig');
-            exit();
+            return $this->renderView('500.html.twig');
         }
         $this->renderView(
             'modifyAnswer.html.twig',
@@ -74,8 +73,7 @@ class AnswerController extends Twig
         $verifAccess = new AccessValidator();
         if (!$verifAccess->isValid($answerInfo['idUser'] ?? null)) {
             http_response_code(500);
-            $this->renderView('500.html.twig');
-            exit();
+            return $this->renderView('500.html.twig');
         }
         $session = new MessageFlash();
         $session->setFlashMessage('Votre réponse a bien été supprimée !', 'success');

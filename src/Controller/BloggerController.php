@@ -16,8 +16,7 @@ class BloggerController extends Twig
 
         if (!$bloggerInfo) {
             http_response_code(404);
-            $this->renderView('404.html.twig');
-            exit();
+            return $this->renderView('404.html.twig');
         }
 
         $cookie = $_COOKIE['auth'] ?? null;
@@ -50,8 +49,7 @@ class BloggerController extends Twig
 
         if (!$verifAccess->isValid($bloggerInfo['idUser'])) {
             http_response_code(500);
-            $this->renderView('500.html.twig');
-            exit();
+            return $this->renderView('500.html.twig');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -66,8 +64,7 @@ class BloggerController extends Twig
             $checkForm = new FormValidator();
 
             if (!$checkForm->checkModifProfile($_POST)) {
-                header('Location: /Blog/modify-profil/' . $id);
-                exit();
+                return header('Location: /Blog/modify-profil/' . $id);
             }
             $session->setFlashMessage('Votre profil a bien été modifié !', 'success');
             $bloggerRepo->modifyProfil($id, $blogger);
