@@ -57,6 +57,17 @@ class Config
     const DB_OPTION = [\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
 }
 ```
+## Admin account
+
+With the database test you have two admin accounts which are : 
+```
+Pseudo : Moore 
+Password : motdepasse 
+```
+```
+Pseudo : Hawkins 
+Password : motdepasse
+```
 
 ## Local Test Mail
 
