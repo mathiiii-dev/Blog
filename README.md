@@ -2,10 +2,6 @@
 
 Create your first blog with PHP
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/693959fff8a242628e9fb1a17ce55ca4)](https://app.codacy.com/gh/mathias73/Blog?utm_source=github.com&utm_medium=referral&utm_content=mathias73/Blog&utm_campaign=Badge_Grade)
-[![CodeFactor](https://www.codefactor.io/repository/github/mathias73/blog/badge)](https://www.codefactor.io/repository/github/mathias73/blog)
-
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine if you want to test it or develop something on it.
